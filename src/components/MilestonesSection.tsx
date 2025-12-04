@@ -17,16 +17,16 @@ export const MilestonesSection = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      // 1️⃣ PINNING THE RIGHT SIDE TEXT LIKE CREARIST
+      // 1️⃣ PIN RIGHT SIDE TEXT (Crearist scroll effect)
       ScrollTrigger.create({
         trigger: ".milestone-right",
         start: "top top",
         end: "bottom+=200% top",
         pin: true,
-        pinSpacing: false,
+        pinSpacing: true,   // ✅ FIX — prevents overlapping
       });
 
-      // 2️⃣ PARALLAX SCROLL FOR LEFT IMAGES
+      // 2️⃣ PARALLAX IMAGES
       gsap.utils.toArray(".milestone-img-wrapper").forEach((img: any) => {
         gsap.fromTo(
           img,
@@ -44,7 +44,7 @@ export const MilestonesSection = () => {
         );
       });
 
-      // 3️⃣ FADE + SLIDE IN STATS ON SCROLL
+      // 3️⃣ FADE + SLIDE STATS ON SCROLL
       gsap.from(".milestone-item", {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -67,7 +67,7 @@ export const MilestonesSection = () => {
 
       <div className="container mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-24">
 
-        {/* LEFT SCROLLING IMAGES (PARALLAX) */}
+        {/* LEFT – PARALLAX IMAGES */}
         <div className="space-y-20">
 
           <div className="milestone-img-wrapper overflow-hidden aspect-video rounded-xl">
@@ -88,7 +88,7 @@ export const MilestonesSection = () => {
 
         </div>
 
-        {/* RIGHT PINNED TEXT (FIXED DURING SCROLL) */}
+        {/* RIGHT – PINNED CONTENT */}
         <div className="milestone-right sticky top-32 h-fit">
 
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">

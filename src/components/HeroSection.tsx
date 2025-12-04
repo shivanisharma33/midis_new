@@ -43,7 +43,7 @@ export const HeroSection = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/images/banner.webp"
+          src="/images/midis final logo-01.png"
           alt="Banner"
           className="w-full h-full object-cover"
         />

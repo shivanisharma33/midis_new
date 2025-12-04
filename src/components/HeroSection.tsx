@@ -43,11 +43,11 @@ export const HeroSection = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/images/midis final logo-01.png"
+          src="/images/banner.webp"
           alt="Banner"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background/60" />
       </div>
 
       {/* Scroll Down Indicator */}

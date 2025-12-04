@@ -22,9 +22,9 @@ export const Navigation = () => {
         {/* Updated LOGO IMAGE */}
         <a href="/" className="flex items-center">
           <img 
-            src="http://127.0.0.1:5500/midis/image/midis%20final%20logo-01.png" 
+            src="/images/midis final logo-01.png" 
             alt="Crearist Logo" 
-            className="h-20 w-auto object-contain" 
+            className="h-16 w-auto object-contain" 
           />
         </a>
 

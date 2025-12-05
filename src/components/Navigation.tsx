@@ -1,81 +1,63 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
-  { label: 'Services' },
-  { label: 'Blogs' },
-  { label: 'Case Study' },
-  { label: 'About' },
-  { label: 'Contact' },
+  { label: 'Services', to: '/services' },
+  { label: 'Blogs', to: '/blogs' },
+  { label: 'Case Study', to: '/case-study' },
+  { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
 ];
 
-const socialLinks = ['FACEBOOK', 'INSTAGRAM', 'linkedin'];
-
 export const Navigation = () => {
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 py-6">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 py-4 bg-black/70 backdrop-blur-md">
       <div className="flex items-center justify-between">
 
-        {/* Updated LOGO IMAGE */}
-        <a href="/" className="flex items-center">
-          <img 
-            src="/images/midis final logo-01.png" 
-            alt="Crearist Logo" 
-            className="h-16 w-auto object-contain" 
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <img
+            src="/images/midis final logo-01.png"
+            alt="Midis Logo"
+            className="h-12 w-auto object-contain"
           />
-        </a>
+        </Link>
 
-        {/* Center Navigation */}
+        {/* Center Navigation (Desktop) */}
         <div className="hidden lg:flex items-center gap-6 bg-secondary/80 backdrop-blur-sm rounded-full px-6 py-2">
 
           {navItems.map((item) => (
-            <button
+            <Link
               key={item.label}
-              className="px-3 py-2 text-sm font-medium tracking-wide text-foreground/90 hover:text-foreground transition-colors"
+              to={item.to}
+              className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+                isActive(item.to)
+                  ? 'text-foreground'
+                  : 'text-foreground/80 hover:text-foreground'
+              }`}
             >
               {item.label}
-            </button>
+            </Link>
           ))}
 
           {/* Book a Meeting — CTA Button */}
-          <button className="ml-4 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition">
+          <Link
+            to="/book-meeting"
+            className="ml-4 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition"
+          >
             Book a Meeting
-          </button>
-
+          </Link>
         </div>
 
-        {/* Right Side */}
-        <div className="flex items-center gap-6">
-
-          {/* Social Links */}
-          {/* <div className="hidden md:flex items-center gap-4">
-            {socialLinks.map((link) => (
-              <a
-                key={link}
-                href={`https://${link.toLowerCase()}.com`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative overflow-hidden"
-                onMouseEnter={() => setHoveredSocial(link)}
-                onMouseLeave={() => setHoveredSocial(null)}
-              >
-                <span className="text-xs tracking-wider font-medium text-foreground/90 hover:text-foreground transition-colors">
-                  {link}
-                </span>
-                <motion.div
-                  className="absolute bottom-0 left-0 h-px bg-foreground"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: hoveredSocial === link ? 1 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ originX: hoveredSocial === link ? 0 : 1 }}
-                />
-              </a>
-            ))}
-          </div> */}
-
+        {/* Right side placeholder (for future mobile menu / icons) */}
+        <div className="flex items-center gap-4">
+          {/* Mobile menu button could go here */}
         </div>
       </div>
     </nav>

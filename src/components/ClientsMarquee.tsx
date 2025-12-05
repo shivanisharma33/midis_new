@@ -43,15 +43,30 @@ export const ClientsMarquee = () => {
       <div className="marquee mb-8">
         <div className="marquee-content">
           {[...clients, ...clients, ...clients].map((client, index) => (
-            <div key={index} className="flex-shrink-0 mx-12 opacity-50 hover:opacity-100 transition-opacity">
-              <img src={client} alt="Client" className="h-8 w-auto invert" />
+            <div
+              key={index}
+              className="flex-shrink-0 mx-14 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110"
+            >
+              <img
+                src={client}
+                alt="Client"
+                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
+              />
             </div>
           ))}
         </div>
+
         <div className="marquee-content" aria-hidden="true">
           {[...clients, ...clients, ...clients].map((client, index) => (
-            <div key={index} className="flex-shrink-0 mx-12 opacity-50 hover:opacity-100 transition-opacity">
-              <img src={client} alt="Client" className="h-8 w-auto invert" />
+            <div
+              key={index}
+              className="flex-shrink-0 mx-14 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110"
+            >
+              <img
+                src={client}
+                alt="Client"
+                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
+              />
             </div>
           ))}
         </div>
@@ -61,15 +76,30 @@ export const ClientsMarquee = () => {
       <div className="marquee">
         <div className="marquee-content marquee-content-reverse">
           {[...clients, ...clients, ...clients].map((client, index) => (
-            <div key={index} className="flex-shrink-0 mx-12 opacity-50 hover:opacity-100 transition-opacity">
-              <img src={client} alt="Client" className="h-8 w-auto invert" />
+            <div
+              key={index}
+              className="flex-shrink-0 mx-14 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110"
+            >
+              <img
+                src={client}
+                alt="Client"
+                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
+              />
             </div>
           ))}
         </div>
+
         <div className="marquee-content marquee-content-reverse" aria-hidden="true">
           {[...clients, ...clients, ...clients].map((client, index) => (
-            <div key={index} className="flex-shrink-0 mx-12 opacity-50 hover:opacity-100 transition-opacity">
-              <img src={client} alt="Client" className="h-8 w-auto invert" />
+            <div
+              key={index}
+              className="flex-shrink-0 mx-14 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110"
+            >
+              <img
+                src={client}
+                alt="Client"
+                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
+              />
             </div>
           ))}
         </div>

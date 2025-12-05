@@ -67,8 +67,8 @@ export const WhyChooseMidis = () => {
         </p>
       </div>
 
-      {/* ⭐ STACKED CARDS */}
-      <div className="relative z-20 max-w-4xl mx-auto space-y-8">
+      {/* ⭐ STACKED CARDS with OUTER PADDING */}
+      <div className="relative z-20 max-w-4xl mx-auto space-y-8 px-6 md:px-12">
         {[
           "15+ years of digital expertise with a forward-looking approach",
           "Proven track record in building scalable, AI-driven applications",

@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,76 +9,44 @@ export const AboutSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.about-content', {
-        scrollTrigger: {
-          trigger: '.about-content',
-          start: 'top 80%',
-        },
-        y: 60,
+
+      // ⭐ LEFT REVEAL ANIMATION (GSAP TEXT STYLE)
+      gsap.set(".about-heading span", { 
         opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
+        x: -80,              // ← move from LEFT
+        filter: "blur(12px)" // extra drama
       });
 
-      gsap.from('.about-image', {
+      gsap.to(".about-heading span", {
         scrollTrigger: {
-          trigger: '.about-image',
-          start: 'top 80%',
+          trigger: ".about-heading",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
         },
-        scale: 0.9,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
+        opacity: 1,
+        x: 0,                // → slide into place
+        filter: "blur(0px)",
+        duration: 1.3,
+        ease: "power3.out",
+        stagger: 0.18,
       });
+
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-section bg-background">
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section ref={sectionRef} className="py-[150px] bg-background">
+      <div className="container mx-auto px-6 lg:px-12 max-w-6xl">
 
-          {/* Image */}
-          <div className="about-image relative">
-            <img
-              src="/images/banner-about.webp"
-              alt="About MIDIS"
-              className="w-full aspect-[4/5] object-cover"
-            />
-          </div>
+        {/* ⭐ Heading with Left Reveal Animation ⭐ */}
+        <h2 className="about-heading text-5xl md:text-7xl lg:text-8xl font-playfair 
+                       text-foreground leading-tight font-semibold mb-12">
+          <span className="block">We Help Brands Grow With</span>
+          <span className="block">Creative Strategy & Digital Innovation</span>
+        </h2>
 
-          {/* Content */}
-          <div className="about-content">
-
-            <p className="text-xs text-muted-foreground tracking-widest uppercase mb-6">
-              About MIDIS
-            </p>
-
-            <p className="text-body-lg text-text-light leading-relaxed mb-8">
-              MIDIS is a performance-driven digital marketing agency that helps brands unlock growth through data-driven strategies, creative execution, and full-funnel marketing solutions.
-            </p>
-
-            <p className="text-sm text-muted-foreground mb-8">
-              Trusted by clients across industries for ROI-focused marketing and measurable results.
-            </p>
-
-            <h3 className="text-heading-md font-playfair text-foreground mb-8">
-              Empowering Brands With Performance, Precision & Innovation
-            </h3>
-
-            {/* Arrow Circle */}
-            <a href="#Brand" className="inline-block">
-              <img
-                src="/images/arrow-circle.svg"
-                alt="Explore"
-                className="w-12 h-12 invert transition-transform hover:rotate-45 duration-300"
-              />
-            </a>
-          </div>
-
-        </div>
       </div>
     </section>
   );

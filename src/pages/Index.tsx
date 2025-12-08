@@ -16,9 +16,10 @@ import { CTASection } from '@/components/CTASection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { Footer } from '@/components/Footer';
 
-// ⭐ NEW SECTION IMPORT
+// ⭐ NEW SECTIONS
 import ConsultationSection from '@/components/ConsultationSection';
-import { WhyChooseMidis } from "@/components/WhyChooseMidis";
+// import { CaseStudySection } from '@/components/CaseStudySection'; 
+
 
 const Index = () => {
   return (
@@ -27,20 +28,23 @@ const Index = () => {
       <HeroSection />
       <AboutSection />
       <PortfolioMarquee />
-      <WhyChooseMidis />
+
+      {/* ⭐ INSERT CASE STUDY BELOW MILESTONES */}
       <MilestonesSection />
+      {/* <CaseStudySection /> */}
+
       <StrategiesSection />
       <ServicesSection />
-
-   
 
       <FreshIdeasSection />
       <ClientsMarquee />
       <CreateSection />
       <ReasonsSection />
       <TeamSection />
-         {/* ⭐ INSERTED CONSULTATION FORM SECTION */}
+
+      {/* ⭐ CONSULTATION FORM */}
       <ConsultationSection />
+
       <AwardsSection />
       <CTASection />
       <TestimonialsSection />

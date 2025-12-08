@@ -10,8 +10,9 @@ export const HeroSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+
       // ------------------------------
-      // HERO LETTER APPEAR ON LOAD
+      // LETTER APPEAR
       // ------------------------------
       gsap.from(".hero-letter", {
         y: 120,
@@ -30,40 +31,52 @@ export const HeroSection = () => {
         ease: "power2.out",
       });
 
-      // ---------------------------------------
-      // ⭐ NETFLIX EXPAND + FADE OUT EFFECT ⭐
-      // ---------------------------------------
+      // ------------------------------
+      // PIN HERO SECTION
+      // ------------------------------
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: "top top",
+        end: "+=180%",
+        pin: true,
+        scrub: true,
+      });
+
+      // ------------------------------
+      // MIDIS → FADE OUT & SCALE OUT
+      // ------------------------------
       gsap.to(".hero-title", {
-        scale: 2.2,          // expand like Netflix
-        opacity: 0,         // fade out
-        y: -150,            // move slightly upward
+        scale: 1.8,
+        opacity: 0,
+        y: -50,
         ease: "power3.out",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-          end: "top+=250 top",
+          end: "top+=45%",
           scrub: true,
         },
       });
 
-      // ---------------------------------------
-      // ⭐ PARAGRAPH APPEARS CENTERED ⭐
-      // ---------------------------------------
+      // ------------------------------
+      // PARAGRAPH FADE IN EXACT POSITION OF MIDIS
+      // ------------------------------
       gsap.fromTo(
-        ".hero-info",
-        { opacity: 0, y: 80 },
+        ".hero-content",
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          ease: "power2.out",
+          ease: "power3.out",
           scrollTrigger: {
             trigger: heroRef.current,
-            start: "top+=120 top",
-            end: "top+=300 top",
+            start: "top+=25% top",
+            end: "top+=70% top",
             scrub: true,
           },
         }
       );
+
     }, heroRef);
 
     return () => ctx.revert();
@@ -76,17 +89,19 @@ export const HeroSection = () => {
       ref={heroRef}
       className="relative h-screen overflow-hidden bg-background"
     >
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/banner.webp"
-          alt="Banner"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background/70" />
-      </div>
+      {/* BACKGROUND IMAGE */}
+    <div className="absolute inset-0 w-full h-full overflow-hidden">
+  <img
+    src="/images/hero.png"
+    alt="Banner"
+    className="w-full h-full object-cover object-[50%_30%]"
+  />
+  <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background/70" />
+</div>
 
-      {/* Scroll Indicator */}
+
+
+      {/* SCROLL INDICATOR */}
       <div className="scroll-indicator absolute left-1/2 -translate-x-1/2 bottom-10 z-20 flex flex-col items-center gap-3">
         <span className="text-xs tracking-widest uppercase text-foreground">scroll</span>
         <motion.div
@@ -107,7 +122,7 @@ export const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* ⭐ MIDIS CENTERED ⭐ */}
+      {/* MIDIS LETTERS */}
       <div className="hero-title absolute inset-0 flex items-center justify-center z-20 text-center">
         <h1 className="font-anton text-[8rem] md:text-[14rem] lg:text-[18rem] text-foreground leading-none tracking-tight flex justify-center overflow-hidden">
           {letters.map((letter, index) => (
@@ -118,12 +133,30 @@ export const HeroSection = () => {
         </h1>
       </div>
 
-      {/* ⭐ PARAGRAPH (Appears AFTER Netflix effect) ⭐ */}
-      <div className="hero-info absolute inset-0 flex items-center justify-center text-center px-6 md:px-20 z-30 opacity-0">
-        <p className="text-xl md:text-3xl text-foreground max-w-3xl mx-auto leading-relaxed font-light">
-          We transform brands through strategy, creativity, and digital innovation—
-          crafting experiences that elevate your vision.
-        </p>
+      {/* SECOND SLIDE CONTENT – APPEARS EXACTLY WHERE MIDIS WAS */}
+      <div className="hero-content absolute inset-0 flex items-center justify-center text-center px-6 md:px-20 z-30 opacity-0 pointer-events-none">
+        <div className="max-w-4xl mx-auto">
+
+          <h2 className="text-3xl md:text-5xl font-semibold text-foreground leading-tight mb-6">
+            Midis.in – Your Trusted Partner for Custom Digital Solutions & Branding Growth
+          </h2>
+
+          <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed mb-10">
+            From bold brand identities to powerful web apps & marketing strategies —
+            we help startups, SMEs & enterprises build, grow, and stand out online.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pointer-events-auto">
+            <button className="px-8 py-4 bg-orange-500 text-white rounded-xl text-lg font-medium hover:bg-orange-600 transition">
+              Get Your Free Consultation
+            </button>
+
+            <button className="px-8 py-4 border border-foreground/30 text-foreground rounded-xl text-lg font-medium hover:bg-foreground/10 transition">
+              See Our Work
+            </button>
+          </div>
+
+        </div>
       </div>
     </section>
   );

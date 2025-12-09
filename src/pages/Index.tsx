@@ -2,11 +2,12 @@ import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/HeroSection';
 import { AboutSection } from '@/components/AboutSection';
 import { PortfolioMarquee } from '@/components/PortfolioMarquee';
-import { MilestonesSection } from '@/components/MilestonesSection';
-import { StrategiesSection } from '@/components/StrategiesSection';
+// import { MilestonesSection } from '@/components/MilestonesSection';
+// import { StrategiesSection } from '@/components/StrategiesSection';
 import { ServicesSection } from '@/components/ServicesSection';
+// import StartupSolutionsSection from "@/components/StartupSolutionsSection";
+import ShowcaseExcellenceSection from "@/components/ShowcaseExcellenceSection";
 
-import { FreshIdeasSection } from '@/components/FreshIdeasSection';
 import { ClientsMarquee } from '@/components/ClientsMarquee';
 import { CreateSection } from '@/components/CreateSection';
 import { ReasonsSection } from '@/components/ReasonsSection';
@@ -15,9 +16,10 @@ import { AwardsSection } from '@/components/AwardsSection';
 import { CTASection } from '@/components/CTASection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { Footer } from '@/components/Footer';
-
+import CrearistCollage from "@/components/CrearistCollage";
+import FuelingYourGrowthWithFreshIdeas from "@/components/FuelingYourGrowthWithFreshIdeas";
 // ⭐ NEW SECTIONS
-import ConsultationSection from '@/components/ConsultationSection';
+// import ConsultationSection from '@/components/ConsultationSection';
 // import { CaseStudySection } from '@/components/CaseStudySection'; 
 
 
@@ -28,22 +30,24 @@ const Index = () => {
       <HeroSection />
       <AboutSection />
       <PortfolioMarquee />
-
+ <CrearistCollage />  
+ <ShowcaseExcellenceSection />
       {/* ⭐ INSERT CASE STUDY BELOW MILESTONES */}
-      <MilestonesSection />
+      {/* <MilestonesSection /> */}
       {/* <CaseStudySection /> */}
+{/* <StartupSolutionsSection /> */}
 
-      <StrategiesSection />
+      {/* <StrategiesSection /> */}
       <ServicesSection />
-
-      <FreshIdeasSection />
+      <FuelingYourGrowthWithFreshIdeas />
+     
       <ClientsMarquee />
       <CreateSection />
       <ReasonsSection />
       <TeamSection />
 
       {/* ⭐ CONSULTATION FORM */}
-      <ConsultationSection />
+      {/* <ConsultationSection /> */}
 
       <AwardsSection />
       <CTASection />

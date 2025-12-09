@@ -22,8 +22,8 @@ const services = [
   },
   {
     number: '03',
-    title: 'Search Engine optimization',
-    description: 'Boost your websites visibility, traffic, and ranking on Google with our expert SEO solutions".',
+    title: 'Search Engine Optimization',
+    description: 'Boost your website visibility, traffic, and ranking on Google with our expert SEO solutions.',
     tags: ['Boxing', 'Packaging', 'Enclosure'],
     image: '/images/service-dev.webp',
   },
@@ -34,11 +34,11 @@ const services = [
     tags: ['Wrapping', 'Packaging', 'Containerization'],
     image: '/images/service-strategy.webp',
   },
-    {
+  {
     number: '05',
-    title: 'Google Ads $ Meta Ads',
-    description: 'Captivating visuals that elevate your brand and grab attention instantly..',
-    tags: ['Wrapping', 'Packaging', 'Containerization'],
+    title: 'Google Ads & Meta Ads',
+    description: 'Maximize your reach and ROI with high-performing ads across Google and Meta platforms.',
+    tags: ['Ads', 'Marketing', 'Paid Campaigns'],
     image: '/images/service-strategy.webp',
   },
 ];
@@ -50,7 +50,7 @@ export const ServicesSection = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      // ⭐ Heading Animation
+      // Heading Animation
       gsap.from(".services-heading", {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -62,7 +62,7 @@ export const ServicesSection = () => {
         ease: "power3.out",
       });
 
-      // ⭐ Service item animation
+      // Service Item Animation
       gsap.from('.service-item', {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -84,17 +84,18 @@ export const ServicesSection = () => {
     <section ref={sectionRef} className="py-section bg-background">
       <div className="container mx-auto px-6 lg:px-12">
 
-        {/* ⭐ OUR SERVICES Heading ⭐ */}
-        <div className="services-heading mb-16">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">
+        {/* SECTION HEADING */}
+        <div className="services-heading mb-20">
+          <p className="text-sm md:text-base uppercase tracking-[0.25em] text-muted-foreground mb-3">
             Our Services
           </p>
-          <h2 className="text-4xl md:text-6xl font-anton text-foreground leading-tight">
+
+          <h2 className="text-5xl md:text-[5.5rem] font-anton text-foreground leading-[1.1]">
             What We Offer
           </h2>
         </div>
 
-        {/* Service Items */}
+        {/* SERVICE LIST */}
         <div className="space-y-0">
           {services.map((service, index) => (
             <motion.div
@@ -105,17 +106,33 @@ export const ServicesSection = () => {
               <a href="#" className="block py-8 lg:py-12 group">
                 <div className="flex items-start justify-between gap-8">
 
-                  {/* Left Section */}
+                  {/* LEFT SIDE */}
                   <div className="flex items-start gap-8 lg:gap-16">
                     <span className="text-sm text-muted-foreground">{service.number}</span>
 
                     <div>
-                      <h3 className="text-heading-md lg:text-heading-lg font-playfair text-foreground mb-4 flex items-center gap-4">
+                      {/* ⭐ UPDATED TITLE SAME AS IMAGE ⭐ */}
+                      <h3
+                        className="
+                          text-[3.5rem]
+                          md:text-[6rem]
+                          font-extrabold
+                          tracking-tight
+                          leading-none
+                          bg-gradient-to-r
+                          from-[#bfbfbf]
+                          to-[#6d6d6d]
+                          text-transparent
+                          bg-clip-text
+                          mb-4
+                          flex items-center
+                          gap-4
+                        "
+                      >
                         {service.title}
-                        <img src="/images/white-arrow.svg" alt="" className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </h3>
 
-                      {/* Expandable Content */}
+                      {/* EXPANDABLE CONTENT */}
                       <AnimatePresence>
                         {activeIndex === index && (
                           <motion.div
@@ -142,7 +159,7 @@ export const ServicesSection = () => {
                     </div>
                   </div>
 
-                  {/* Right Side Image */}
+                  {/* RIGHT IMAGE (Only when active) */}
                   <AnimatePresence>
                     {activeIndex === index && (
                       <motion.div

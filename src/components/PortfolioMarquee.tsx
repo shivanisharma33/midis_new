@@ -5,95 +5,74 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const portfolioItems = [
-  { src: "/images/port/22.png", alt: "Partner 1" },
-  { src: "/images/port/23.png", alt: "Staberry" },
-  { src: "/images/port/24.png", alt: "Partner 3" },
-  { src: "/images/port/25.png", alt: "Televisio" },
-  { src: "/images/port/26.png", alt: "Televisio" },
-  { src: "/images/port/27.png", alt: "Televisio" },
-  { src: "/images/port/28.png", alt: "Televisio" },
-  { src: "/images/port/29.png", alt: "Televisio" },
-  { src: "/images/port/30.png", alt: "Televisio" },
+  { src: "/images/port/22.png", title: "Brand Strategy" },
+  { src: "/images/port/23.png", title: "UI/UX Design" },
+  { src: "/images/port/24.png", title: "E-Commerce" },
+  { src: "/images/port/25.png", title: "Marketing Creative" },
+  { src: "/images/port/26.png", title: "Product Launch" },
+  { src: "/images/port/27.png", title: "Brand Identity" },
 ];
 
 export const PortfolioMarquee = () => {
-  const marqueeRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Heading animation
-      gsap.from(".portfolio-heading", {
-        scrollTrigger: {
-          trigger: marqueeRef.current,
-          start: "top 85%",
-        },
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: "power3.out",
-      });
+    const wrapper = wrapperRef.current;
+    const track = trackRef.current;
 
-      // Card animation
-      gsap.from(".marquee-item", {
-        scrollTrigger: {
-          trigger: marqueeRef.current,
-          start: "top 80%",
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power3.out",
-      });
-    }, marqueeRef);
+    if (!wrapper || !track) return;
 
-    return () => ctx.revert();
+    const totalWidth = track.scrollWidth;
+    const viewportWidth = wrapper.offsetWidth;
+    const scrollDistance = totalWidth - viewportWidth;
+
+    gsap.to(track, {
+      x: -scrollDistance,
+      ease: "none",
+      scrollTrigger: {
+        trigger: wrapper,
+        start: "top top",
+        end: `+=${scrollDistance}`,
+        scrub: 1,
+        pin: true,
+      },
+    });
   }, []);
 
   return (
-    <section ref={marqueeRef} className="py-section-sm bg-background overflow-hidden">
+    <section className="bg-black text-white py-24">
 
       {/* Heading */}
-      <div className="container mx-auto px-6 lg:px-12 mb-14">
-        <div className="portfolio-heading">
-          <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2">
-            Our Work
-          </p>
-          <h2 className="text-4xl md:text-6xl font-anton text-foreground leading-tight">
-            Portfolio
-          </h2>
-        </div>
+      <div className="text-center mb-14">
+        <p className="text-xs uppercase tracking-widest text-gray-400 mb-3">
+          Our Work
+        </p>
+        <h2 className="text-4xl md:text-6xl font-semibold">Portfolio</h2>
       </div>
 
-      {/* Marquee */}
-      <div className="marquee relative overflow-hidden">
-        
-        {/* Loop 1 */}
-        <div className="marquee-content">
-          {[...portfolioItems, ...portfolioItems].map((item, index) => (
-            <div key={index} className="marquee-item w-[380px] h-[220px] mx-5 rounded-xl overflow-hidden shadow-md bg-black/10">
+      {/* HORIZONTAL SCROLL WRAPPER */}
+      <div ref={wrapperRef} className="relative overflow-hidden w-full h-[420px]">
+
+        {/* Track (moves horizontally) */}
+        <div ref={trackRef} className="absolute top-0 left-0 flex gap-10 px-10">
+
+          {portfolioItems.map((item, index) => (
+            <div
+              key={index}
+              className="min-w-[380px] h-[420px] bg-[#111] rounded-3xl shadow-xl overflow-hidden 
+              hover:scale-[1.04] transition duration-500"
+            >
               <img
                 src={item.src}
-                alt={item.alt}
-                className="w-full h-full object-cover object-center transition-all duration-500 grayscale hover:grayscale-0 hover:scale-105"
+                className="w-full h-[300px] object-cover"
+                alt={item.title}
               />
+              <div className="p-6 text-xl font-semibold">{item.title}</div>
             </div>
           ))}
-        </div>
 
-        {/* Loop 2 */}
-        <div className="marquee-content" aria-hidden="true">
-          {[...portfolioItems, ...portfolioItems].map((item, index) => (
-            <div key={index} className="marquee-item w-[380px] h-[220px] mx-5 rounded-xl overflow-hidden shadow-md bg-black/10">
-              <img
-                src={item.src}
-                alt={item.alt}
-                className="w-full h-full object-cover object-center transition-all duration-500 grayscale hover:grayscale-0 hover:scale-105"
-              />
-            </div>
-          ))}
         </div>
-
       </div>
     </section>
   );

@@ -5,12 +5,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const portfolioItems = [
-  { src: "/images/port/22.png", title: "Brand Strategy" },
-  { src: "/images/port/23.png", title: "UI/UX Design" },
-  { src: "/images/port/24.png", title: "E-Commerce" },
-  { src: "/images/port/25.png", title: "Marketing Creative" },
-  { src: "/images/port/26.png", title: "Product Launch" },
-  { src: "/images/port/27.png", title: "Brand Identity" },
+  { src: "/images/port/8.png", title: "" },
+  { src: "/images/port/38.png", title: "" },
+  { src: "/images/port/18.png", title: "" },
+  { src: "/images/port/25.png", title: "" },
+  { src: "/images/port/26.png", title: "" },
+  { src: "/images/port/27.png", title: "" },
 ];
 
 export const PortfolioMarquee = () => {
@@ -60,7 +60,7 @@ export const PortfolioMarquee = () => {
           {portfolioItems.map((item, index) => (
             <div
               key={index}
-              className="min-w-[380px] h-[420px] bg-[#111] rounded-3xl shadow-xl overflow-hidden 
+              className="min-w-[380px] h-[300px] bg-[#111] rounded-3xl shadow-xl overflow-hidden 
               hover:scale-[1.04] transition duration-500"
             >
               <img

@@ -52,7 +52,7 @@ export const AboutSection = () => {
       <div className="container mx-auto px-6 text-center">
 
         <p className="uppercase text-sm tracking-widest text-gray-500 mb-6">
-          Welcome to Crearist
+          Welcome to midis
         </p>
 
         {/* ⭐ EXACT CREARIST STYLE LINES ⭐ */}

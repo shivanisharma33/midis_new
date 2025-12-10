@@ -70,10 +70,9 @@ function StackContainer() {
   useEffect(() => {
     if (!wrapperRef.current || !card1Ref.current || !card2Ref.current) return;
 
-    // CLEAN STACKED OVERLAY ANIMATION
     gsap.fromTo(
       card2Ref.current,
-      { y: 350, zIndex: 30 }, // Card 2 starts lower but FULLY OPAQUE
+      { y: 350, zIndex: 30 },
       {
         y: -20,
         ease: "power2.out",
@@ -95,7 +94,7 @@ function StackContainer() {
         <NormalCard />
       </div>
 
-      {/* CARD 2 — FULLY VISIBLE, OPAQUE, CLEAN OVERLAY */}
+      {/* CARD 2 */}
       <div
         ref={card2Ref}
         className="absolute top-[200px] left-0 w-full z-30 pointer-events-none"
@@ -130,17 +129,21 @@ function NormalCard() {
         <img src="/images/milestone.webp" className="w-full h-full rounded-xl" />
 
         <div className="flex flex-col justify-center space-y-16">
-          <h1 className="text-[3rem] md:text-[4rem] font-bold leading-tight">
+
+          {/* ⭐ FIXED HEADING (z-index added) */}
+          <h1 className="text-[3rem] md:text-[4rem] font-bold leading-tight text-black relative z-10">
             SHOWCASE OUR <br /> EXCELLENCE
           </h1>
 
           {/* GRID */}
           <div className="relative grid grid-cols-2 gap-12">
-            <div className="absolute top-1/2 left-0 w-full h-px bg-gray-300"></div>
-            <div className="absolute left-1/2 top-0 h-full w-px bg-gray-300"></div>
+
+            {/* ⭐ LINES BEHIND CONTENT */}
+            <div className="absolute top-1/2 left-0 w-full h-px bg-gray-300 z-0"></div>
+            <div className="absolute left-1/2 top-0 h-full w-px bg-gray-300 z-0"></div>
 
             {stats1.map((stat, index) => (
-              <div key={index}>
+              <div key={index} className="relative z-10">
                 <p className="text-xs uppercase text-gray-500">{stat.label}</p>
                 <h2
                   ref={(el) => (countersRef.current[index] = el)}
@@ -159,7 +162,7 @@ function NormalCard() {
 }
 
 /* =======================================================
-   CARD 2 — Stacked Fully Opaque Overlay Section
+   CARD 2 — Stacked Section
 ======================================================= */
 function StackedCardSection() {
   const countersRef = useRef<(HTMLElement | null)[]>([]);
@@ -180,17 +183,21 @@ function StackedCardSection() {
         <img src="/images/partner-3.webp" className="w-full h-full rounded-xl" />
 
         <div className="flex flex-col justify-center space-y-16">
-          <h1 className="text-[3rem] md:text-[4rem] font-bold leading-tight">
+
+          {/* ⭐ FIXED HEADING (z-index added) */}
+          <h1 className="text-[3rem] md:text-[4rem] font-bold leading-tight text-black relative z-10">
             OUR CREATIVE <br /> IMPACT
           </h1>
 
           {/* GRID */}
           <div className="relative grid grid-cols-2 gap-12">
-            <div className="absolute top-1/2 left-0 w-full h-px bg-gray-300"></div>
-            <div className="absolute left-1/2 top-0 h-full w-px bg-gray-300"></div>
+
+            {/* ⭐ LINES BEHIND CONTENT */}
+            <div className="absolute top-1/2 left-0 w-full h-px bg-gray-300 z-0"></div>
+            <div className="absolute left-1/2 top-0 h-full w-px bg-gray-300 z-0"></div>
 
             {stats2.map((stat, i) => (
-              <div key={i}>
+              <div key={i} className="relative z-10">
                 <p className="text-xs uppercase text-gray-500">{stat.label}</p>
                 <h2
                   ref={(el) => (countersRef.current[i] = el)}

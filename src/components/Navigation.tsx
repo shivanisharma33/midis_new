@@ -1,25 +1,18 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navItems = [
-  { label: 'Services', to: '/services', dropdown: true },
+  { label: 'Services', to: '/services2' },   // SIMPLE LINK
   { label: 'Blogs', to: '/blogs' },
   { label: 'Case Study', to: '/case-study' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
 ];
 
-const serviceDropdownItems = [
-  { label: 'Services', to: '/services' },
-  { label: 'Services 2', to: '/services2' },
-];
-
 export const Navigation = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
@@ -47,60 +40,17 @@ export const Navigation = () => {
           <div className="hidden lg:flex items-center gap-6 bg-secondary/80 backdrop-blur-sm rounded-full px-6 py-2">
 
             {navItems.map((item) => (
-              <div key={item.label} className="relative">
-
-                {/* DESKTOP SERVICES DROPDOWN BUTTON */}
-                {item.dropdown ? (
-                  <button
-                    onMouseEnter={() => setIsDesktopDropdownOpen(true)}
-                    onMouseLeave={() => setIsDesktopDropdownOpen(false)}
-                    className={`px-3 py-2 text-sm font-medium flex items-center gap-1 transition-all duration-300 ${
-                      isActive(item.to)
-                        ? 'text-foreground'
-                        : 'text-foreground/80 hover:text-foreground'
-                    }`}
-                  >
-                    {item.label}
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
-                ) : (
-                  <Link
-                    to={item.to}
-                    className={`px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                      isActive(item.to)
-                        ? 'text-foreground'
-                        : 'text-foreground/80 hover:text-foreground'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                )}
-
-                {/* DESKTOP DROPDOWN MENU WITH SMOOTH ANIMATION */}
-                {item.dropdown && (
-                  <div
-                    onMouseEnter={() => setIsDesktopDropdownOpen(true)}
-                    onMouseLeave={() => setIsDesktopDropdownOpen(false)}
-                    className={`
-                      absolute left-0 mt-3 w-48 py-3 rounded-xl bg-[#111] border border-white/10 shadow-xl z-50
-                      transition-all duration-500 ease-out origin-top
-                      ${isDesktopDropdownOpen
-                        ? "opacity-100 scale-100 translate-y-0"
-                        : "opacity-0 scale-[0.95] translate-y-2 pointer-events-none"}
-                    `}
-                  >
-                    {serviceDropdownItems.map((s) => (
-                      <Link
-                        key={s.label}
-                        to={s.to}
-                        className="block px-4 py-2 text-sm text-white/80 hover:bg-white/10 hover:text-white rounded-lg"
-                      >
-                        {s.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <Link
+                key={item.label}
+                to={item.to}
+                className={`px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  isActive(item.to)
+                    ? "text-foreground"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
+              >
+                {item.label}
+              </Link>
             ))}
 
             {/* CTA */}
@@ -108,7 +58,7 @@ export const Navigation = () => {
               to="/book-meeting"
               className="ml-4 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:scale-105 transition-all duration-300"
             >
-              Book a Meeting         
+              Book a Meeting
             </Link>
           </div>
 
@@ -152,52 +102,14 @@ export const Navigation = () => {
 
             {/* MOBILE NAV ITEMS */}
             {navItems.map((item) => (
-              <div key={item.label}>
-
-                {/* MOBILE SERVICES ACCORDION */}
-                {item.dropdown ? (
-                  <>
-                    <button
-                      onClick={() => setIsServicesOpen(!isServicesOpen)}
-                      className="w-full px-4 py-3 text-left text-white/80 hover:text-white rounded-lg flex justify-between items-center"
-                    >
-                      {item.label}
-                      <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-500 ${
-                          isServicesOpen ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-
-                    {/* MOBILE DROPDOWN WITH SMOOTH ACCORDION */}
-                    <div
-                      className={`
-                        ml-4 mt-2 space-y-1 transition-all duration-500 ease-out overflow-hidden
-                        ${isServicesOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}
-                      `}
-                    >
-                      {serviceDropdownItems.map((s) => (
-                        <Link
-                          key={s.label}
-                          to={s.to}
-                          onClick={closeMobileMenu}
-                          className="block px-4 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg"
-                        >
-                          {s.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    to={item.to}
-                    onClick={closeMobileMenu}
-                    className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 rounded-lg"
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </div>
+              <Link
+                key={item.label}
+                to={item.to}
+                onClick={closeMobileMenu}
+                className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 rounded-lg"
+              >
+                {item.label}
+              </Link>
             ))}
 
             {/* MOBILE CTA */}

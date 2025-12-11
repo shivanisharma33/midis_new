@@ -55,13 +55,13 @@ export const TeamSection: React.FC = () => {
     tl.to(blackBox, {
       opacity: 1,
       scale: 1.4,
-      duration: 1.3,
+      duration: 1.2,
       ease: "power3.out",
     });
 
     tl.to(blackBox, {
       scale: 1.85,
-      duration: 1.3,
+      duration: 1.2,
       ease: "power3.out",
     });
 
@@ -71,8 +71,8 @@ export const TeamSection: React.FC = () => {
       {
         y: 0,
         opacity: 1,
-        duration: 1,
-        stagger: 0.1,
+        duration: 1.1,
+        stagger: 0.12,
         ease: "power3.out",
       },
       "-=1"
@@ -92,20 +92,20 @@ export const TeamSection: React.FC = () => {
     "https://www.midis.in/image/member4.jpg",
     "https://www.midis.in/image/member6.jpg",
     "https://www.midis.in/image/member3.jpg",
-    "https://i.pravatar.cc/450?img=12"
+    "https://i.pravatar.cc/450?img=12",
   ];
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-background overflow-hidden h-[100vh] w-full"
+      className="relative bg-black overflow-hidden h-[100vh] w-full"
     >
       {/* HEADING */}
       <div className="absolute inset-0 flex items-center justify-center z-20">
         <h1
           ref={headingRef}
-          className="font-anton text-[5rem] md:text-[7rem] lg:text-[9rem]
-            text-foreground text-center leading-[0.9]"
+          className="font-anton text-[5rem] md:text-[7rem] lg:text-[9rem] 
+            text-white text-center leading-[0.9]"
         >
           <span className="line block">MEET OUR</span>
           <span className="line block">
@@ -116,74 +116,98 @@ export const TeamSection: React.FC = () => {
         </h1>
       </div>
 
-      {/* BLACK BOX + GRID */}
+      {/* BLACK BOX */}
       <div
         ref={blackBoxRef}
-        className="absolute left-1/2 top-1/2 
-          w-[60%] h-[85vh]
-          -translate-x-1/2 -translate-y-1/2 
-          bg-black rounded-xl shadow-xl opacity-0 scale-90
-          flex items-center justify-center p-8 overflow-hidden"
+        className="
+          absolute left-1/2 top-1/2  
+          w-[70%] h-[88vh] 
+          -translate-x-1/2 -translate-y-1/2  
+          bg-[#0B0C0E] 
+          opacity-0 scale-50 
+          border border-[#ffffff15]
+          shadow-[0_0_40px_rgba(255,255,255,0.04),0_0_80px_rgba(255,255,255,0.03)]
+          transition-all duration-700 
+          flex items-center justify-center 
+          p-20 overflow-hidden
+        "
       >
+        {/* GRID */}
         <div
           ref={faceGridRef}
-          className="grid grid-cols-4 gap-6 w-full h-full place-items-center"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 w-full h-full place-items-center px-4"
         >
           {teamPhotos.map((img, i) => (
             <div
               key={i}
               className="
-                grid-item relative overflow-hidden
-                rounded-2xl
-                w-[190px] aspect-square
+                grid-item relative overflow-hidden 
+                w-full max-w-[190px]
+                h-[230px]
                 bg-[#0f0f10]
-                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-                border border-white/5
-                hover:shadow-[0_12px_40px_rgba(0,0,0,0.55)]
-                transition-all duration-500
-                group
+                border border-white/10
+                p-3
+                rounded-md
+                shadow-[0_10px_40px_rgba(0,0,0,0.45)]
+                transition-all duration-500 ease-out
+                hover:scale-[1.04]
+                group cursor-pointer
               "
             >
+              {/* IMAGE */}
               <img
                 src={img}
                 className="
                   w-full h-full object-cover object-center
+                  rounded-md
                   transition-all duration-700 ease-out
-                  group-hover:scale-110 group-hover:rotate-1
+                  group-hover:scale-110
                 "
               />
 
-              {/* Glass reflection */}
+              {/* DARK OVERLAY */}
               <div
                 className="
-                  absolute inset-0
-                  bg-gradient-to-br from-white/10 to-transparent
-                  opacity-0 group-hover:opacity-100
-                  transition-all duration-700
-                  pointer-events-none
-                "
-              />
-
-              {/* Bottom fade */}
-              <div
-                className="
-                  absolute bottom-0 left-0 right-0 h-1/3
-                  bg-gradient-to-t from-black/50 to-transparent
-                  pointer-events-none
-                "
-              />
-
-              {/* Glow outline */}
-              <div
-                className="
-                  absolute inset-0 rounded-2xl 
-                  border border-white/10
-                  shadow-[0_0_25px_rgba(255,255,255,0.08)]
-                  opacity-0 group-hover:opacity-100
+                  absolute inset-0 
+                  bg-[rgba(0,0,0,0.45)]
+                  opacity-0
                   transition-all duration-500
-                  pointer-events-none
+                  group-hover:opacity-100
                 "
               />
+
+              {/* ROLE TAG */}
+              <div
+                className="
+                  absolute top-3 left-0
+                  bg-black/80 text-white 
+                  text-[10px] font-semibold 
+                  px-3 py-1
+                  rounded-r-md
+                  opacity-0 -translate-x-3
+                  transition-all duration-500
+                  group-hover:opacity-100 group-hover:translate-x-0
+                "
+              >
+                Technical Director
+              </div>
+
+              {/* NAME BAR */}
+              <div
+                className="
+                  absolute bottom-0 left-0 w-full
+                  bg-gradient-to-t from-black/90 to-transparent
+                  py-3 px-3
+                  opacity-0 translate-y-5
+                  transition-all duration-500
+                  group-hover:opacity-100 group-hover:translate-y-0
+                "
+              >
+                <p className="text-white font-bold text-sm">Riley Knox</p>
+                <p className="text-white/60 text-[10px] -mt-1">
+                  Director of Design
+                </p>
+              </div>
             </div>
           ))}
         </div>

@@ -18,8 +18,8 @@ const serviceDropdownItems = [
 export const Navigation = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false); // MOBILE DROPDOWN
-  const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false); // DESKTOP DROPDOWN
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
@@ -39,7 +39,7 @@ export const Navigation = () => {
             <img
               src="/images/midis final logo-01.png"
               alt="Midis Logo"
-              className="h-8 sm:h-10 lg:h-12 w-auto object-contain"
+              className="h-8 sm:h-10 lg:h-20 w-auto object-contain"
             />
           </Link>
 
@@ -49,7 +49,7 @@ export const Navigation = () => {
             {navItems.map((item) => (
               <div key={item.label} className="relative">
 
-                {/* SERVICES DROPDOWN TRIGGER */}
+                {/* DESKTOP SERVICES DROPDOWN BUTTON */}
                 {item.dropdown ? (
                   <button
                     onMouseEnter={() => setIsDesktopDropdownOpen(true)}
@@ -76,12 +76,18 @@ export const Navigation = () => {
                   </Link>
                 )}
 
-                {/* DESKTOP DROPDOWN MENU */}
-                {item.dropdown && isDesktopDropdownOpen && (
+                {/* DESKTOP DROPDOWN MENU WITH SMOOTH ANIMATION */}
+                {item.dropdown && (
                   <div
                     onMouseEnter={() => setIsDesktopDropdownOpen(true)}
                     onMouseLeave={() => setIsDesktopDropdownOpen(false)}
-                    className="absolute left-0 mt-3 bg-[#111] border border-white/10 rounded-xl shadow-xl w-48 py-3 z-50 animate-fadeIn"
+                    className={`
+                      absolute left-0 mt-3 w-48 py-3 rounded-xl bg-[#111] border border-white/10 shadow-xl z-50
+                      transition-all duration-500 ease-out origin-top
+                      ${isDesktopDropdownOpen
+                        ? "opacity-100 scale-100 translate-y-0"
+                        : "opacity-0 scale-[0.95] translate-y-2 pointer-events-none"}
+                    `}
                   >
                     {serviceDropdownItems.map((s) => (
                       <Link
@@ -102,7 +108,7 @@ export const Navigation = () => {
               to="/book-meeting"
               className="ml-4 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:scale-105 transition-all duration-300"
             >
-              Book a Meeting
+              Book a Meeting         
             </Link>
           </div>
 
@@ -114,7 +120,7 @@ export const Navigation = () => {
             Book Meeting
           </Link>
 
-          {/* MOBILE BUTTON */}
+          {/* MOBILE MENU BUTTON */}
           <button
             onClick={toggleMobileMenu}
             className="lg:hidden relative z-50 p-2 text-white hover:text-orange-400 transition-colors"
@@ -136,7 +142,7 @@ export const Navigation = () => {
           onClick={closeMobileMenu}
         />
 
-        {/* MOBILE SLIDE-IN */}
+        {/* MOBILE SLIDE-IN MENU */}
         <div
           className={`absolute top-0 right-0 h-full w-full sm:w-80 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] border-l border-white/10 shadow-2xl transition-transform duration-300 ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
@@ -144,10 +150,11 @@ export const Navigation = () => {
         >
           <div className="flex flex-col h-full pt-16 sm:pt-20 px-6 space-y-1">
 
-            {/* NAV ITEMS */}
-            {navItems.map((item, index) => (
+            {/* MOBILE NAV ITEMS */}
+            {navItems.map((item) => (
               <div key={item.label}>
-                {/* SERVICES accordion dropdown */}
+
+                {/* MOBILE SERVICES ACCORDION */}
                 {item.dropdown ? (
                   <>
                     <button
@@ -156,33 +163,36 @@ export const Navigation = () => {
                     >
                       {item.label}
                       <ChevronDown
-                        className={`w-5 h-5 transition-transform ${
+                        className={`w-5 h-5 transition-transform duration-500 ${
                           isServicesOpen ? 'rotate-180' : ''
                         }`}
                       />
                     </button>
 
-                    {/* MOBILE DROPDOWN ITEMS */}
-                    {isServicesOpen && (
-                      <div className="ml-4 mt-2 space-y-1">
-                        {serviceDropdownItems.map((s) => (
-                          <Link
-                            key={s.label}
-                            to={s.to}
-                            onClick={closeMobileMenu}
-                            className="block px-4 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg"
-                          >
-                            {s.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+                    {/* MOBILE DROPDOWN WITH SMOOTH ACCORDION */}
+                    <div
+                      className={`
+                        ml-4 mt-2 space-y-1 transition-all duration-500 ease-out overflow-hidden
+                        ${isServicesOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}
+                      `}
+                    >
+                      {serviceDropdownItems.map((s) => (
+                        <Link
+                          key={s.label}
+                          to={s.to}
+                          onClick={closeMobileMenu}
+                          className="block px-4 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg"
+                        >
+                          {s.label}
+                        </Link>
+                      ))}
+                    </div>
                   </>
                 ) : (
                   <Link
                     to={item.to}
                     onClick={closeMobileMenu}
-                    className={`block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 rounded-lg`}
+                    className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 rounded-lg"
                   >
                     {item.label}
                   </Link>
@@ -190,7 +200,7 @@ export const Navigation = () => {
               </div>
             ))}
 
-            {/* CTA */}
+            {/* MOBILE CTA */}
             <Link
               to="/book-meeting"
               onClick={closeMobileMenu}
@@ -201,15 +211,6 @@ export const Navigation = () => {
           </div>
         </div>
       </div>
-
-      {/* animation */}
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn { animation: fadeIn .25s ease-out; }
-      `}</style>
     </>
   );
 };

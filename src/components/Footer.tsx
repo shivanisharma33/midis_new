@@ -1,119 +1,76 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
-
-gsap.registerPlugin(ScrollTrigger);
-
-const footerLinks = [
-  { icon: '/images/facebook.svg', label: 'facebook', href: 'https://facebook.com' },
-  { icon: '/images/instagram.svg', label: 'Instagram', href: 'https://instagram.com' },
-  { icon: '/images/linkedin.svg', label: 'LinkedIn', href: 'https://linkedin.com' },
-  { icon: '/images/dribbble.svg', label: 'dribbble', href: 'https://dribbble.com' },
-];
+import React from "react";
 
 export const Footer = () => {
-  const footerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.footer-content', {
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: 'top 90%',
-        },
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.1,
-        ease: 'power3.out',
-      });
-    }, footerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <footer ref={footerRef} className="py-section bg-background border-t border-border">
-      <div className="container mx-auto px-6 lg:px-12">
-        {/* CTA */}
-        <div className="footer-content text-center mb-16">
-          <p className="text-xs text-muted-foreground tracking-widest uppercase mb-4">
-            let's work together
-          </p>
-          <motion.a
-            href="#"
-            className="btn-animated inline-flex items-center gap-4 px-8 py-4 border border-foreground text-foreground"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <span className="btn-animated-content">
-              <span>start your new project</span>
-              <img src="/images/button-arrow.svg" alt="" className="w-4 h-4 invert" />
-            </span>
-          </motion.a>
-        </div>
+    <footer className="w-full bg-[#0C0E12] text-white pt-28 pb-12 px-6 md:px-16 lg:px-24">
+      
+      {/* ================= TOP CTA ================= */}
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-20 gap-10">
+        
+        {/* LEFT BIG TEXT */}
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight max-w-[700px]">
+          LET’S BUILD SOMETHING AMAZING TOGETHER
+        </h1>
 
-        {/* Contact Info */}
-        <div className="footer-content grid md:grid-cols-3 gap-12 mb-16">
-          {/* Email */}
-          <div>
-            <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">
-              say hello!
-            </p>
-            <a href="mailto:info@example.com" className="text-lg text-foreground link-underline">
-              info@example.com
-            </a>
-          </div>
-
-          {/* Phone */}
-          <div>
-            <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">
-              contact us
-            </p>
-            <a href="tel:8881234560" className="text-lg text-foreground link-underline">
-              (888) 123 4560
-            </a>
-          </div>
-
-          {/* Address */}
-          <div>
-            <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">
-              Location
-            </p>
-            <p className="text-lg text-foreground">
-              410 Sandtown, California 94001, USA
-            </p>
-          </div>
-        </div>
-
-        {/* Social Links */}
-        <div className="footer-content flex flex-wrap justify-center gap-6 mb-16">
-          {footerLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-foreground hover:text-muted-foreground transition-colors"
-            >
-              <img src={link.icon} alt={link.label} className="w-5 h-5 invert" />
-              <span className="text-sm">{link.label}</span>
-            </a>
-          ))}
-        </div>
-
-        {/* Bottom */}
-        <div className="footer-content flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-border">
-          <a href="/" className="text-lg font-playfair text-foreground">Crearist</a>
-          
-          <p className="text-sm text-muted-foreground">
-            Designed by <a href="#" className="text-foreground link-underline">Radiant Templates,</a> Powered by <a href="https://webflow.com" className="text-foreground link-underline">Webflow</a>
-          </p>
-
-          <a href="/license" className="text-sm text-foreground link-underline">License</a>
-        </div>
+        {/* CTA BUTTON */}
+        <button className="bg-white text-black px-10 py-5 rounded-full font-semibold text-sm tracking-wider hover:bg-gray-200 transition-all flex items-center gap-2">
+          CONTACT US
+          <span className="text-lg">↗</span>
+        </button>
       </div>
+
+      {/* ================= MAIN GRID ================= */}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 border-t border-white/10 pt-16 pb-10">
+
+        {/* Column 1 */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Company</h3>
+          <ul className="space-y-3 text-gray-400 text-sm">
+            <li className="hover:text-white transition">About Us</li>
+            <li className="hover:text-white transition">Our Services</li>
+            <li className="hover:text-white transition">Case Studies</li>
+            <li className="hover:text-white transition">Blogs</li>
+          </ul>
+        </div>
+
+        {/* Column 2 */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Support</h3>
+          <ul className="space-y-3 text-gray-400 text-sm">
+            <li className="hover:text-white transition">Help Center</li>
+            <li className="hover:text-white transition">Privacy Policy</li>
+            <li className="hover:text-white transition">Terms & Conditions</li>
+            <li className="hover:text-white transition">Contact Support</li>
+          </ul>
+        </div>
+
+        {/* Column 3 */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Contact</h3>
+          <ul className="space-y-3 text-gray-400 text-sm">
+            <li>Email: info@example.com</li>
+            <li>Phone: (888) 123 4560</li>
+            <li>Address: New Delhi, India</li>
+          </ul>
+        </div>
+
+        {/* Column 4 — Socials */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+          <div className="flex items-center gap-6 text-gray-400">
+            <a className="hover:text-white transition" href="#">Instagram</a>
+            <a className="hover:text-white transition" href="#">LinkedIn</a>
+            <a className="hover:text-white transition" href="#">Twitter</a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ================= BOTTOM COPYRIGHT ================= */}
+      <div className="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+        © {new Date().getFullYear()} Your Company Name. All Rights Reserved.
+      </div>
+
     </footer>
   );
 };

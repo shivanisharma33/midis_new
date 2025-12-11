@@ -19,7 +19,6 @@ const FuelingYourGrowthWithFreshIdeas: React.FC = () => {
 
     if (imgs.length === 0) return;
 
-    // Initial position: all images below & invisible except the first
     imgs.forEach((img, i) => {
       gsap.set(img, {
         position: "absolute",
@@ -28,12 +27,11 @@ const FuelingYourGrowthWithFreshIdeas: React.FC = () => {
         width: "100%",
         height: "100%",
         objectFit: "cover",
-        y: i === 0 ? 0 : 150,      // others start slightly down
-        autoAlpha: i === 0 ? 1 : 0 // fade hidden
+        y: i === 0 ? 0 : 150,
+        autoAlpha: i === 0 ? 1 : 0
       });
     });
 
-    // GSAP timeline for SLIDE-UP + FADE animation
     const tl = gsap.timeline();
 
     imgs.forEach((img, i) => {
@@ -41,15 +39,14 @@ const FuelingYourGrowthWithFreshIdeas: React.FC = () => {
         tl.to(
           img,
           {
-            y: 0,          // slide up into place
-            autoAlpha: 1,  // fade in
+            y: 0,
+            autoAlpha: 1,
             duration: 1.2,
             ease: "power2.out",
           },
           "+=0.2"
         );
 
-        // fade previous image out
         tl.to(
           imgs[i - 1],
           {
@@ -75,39 +72,73 @@ const FuelingYourGrowthWithFreshIdeas: React.FC = () => {
 
   return (
     <section ref={containerRef} className="w-full">
-      <div className="flex w-full">
-        
-        {/* LEFT: SLIDE-UP IMAGE PANEL */}
-        <div className="w-1/2 h-screen relative overflow-hidden" ref={imagesRef}>
-         <img src="./images/fresh-idea-3.webp" />
-        
+
+      {/* MAIN FLEX (Desktop) → COLUMN (Mobile) */}
+      <div className="flex flex-col md:flex-row w-full">
+
+        {/* LEFT IMAGE SLIDER */}
+        <div
+          ref={imagesRef}
+          className="
+            relative overflow-hidden
+            w-full md:w-1/2
+            min-h-[60vh] sm:min-h-[70vh] md:h-screen
+          "
+        >
+          <img src="./images/fresh-idea-3.webp" />
           <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80" />
-           <img src="./images/fresh-idea-2.webp" />
+          <img src="./images/fresh-idea-2.webp" />
         </div>
 
-        {/* RIGHT TEXT CONTENT */}
-        <div className="w-1/2">
-          <div className="sticky top-0 h-screen flex flex-col justify-center px-20 bg-white">
-            
-            <h1 className="text-[55px] font-extrabold leading-[1.1] text-black mb-6">
+        {/* RIGHT CONTENT */}
+        <div className="w-full md:w-1/2 bg-white">
+          <div
+            className="
+              md:sticky top-0 
+              h-auto md:h-screen 
+              flex flex-col justify-center
+              px-6 sm:px-10 md:px-20 
+              py-12 md:py-0
+            "
+          >
+            <h1
+              className="
+                font-extrabold text-black leading-[1.1] mb-6
+                text-[36px] sm:text-[45px] md:text-[55px]
+              "
+            >
               FUELING YOUR <br />
               GROWTH WITH <br />
               FRESH IDEAS
             </h1>
 
-            <p className="text-[17px] text-gray-600 leading-7 max-w-[480px] mb-8">
+            <p
+              className="
+                text-[15px] sm:text-[17px]
+                text-gray-600 leading-7 
+                max-w-[480px] mb-8
+              "
+            >
               We combine creativity and strategy to deliver innovative solutions,
               helping your business thrive and achieve sustainable growth with fresh ideas.
             </p>
 
             <div className="mb-10">
-              <p className="text-[18px] font-medium text-black">(888) 123 4560</p>
-              <a href="#" className="text-black border-b border-gray-700 pb-[3px] text-[16px]">
+              <p className="text-[16px] sm:text-[18px] font-medium text-black">(888) 123 4560</p>
+              <a href="#" className="text-black border-b border-gray-700 pb-[3px] text-[14px] sm:text-[16px]">
                 INFO@EXAMPLE.COM
               </a>
             </div>
 
-            <button className="bg-black text-white px-8 py-4 rounded-full text-[16px] font-semibold w-fit hover:bg-gray-900 transition">
+            <button
+              className="
+                bg-black text-white 
+                px-6 sm:px-8 py-3 sm:py-4 
+                rounded-full text-[15px] sm:text-[16px] 
+                font-semibold w-fit hover:bg-gray-900 
+                transition
+              "
+            >
               LET’S COLLABORATE →
             </button>
 

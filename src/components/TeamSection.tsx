@@ -54,13 +54,13 @@ export const TeamSection: React.FC = () => {
 
     tl.to(blackBox, {
       opacity: 1,
-      scale: 1.4,
+      scale: 1.1,
       duration: 1.2,
       ease: "power3.out",
     });
 
     tl.to(blackBox, {
-      scale: 1.85,
+      scale: 1.45, // SAFER ON PHONES
       duration: 1.2,
       ease: "power3.out",
     });
@@ -98,14 +98,27 @@ export const TeamSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-black overflow-hidden h-[100vh] w-full"
+      className="
+        relative bg-black overflow-hidden 
+        h-[100vh] w-full
+        min-h-[650px] sm:min-h-[750px]
+      "
     >
       {/* HEADING */}
-      <div className="absolute inset-0 flex items-center justify-center z-20">
+      <div className="absolute inset-0 flex items-center justify-center z-20 px-4 sm:px-8">
         <h1
           ref={headingRef}
-          className="font-anton text-[5rem] md:text-[7rem] lg:text-[9rem] 
-            text-white text-center leading-[0.9]"
+          className="
+            font-anton 
+            text-[2.5rem] 
+            sm:text-[4rem] 
+            md:text-[6rem] 
+            lg:text-[8rem] 
+            xl:text-[9rem] 
+            text-white text-center 
+            leading-[0.9] 
+            break-words
+          "
         >
           <span className="line block">MEET OUR</span>
           <span className="line block">
@@ -121,7 +134,8 @@ export const TeamSection: React.FC = () => {
         ref={blackBoxRef}
         className="
           absolute left-1/2 top-1/2  
-          w-[70%] h-[88vh] 
+          w-[90%] sm:w-[80%] lg:w-[70%] 
+          h-[70vh] sm:h-[80vh] lg:h-[88vh] 
           -translate-x-1/2 -translate-y-1/2  
           bg-[#0B0C0E] 
           opacity-0 scale-50 
@@ -129,24 +143,32 @@ export const TeamSection: React.FC = () => {
           shadow-[0_0_40px_rgba(255,255,255,0.04),0_0_80px_rgba(255,255,255,0.03)]
           transition-all duration-700 
           flex items-center justify-center 
-          p-20 overflow-hidden
+          p-4 sm:p-10 md:p-20 
+          overflow-hidden
         "
       >
         {/* GRID */}
         <div
           ref={faceGridRef}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 w-full h-full place-items-center px-4"
+          className="
+            grid grid-cols-2 
+            sm:grid-cols-3 
+            lg:grid-cols-4 
+            gap-3 sm:gap-5 
+            w-full h-full 
+            place-items-center px-2 sm:px-4
+          "
         >
           {teamPhotos.map((img, i) => (
             <div
               key={i}
               className="
                 grid-item relative overflow-hidden 
-                w-full max-w-[190px]
-                h-[230px]
+                w-full max-w-[140px] sm:max-w-[170px] md:max-w-[190px]
+                h-[180px] sm:h-[210px] md:h-[230px]
                 bg-[#0f0f10]
                 border border-white/10
-                p-3
+                p-2 sm:p-3
                 rounded-md
                 shadow-[0_10px_40px_rgba(0,0,0,0.45)]
                 transition-all duration-500 ease-out
@@ -154,7 +176,6 @@ export const TeamSection: React.FC = () => {
                 group cursor-pointer
               "
             >
-              {/* IMAGE */}
               <img
                 src={img}
                 className="
@@ -181,8 +202,9 @@ export const TeamSection: React.FC = () => {
                 className="
                   absolute top-3 left-0
                   bg-black/80 text-white 
-                  text-[10px] font-semibold 
-                  px-3 py-1
+                  text-[8px] sm:text-[10px] 
+                  font-semibold 
+                  px-2 py-1 
                   rounded-r-md
                   opacity-0 -translate-x-3
                   transition-all duration-500
@@ -197,14 +219,14 @@ export const TeamSection: React.FC = () => {
                 className="
                   absolute bottom-0 left-0 w-full
                   bg-gradient-to-t from-black/90 to-transparent
-                  py-3 px-3
+                  py-2 sm:py-3 px-2 sm:px-3
                   opacity-0 translate-y-5
                   transition-all duration-500
                   group-hover:opacity-100 group-hover:translate-y-0
                 "
               >
-                <p className="text-white font-bold text-sm">Riley Knox</p>
-                <p className="text-white/60 text-[10px] -mt-1">
+                <p className="text-white font-bold text-xs sm:text-sm">Riley Knox</p>
+                <p className="text-white/60 text-[8px] sm:text-[10px] -mt-1">
                   Director of Design
                 </p>
               </div>

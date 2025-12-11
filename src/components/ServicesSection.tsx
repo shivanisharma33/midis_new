@@ -49,8 +49,6 @@ export const ServicesSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
-      // Heading Animation
       gsap.from(".services-heading", {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -62,7 +60,6 @@ export const ServicesSection = () => {
         ease: "power3.out",
       });
 
-      // Service Item Animation
       gsap.from('.service-item', {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -74,23 +71,22 @@ export const ServicesSection = () => {
         stagger: 0.15,
         ease: 'power3.out',
       });
-
-    }, sectionRef);
+    });
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-section bg-background">
-      <div className="container mx-auto px-6 lg:px-12">
+    <section ref={sectionRef} className="py-16 sm:py-20 md:py-section bg-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
 
         {/* SECTION HEADING */}
-        <div className="services-heading mb-20">
-          <p className="text-sm md:text-base uppercase tracking-[0.25em] text-muted-foreground mb-3">
+        <div className="services-heading mb-12 sm:mb-16 md:mb-20">
+          <p className="text-xs sm:text-sm md:text-base uppercase tracking-[0.25em] text-muted-foreground mb-3">
             Our Services
           </p>
 
-          <h2 className="text-5xl md:text-[5.5rem] font-anton text-foreground leading-[1.1]">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl xl:text-[5.5rem] font-anton text-foreground leading-[1.15] sm:leading-[1.1]">
             What We Offer
           </h2>
         </div>
@@ -103,55 +99,66 @@ export const ServicesSection = () => {
               className="service-item border-t border-border"
               onMouseEnter={() => setActiveIndex(index)}
             >
-              <a href="#" className="block py-8 lg:py-12 group">
-                <div className="flex items-start justify-between gap-8">
+              <a className="block py-6 sm:py-8 lg:py-12 group">
+                
+                {/* FLEX LAYOUT (responsive) */}
+                <div className="flex flex-col md:flex-row items-start justify-between gap-6 sm:gap-8 md:gap-12">
 
                   {/* LEFT SIDE */}
-                  <div className="flex items-start gap-8 lg:gap-16">
-                    <span className="text-sm text-muted-foreground">{service.number}</span>
+                  <div className="flex items-start gap-4 sm:gap-8 md:gap-16 w-full">
+                    <span className="text-xs sm:text-sm text-muted-foreground">{service.number}</span>
 
-                    <div>
-                      {/* ⭐ UPDATED TITLE SAME AS IMAGE ⭐ */}
+                    <div className="w-full">
                       <h3
                         className="
-                          text-[3.5rem]
-                          md:text-[6rem]
+                          text-[2.2rem]
+                          xs:text-[2.8rem]
+                          sm:text-[3.5rem]
+                          md:text-[5rem]
+                          lg:text-[6rem]
                           font-extrabold
-                          tracking-tight
                           leading-none
-                          bg-gradient-to-r
-                          from-[#bfbfbf]
-                          to-[#6d6d6d]
-                          text-transparent
-                          bg-clip-text
-                          mb-4
-                          flex items-center
-                          gap-4
+                          tracking-tight
+                          bg-gradient-to-r from-[#bfbfbf] to-[#6d6d6d]
+                          text-transparent bg-clip-text
+                          mb-3 sm:mb-4
                         "
                       >
                         {service.title}
                       </h3>
 
-                      {/* EXPANDABLE CONTENT */}
+                      {/* EXPANDED CONTENT */}
                       <AnimatePresence>
                         {activeIndex === index && (
                           <motion.div
                             initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
+                            animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.4, ease: 'easeInOut' }}
+                            transition={{ duration: 0.45, ease: "easeInOut" }}
                             className="overflow-hidden"
                           >
-                            <p className="text-body text-muted-foreground mb-4 max-w-lg">
+                            <p className="text-[14px] sm:text-base text-muted-foreground mb-3 sm:mb-4 max-w-lg">
                               {service.description}
                             </p>
 
                             <div className="flex flex-wrap gap-2">
                               {service.tags.map((tag) => (
-                                <span key={tag} className="text-xs text-muted-foreground border border-border px-3 py-1">
+                                <span
+                                  key={tag}
+                                  className="text-[10px] sm:text-xs text-muted-foreground border border-border px-2 sm:px-3 py-1"
+                                >
                                   {tag}
                                 </span>
                               ))}
+                            </div>
+
+                            {/* MOBILE IMAGE (visible on sm & below) */}
+                            <div className="mt-4 mb-2 sm:hidden">
+                              <img
+                                src={service.image}
+                                alt={service.title}
+                                className="w-full h-48 object-cover rounded-lg"
+                              />
                             </div>
                           </motion.div>
                         )}
@@ -159,7 +166,7 @@ export const ServicesSection = () => {
                     </div>
                   </div>
 
-                  {/* RIGHT IMAGE (Only when active) */}
+                  {/* DESKTOP RIGHT IMAGE */}
                   <AnimatePresence>
                     {activeIndex === index && (
                       <motion.div
@@ -167,7 +174,7 @@ export const ServicesSection = () => {
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: 20, scale: 0.9 }}
                         transition={{ duration: 0.4 }}
-                        className="hidden lg:block w-72 h-48 flex-shrink-0"
+                        className="hidden sm:hidden md:block w-56 lg:w-72 h-40 lg:h-48 flex-shrink-0"
                       >
                         <img
                           src={service.image}
@@ -183,7 +190,6 @@ export const ServicesSection = () => {
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );

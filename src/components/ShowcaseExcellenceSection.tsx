@@ -49,7 +49,7 @@ function useCounters(
 }
 
 /* =======================================================
-   MAIN EXPORT — STACKING CONTAINER
+   MAIN EXPORT
 ======================================================= */
 export default function ShowcaseExcellenceSection() {
   return (
@@ -60,7 +60,7 @@ export default function ShowcaseExcellenceSection() {
 }
 
 /* =======================================================
-   STACK CONTAINER — Handles Overlay + Animation
+   STACK CONTAINER
 ======================================================= */
 function StackContainer() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -87,8 +87,10 @@ function StackContainer() {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative w-full min-h-[150vh]">
-
+    <div
+      ref={wrapperRef}
+      className="relative w-full min-h-[140vh] sm:min-h-[150vh] md:min-h-[160vh]"
+    >
       {/* CARD 1 */}
       <div ref={card1Ref} className="relative z-0">
         <NormalCard />
@@ -97,7 +99,12 @@ function StackContainer() {
       {/* CARD 2 */}
       <div
         ref={card2Ref}
-        className="absolute top-[200px] left-0 w-full z-30 pointer-events-none"
+        className="
+          absolute 
+          top-[120px] xs:top-[150px] sm:top-[200px]
+          left-0 w-full 
+          z-30 pointer-events-none
+        "
       >
         <div className="bg-white w-full rounded-2xl shadow-xl">
           <StackedCardSection />
@@ -108,7 +115,7 @@ function StackContainer() {
 }
 
 /* =======================================================
-   CARD 1 — Normal Section
+   CARD 1
 ======================================================= */
 function NormalCard() {
   const countersRef = useRef<(HTMLElement | null)[]>([]);
@@ -123,31 +130,54 @@ function NormalCard() {
   useCounters(countersRef, stats1);
 
   return (
-    <section className="w-full bg-white py-24">
-      <div className="max-w-[1500px] grid grid-cols-1 md:grid-cols-2 gap-14 px-8 mx-auto">
+    <section className="w-full bg-white py-16 sm:py-20 md:py-24">
+      <div
+        className="
+          max-w-[1500px] 
+          grid grid-cols-1 md:grid-cols-2 
+          gap-10 sm:gap-12 lg:gap-16 
+          px-4 sm:px-6 md:px-8 
+          mx-auto
+        "
+      >
+        <img
+          src="/images/milestone.webp"
+          className="
+            w-full 
+            h-auto 
+            rounded-xl 
+            object-cover
+          "
+        />
 
-        <img src="/images/milestone.webp" className="w-full h-full rounded-xl" />
-
-        <div className="flex flex-col justify-center space-y-16">
-
-          {/* ⭐ FIXED HEADING (z-index added) */}
-          <h1 className="text-[3rem] md:text-[4rem] font-bold leading-tight text-black relative z-10">
+        <div className="flex flex-col justify-center space-y-10 sm:space-y-12 md:space-y-16">
+          <h1
+            className="
+              text-[2rem] xs:text-[2.5rem] sm:text-[3rem] md:text-[4rem] 
+              font-bold leading-tight text-black
+              relative z-10
+            "
+          >
             SHOWCASE OUR <br /> EXCELLENCE
           </h1>
 
           {/* GRID */}
-          <div className="relative grid grid-cols-2 gap-12">
-
-            {/* ⭐ LINES BEHIND CONTENT */}
+          <div className="relative grid grid-cols-2 gap-8 sm:gap-10 md:gap-12">
             <div className="absolute top-1/2 left-0 w-full h-px bg-gray-300 z-0"></div>
             <div className="absolute left-1/2 top-0 h-full w-px bg-gray-300 z-0"></div>
 
             {stats1.map((stat, index) => (
               <div key={index} className="relative z-10">
-                <p className="text-xs uppercase text-gray-500">{stat.label}</p>
+                <p className="text-[10px] xs:text-xs uppercase text-gray-500">
+                  {stat.label}
+                </p>
+
                 <h2
                   ref={(el) => (countersRef.current[index] = el)}
-                  className="text-[3rem] md:text-[4rem] font-bold text-black"
+                  className="
+                    text-[2.5rem] xs:text-[3rem] md:text-[4rem] 
+                    font-bold text-black
+                  "
                 >
                   0
                 </h2>
@@ -155,14 +185,13 @@ function NormalCard() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );
 }
 
 /* =======================================================
-   CARD 2 — Stacked Section
+   CARD 2
 ======================================================= */
 function StackedCardSection() {
   const countersRef = useRef<(HTMLElement | null)[]>([]);
@@ -178,30 +207,49 @@ function StackedCardSection() {
 
   return (
     <section className="w-full">
-      <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 px-8 p-10 bg-white rounded-2xl shadow-xl">
+      <div
+        className="
+          max-w-[1500px] 
+          mx-auto 
+          grid grid-cols-1 md:grid-cols-2 
+          gap-10 sm:gap-12 md:gap-14 
+          px-4 sm:px-6 md:px-8 
+          py-8 sm:py-10 
+          bg-white rounded-2xl shadow-xl
+        "
+      >
+        <img
+          src="/images/partner-3.webp"
+          className="w-full h-auto rounded-xl object-cover"
+        />
 
-        <img src="/images/partner-3.webp" className="w-full h-full rounded-xl" />
-
-        <div className="flex flex-col justify-center space-y-16">
-
-          {/* ⭐ FIXED HEADING (z-index added) */}
-          <h1 className="text-[3rem] md:text-[4rem] font-bold leading-tight text-black relative z-10">
+        <div className="flex flex-col justify-center space-y-10 sm:space-y-12 md:space-y-16">
+          <h1
+            className="
+              text-[2rem] xs:text-[2.5rem] sm:text-[3rem] md:text-[4rem] 
+              font-bold leading-tight text-black
+              relative z-10
+            "
+          >
             OUR CREATIVE <br /> IMPACT
           </h1>
 
-          {/* GRID */}
-          <div className="relative grid grid-cols-2 gap-12">
-
-            {/* ⭐ LINES BEHIND CONTENT */}
+          <div className="relative grid grid-cols-2 gap-8 sm:gap-10 md:gap-12">
             <div className="absolute top-1/2 left-0 w-full h-px bg-gray-300 z-0"></div>
             <div className="absolute left-1/2 top-0 h-full w-px bg-gray-300 z-0"></div>
 
             {stats2.map((stat, i) => (
               <div key={i} className="relative z-10">
-                <p className="text-xs uppercase text-gray-500">{stat.label}</p>
+                <p className="text-[10px] xs:text-xs uppercase text-gray-500">
+                  {stat.label}
+                </p>
+
                 <h2
                   ref={(el) => (countersRef.current[i] = el)}
-                  className="text-[3rem] md:text-[4rem] font-bold text-black"
+                  className="
+                    text-[2.5rem] xs:text-[3rem] md:text-[4rem] 
+                    font-bold text-black
+                  "
                 >
                   0
                 </h2>
@@ -209,7 +257,6 @@ function StackedCardSection() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

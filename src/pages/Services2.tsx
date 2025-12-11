@@ -128,41 +128,73 @@ useEffect(() => {
       <main className="w-full min-h-screen bg-[#0C0E12] text-white flex flex-col items-center relative overflow-hidden">
 
         {/* ===================== HEADING WRAPPER ===================== */}
-        <div className="max-w-[1600px] mx-auto w-full px-6 md:px-12 lg:px-24 pt-40 pb-24">
-          <div ref={headingRef} className="space-y-6 leading-[0.88] font-extrabold">
+   <div className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-24 pt-32 sm:pt-36 md:pt-40 pb-20">
+  <div ref={headingRef} className="space-y-4 sm:space-y-6 leading-[0.88] font-extrabold">
 
-            <h1 className="reveal-line text-[3.5rem] md:text-[6.5rem] lg:text-[10rem] tracking-tight">
-              EXPERIENCE
-            </h1>
+    {/* EXPERIENCE */}
+    <h1 className="
+      reveal-line 
+      text-[2.5rem] xs:text-[3rem] sm:text-[3.5rem] 
+      md:text-[6.5rem] lg:text-[10rem]
+      tracking-tight
+    ">
+      EXPERIENCE
+    </h1>
 
-            <h1 className="reveal-line flex items-center gap-8 text-[3.5rem] md:text-[6.5rem] lg:text-[10rem] tracking-tight">
-              CREATIVE
-              <svg width="110" height="110" viewBox="0 0 70 70" fill="none" className="mt-4">
-                <path
-                  d="M5 35L65 5L45 65L35 40L5 35Z"
-                  stroke="white"
-                  strokeWidth="5"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </h1>
+    {/* CREATIVE + SVG */}
+    <h1 className="
+      reveal-line flex items-center gap-3 sm:gap-6 md:gap-8
+      text-[2.5rem] xs:text-[3rem] sm:text-[3.5rem] 
+      md:text-[6.5rem] lg:text-[10rem]
+      tracking-tight
+    ">
+      CREATIVE
+      <svg
+        className="mt-2 w-10 h-10 xs:w-12 xs:h-12 sm:w-14 sm:h-14 md:w-[80px] md:h-[80px] lg:w-[110px] lg:h-[110px]"
+        viewBox="0 0 70 70"
+        fill="none"
+      >
+        <path
+          d="M5 35L65 5L45 65L35 40L5 35Z"
+          stroke="white"
+          strokeWidth="5"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+      </svg>
+    </h1>
 
-            <h1 className="reveal-line text-[3.5rem] md:text-[6.5rem] lg:text-[10rem] tracking-tight">
-              EXCELLENCE
-            </h1>
-          </div>
-        </div>
+    {/* EXCELLENCE */}
+    <h1 className="
+      reveal-line
+      text-[2.5rem] xs:text-[3rem] sm:text-[3.5rem] 
+      md:text-[6.5rem] lg:text-[10rem]
+      tracking-tight
+    ">
+      EXCELLENCE
+    </h1>
+
+  </div>
+</div>
+
 
         {/* ===================== FULL SCREEN IMAGE ZOOM ===================== */}
-        <section className="w-full h-screen flex justify-center items-center overflow-hidden">
-          <img
-            ref={zoomImgRef}
-            src="/images/reason-4.webp"
-            alt="Zoom Visual"
-            className="w-[260px] md:w-[520px] lg:w-[1500px] object-cover rounded-xl"
-          />
-        </section>
+      <section className="w-full h-screen flex justify-center items-center overflow-hidden px-4">
+  <img
+    ref={zoomImgRef}
+    src="/images/reason-4.webp"
+    alt="Zoom Visual"
+    className="
+      w-[180px]       /* very small phones (320px) */
+      xs:w-[220px]    /* slightly bigger phones */
+      sm:w-[260px]    /* standard phones */
+      md:w-[520px]    /* tablets */
+      lg:w-[1500px]   /* desktop (unchanged) */
+      object-cover rounded-xl
+    "
+  />
+</section>
+
 
         {/* ===================== CONTACT AREA ===================== */}
         <div className="max-w-[1600px] mx-auto w-full px-6 md:px-12 lg:px-24 pb-24 mt-10">

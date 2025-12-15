@@ -21,14 +21,46 @@ export default function PortfolioMarquee() {
       const cards = cardsRef.current;
       if (!cards.length) return;
 
-      // 🎯 Tuned for horizontal cards
-      const positions = [
-        { x: -320, scale: 0.9, opacity: 1, zIndex: 1 },
-        { x: -160, scale: 0.95, opacity: 1, zIndex: 2 },
-        { x: 0, scale: 1, opacity: 1, zIndex: 5 }, // CENTER
-        { x: 160, scale: 0.95, opacity: 1, zIndex: 2 },
-        { x: 320, scale: 0.9, opacity: 1, zIndex: 1 },
-      ];
+      /* ===============================
+         RESPONSIVE POSITIONS
+         (DESKTOP UNCHANGED)
+      =============================== */
+      const getPositions = () => {
+        const w = window.innerWidth;
+
+        // 📱 Small phones
+        if (w < 480) {
+          return [
+            { x: -140, scale: 0.85, opacity: 1, zIndex: 1 },
+            { x: -70, scale: 0.92, opacity: 1, zIndex: 2 },
+            { x: 0, scale: 1, opacity: 1, zIndex: 5 },
+            { x: 70, scale: 0.92, opacity: 1, zIndex: 2 },
+            { x: 140, scale: 0.85, opacity: 1, zIndex: 1 },
+          ];
+        }
+
+        // 📱 Large phones
+        if (w < 768) {
+          return [
+            { x: -200, scale: 0.88, opacity: 1, zIndex: 1 },
+            { x: -100, scale: 0.94, opacity: 1, zIndex: 2 },
+            { x: 0, scale: 1, opacity: 1, zIndex: 5 },
+            { x: 100, scale: 0.94, opacity: 1, zIndex: 2 },
+            { x: 200, scale: 0.88, opacity: 1, zIndex: 1 },
+          ];
+        }
+
+        // 🖥 Desktop — EXACT SAME AS YOUR CODE
+        return [
+          { x: -320, scale: 0.9, opacity: 1, zIndex: 1 },
+          { x: -160, scale: 0.95, opacity: 1, zIndex: 2 },
+          { x: 0, scale: 1, opacity: 1, zIndex: 5 },
+          { x: 160, scale: 0.95, opacity: 1, zIndex: 2 },
+          { x: 320, scale: 0.9, opacity: 1, zIndex: 1 },
+        ];
+      };
+
+      let positions = getPositions();
 
       const applyPositions = () => {
         cards.forEach((card, i) => {
@@ -56,7 +88,18 @@ export default function PortfolioMarquee() {
         applyPositions();
       }, 3000);
 
-      return () => clearInterval(interval);
+      // 🔄 Recalculate ONLY on resize (mobile rotation, etc.)
+      const onResize = () => {
+        positions = getPositions();
+        applyPositions();
+      };
+
+      window.addEventListener("resize", onResize);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener("resize", onResize);
+      };
     }, sectionRef);
 
     return () => ctx.revert();
@@ -67,43 +110,36 @@ export default function PortfolioMarquee() {
       ref={sectionRef}
       className="relative min-h-screen bg-black flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Subtle Circular Background */}
+      {/* Background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-[700px] h-[900px] rounded-full border border-white/10" />
         <div className="absolute w-[1100px] h-[1100px] rounded-full border border-white/5" />
       </div>
 
       {/* Heading */}
-    <div className="relative z-10 text-center mb-28">
+      <div className="relative z-10 text-center mb-20 md:mb-28 px-4">
+        <div className="flex justify-center mb-5">
+          <span className="h-[2px] w-16 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></span>
+        </div>
 
-  {/* Small accent line */}
-  <div className="flex justify-center mb-5">
-    <span className="h-[2px] w-16 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></span>
-  </div>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif italic text-orange-400 tracking-wide">
+          Result that
+        </h2>
 
-  {/* Top line */}
-  <h2 className="text-4xl md:text-5xl font-serif italic text-orange-400 tracking-wide">
-    Result that
-  </h2>
+        <h3 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mt-2 leading-tight">
+          Matter{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
+            expertise
+          </span>
+        </h3>
 
-  {/* Main heading */}
-  <h3 className="text-5xl md:text-7xl font-extrabold text-white mt-2 leading-tight">
-    Matter{" "}
-    <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
-      expertise
-    </span>
-  </h3>
-
-  {/* Sub text */}
-  <p className="text-lg md:text-2xl text-gray-300 mt-4 max-w-2xl mx-auto">
-    you can trust
-  </p>
-
-</div>
-
+        <p className="text-base sm:text-lg md:text-2xl text-gray-300 mt-4 max-w-2xl mx-auto">
+          you can trust
+        </p>
+      </div>
 
       {/* Cards */}
-      <div className="relative w-full h-[420px] flex items-center justify-center">
+      <div className="relative w-full h-[280px] sm:h-[340px] md:h-[420px] flex items-center justify-center">
         {items.map((src, i) => (
           <div
             key={i}
@@ -112,8 +148,8 @@ export default function PortfolioMarquee() {
             }}
             className="
               absolute
-              w-[360px] sm:w-[420px] md:w-[520px]
-              h-[220px] sm:h-[260px] md:h-[300px]
+              w-[260px] sm:w-[360px] md:w-[520px]
+              h-[160px] sm:h-[220px] md:h-[300px]
               rounded-xl overflow-hidden
               bg-[#111]
               shadow-[0_30px_80px_rgba(0,0,0,0.55)]

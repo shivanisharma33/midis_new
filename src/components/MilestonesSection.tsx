@@ -71,7 +71,7 @@ export const MilestonesSection = () => {
       gsap.from(".milestone-item", {
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 70%",
+          start: "top 30%",
         },
         y: 40,
         opacity: 0,

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const navItems = [
-  { label: 'Services', to: '/services2' },   // SIMPLE LINK
+  { label: 'Services', to: '/services2' },
   { label: 'Blogs', to: '/blogs' },
   { label: 'Case Study', to: '/case-study' },
   { label: 'About', to: '/about' },
@@ -24,11 +24,24 @@ export const Navigation = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-12 py-3 sm:py-4 bg-transparent backdrop-blur-md border-b border-white/10">
+      {/* ================= HEADER ================= */}
+      <nav
+        className="
+          fixed top-0 left-0 right-0 z-50
+          px-4 sm:px-6 lg:px-12
+          py-3 sm:py-4
+          bg-black/70 backdrop-blur-lg
+          border-b border-white/10
+        "
+      >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
 
           {/* LOGO */}
-          <Link to="/" className="flex items-center relative z-50" onClick={closeMobileMenu}>
+          <Link
+            to="/"
+            className="flex items-center relative z-50"
+            onClick={closeMobileMenu}
+          >
             <img
               src="/images/midis final logo-01.png"
               alt="Midis Logo"
@@ -45,8 +58,8 @@ export const Navigation = () => {
                 to={item.to}
                 className={`px-3 py-2 text-sm font-medium transition-all duration-300 ${
                   isActive(item.to)
-                    ? "text-foreground"
-                    : "text-foreground/80 hover:text-foreground"
+                    ? 'text-foreground'
+                    : 'text-foreground/80 hover:text-foreground'
                 }`}
               >
                 {item.label}
@@ -80,10 +93,12 @@ export const Navigation = () => {
         </div>
       </nav>
 
-      {/* MOBILE OVERLAY */}
+      {/* ================= MOBILE OVERLAY ================= */}
       <div
         className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
-          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          isMobileMenuOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
         }`}
       >
         {/* BACKDROP */}
@@ -92,15 +107,17 @@ export const Navigation = () => {
           onClick={closeMobileMenu}
         />
 
-        {/* MOBILE SLIDE-IN MENU */}
+        {/* SLIDE-IN MENU */}
         <div
-          className={`absolute top-0 right-0 h-full w-full sm:w-80 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] border-l border-white/10 shadow-2xl transition-transform duration-300 ${
-            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          className={`absolute top-0 right-0 h-full w-full sm:w-80
+            bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a]
+            border-l border-white/10 shadow-2xl
+            transition-transform duration-300
+            ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          `}
         >
           <div className="flex flex-col h-full pt-16 sm:pt-20 px-6 space-y-1">
 
-            {/* MOBILE NAV ITEMS */}
             {navItems.map((item) => (
               <Link
                 key={item.label}
@@ -116,10 +133,14 @@ export const Navigation = () => {
             <Link
               to="/book-meeting"
               onClick={closeMobileMenu}
-              className="mt-6 block w-full px-6 py-3 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-center font-semibold shadow-lg shadow-orange-500/25"
+              className="mt-6 block w-full px-6 py-3 rounded-full
+              bg-gradient-to-r from-orange-500 to-pink-500
+              text-white text-center font-semibold
+              shadow-lg shadow-orange-500/25"
             >
               Book a Meeting
             </Link>
+
           </div>
         </div>
       </div>

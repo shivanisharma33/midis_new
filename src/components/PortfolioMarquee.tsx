@@ -3,10 +3,11 @@ import { gsap } from "gsap";
 
 const items = [
   "/images/port/8.png",
-  "/images/port/38.png",
+  "/images/port/19.png",
   "/images/port/18.png",
   "/images/port/25.png",
-  "/images/port/26.png",
+  "/images/port/34.png",
+  
 ];
 
 export default function PortfolioMarquee() {

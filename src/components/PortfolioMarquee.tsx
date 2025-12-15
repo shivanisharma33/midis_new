@@ -18,96 +18,75 @@ export const PortfolioMarquee = () => {
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!wrapperRef.current || !trackRef.current) return;
+    const wrapper = wrapperRef.current;
+    const track = trackRef.current;
+    if (!wrapper || !track) return;
 
-    const ctx = gsap.context(() => {
-      const wrapper = wrapperRef.current!;
-      const track = trackRef.current!;
+    const resizeAnimation = () => {
+      const totalWidth = track.scrollWidth;
+      const viewportWidth = wrapper.offsetWidth;
+      const scrollDistance = totalWidth - viewportWidth;
 
-      const setupAnimation = () => {
-        ScrollTrigger.getById("portfolio-marquee")?.kill();
+      gsap.killTweensOf(track);
 
-        const totalWidth = track.scrollWidth;
-        const viewportWidth = wrapper.offsetWidth;
+      gsap.to(track, {
+        x: -scrollDistance,
+        ease: "none",
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "center center",
+          end: `+=${scrollDistance * 0.9}`, // 🔥 REDUCED SPACING
+          scrub: 1,
+          pin: true,
+        },
+      });
+    };
 
-        // 🔥 safer scroll distance for mobile
-        const scrollDistance = Math.max(totalWidth - viewportWidth, 0);
+    resizeAnimation();
+    window.addEventListener("resize", resizeAnimation);
 
-        gsap.to(track, {
-          x: -scrollDistance,
-          ease: "none",
-          scrollTrigger: {
-            id: "portfolio-marquee",
-            trigger: wrapper,
-            start: "center center",
-            end: `+=${scrollDistance * 0.6}`,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-          },
-        });
-      };
-
-      setupAnimation();
-      window.addEventListener("resize", setupAnimation);
-
-      return () => {
-        window.removeEventListener("resize", setupAnimation);
-      };
-    }, wrapperRef);
-
-    return () => ctx.revert();
+    return () => window.removeEventListener("resize", resizeAnimation);
   }, []);
 
   return (
-    <section className="bg-black text-white py-16 sm:py-20 md:py-24 overflow-hidden">
+    <section className="bg-black text-white py-20 md:py-24">
       {/* Heading */}
-      <div className="text-center mb-8 sm:mb-10 md:mb-14 relative z-10 px-4">
-        <p className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 mb-2">
+      <div className="text-center mb-10 md:mb-14">
+        <p className="text-[10px] md:text-xs uppercase tracking-widest text-gray-400 mb-2 md:mb-3">
           Our Work
         </p>
-        <h2 className="text-2xl sm:text-3xl md:text-6xl font-semibold">
-          Portfolio
-        </h2>
+        <h2 className="text-3xl md:text-6xl font-semibold">Portfolio</h2>
       </div>
 
-      {/* Wrapper */}
+      {/* HORIZONTAL SCROLL WRAPPER */}
       <div
         ref={wrapperRef}
-        className="
-          relative w-full overflow-hidden
-          min-h-[240px]
-          sm:min-h-[280px]
-          md:min-h-[340px]
-          lg:min-h-[380px]
-        "
+        className="relative overflow-hidden w-full 
+        h-[300px] xs:h-[340px] sm:h-[380px] md:h-[420px]"
       >
         {/* Track */}
         <div
           ref={trackRef}
-          className="
-            flex items-center
-            gap-3 sm:gap-5 md:gap-8 lg:gap-10
-            px-3 sm:px-6 md:px-10
-          "
+          className="absolute top-0 left-0 flex 
+          gap-4 xs:gap-6 sm:gap-8 md:gap-10 
+          px-4 xs:px-6 sm:px-8 md:px-10"
         >
           {portfolioItems.map((item, index) => (
             <div
               key={index}
               className="
-                flex-shrink-0
-                min-w-[200px] h-[160px]
-                sm:min-w-[240px] sm:h-[190px]
-                md:min-w-[320px] md:h-[240px]
-                lg:min-w-[380px] lg:h-[300px]
-                bg-[#111] rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden
-                transition-transform duration-500 hover:scale-[1.04]
+                min-w-[240px] h-[220px]
+                xs:min-w-[280px] xs:h-[240px]
+                sm:min-w-[320px] sm:h-[260px]
+                md:min-w-[380px] md:h-[300px]
+                bg-[#111] rounded-3xl shadow-xl overflow-hidden 
+                hover:scale-[1.04] transition duration-500
               "
             >
               <img
                 src={item.src}
+                className="w-full h-full object-cover"
                 alt={item.title}
-                className="w-full h-full object-cover block"
               />
             </div>
           ))}
@@ -115,4 +94,4 @@ export const PortfolioMarquee = () => {
       </div>
     </section>
   );
-};
+}; 

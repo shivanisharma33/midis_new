@@ -27,7 +27,7 @@ export const Navigation = () => {
       {/* ================= HEADER ================= */}
       <nav
         className="
-          fixed top-0 left-0 right-0 z-50
+          sticky top-0 z-50
           px-4 sm:px-6 lg:px-12
           py-3 sm:py-4
           bg-black/70 backdrop-blur-lg
@@ -88,7 +88,11 @@ export const Navigation = () => {
             onClick={toggleMobileMenu}
             className="lg:hidden relative z-50 p-2 text-white hover:text-orange-400 transition-colors"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </nav>

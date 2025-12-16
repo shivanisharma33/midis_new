@@ -8,33 +8,38 @@ export const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const lines = gsap.utils.toArray(".reveal-line");
+    if (!sectionRef.current) return;
 
-      lines.forEach((line: any) => {
-        gsap.fromTo(
-          line,
-          {
-            y: 80,
-            opacity: 0.1,
-            filter: "blur(8px)",
-            color: "#c7c7c7",
-          },
-          {
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            color: "#0f0f17",
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: line,
-              start: "top 90%",
-              end: "top 50%",
-              scrub: true,
-            },
-          }
-        );
+    const ctx = gsap.context(() => {
+      const lines = gsap.utils.toArray<HTMLElement>(".reveal-line");
+
+      gsap.set(lines, {
+        y: 70,
+        opacity: 0,
+        filter: "blur(8px)",
+        color: "#9ca3af",
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=160%",
+          pin: true,
+          scrub: true,
+          anticipatePin: 1,
+        },
+      });
+
+      lines.forEach((line) => {
+        tl.to(line, {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          color: "#0f172a",
+          duration: 1,
+          ease: "power3.out",
+        });
       });
     }, sectionRef);
 
@@ -44,38 +49,55 @@ export const AboutSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="
-        relative 
-        py-[120px] 
-        sm:py-[150px] 
-        md:py-[180px] 
-        lg:py-[200px] 
-        bg-white 
-        overflow-hidden
-      "
+      className="relative flex items-center justify-center bg-white overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      {/* ✨ SOFT PREMIUM BACKGROUND */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-orange-400/20 rounded-full blur-[180px]" />
+      </div>
 
-        <p className="uppercase text-xs sm:text-sm tracking-widest text-gray-500 mb-4 sm:mb-6">
-          Welcome to midis
+      <div className="relative max-w-6xl mx-auto px-6 text-center py-32">
+        
+        {/* TAGLINE */}
+        <p className="reveal-line uppercase text-xs sm:text-sm tracking-[0.25em] text-gray-500 mb-6">
+          Welcome to MIDIS
         </p>
 
+        {/* SMALL DIVIDER */}
+        <div className="flex justify-center mb-10">
+          <span className="h-[2px] w-14 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full reveal-line" />
+        </div>
+
+        {/* HEADING */}
         <h2
           className="
-            font-bold tracking-tight leading-[1.15]
-            text-[2rem]       
-            sm:text-[2.5rem] 
-            md:text-[3.5rem] 
-            lg:text-[5rem]   
-            xl:text-[6rem]
+            font-extrabold tracking-tight leading-[1.15]
+            text-[2rem]
+            sm:text-[2.8rem]
+            md:text-[3.6rem]
+            lg:text-[4.6rem]
+            xl:text-[5.4rem]
           "
         >
-          <span className="reveal-line block">WE DELIVER INNOVATIVE</span>
-          <span className="reveal-line block">SOLUTIONS TO HELP YOUR STARTUP</span>
-          <span className="reveal-line block">THRIVE BY STRATEGICALLY BUILDING</span>
-          <span className="reveal-line block">ITS PRESENCE IN THE MARKET.</span>
-        </h2>
+          <span className="reveal-line block">
+            We Deliver
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
+              {" "}Innovative Solutions
+            </span>
+          </span>
 
+          <span className="reveal-line block">
+            To Help Your Startup Thrive
+          </span>
+
+          <span className="reveal-line block">
+            By Strategically Building
+          </span>
+
+          <span className="reveal-line block text-gray-600 font-medium">
+            Its Presence In The Market.
+          </span>
+        </h2>
       </div>
     </section>
   );

@@ -15,7 +15,7 @@ import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { Footer } from '@/components/Footer';
 import CrearistCollage from "@/components/CrearistCollage";
 import FuelingYourGrowthWithFreshIdeas from "@/components/FuelingYourGrowthWithFreshIdeas";
-import { CurlyCursor } from "@/components/CurlyCursor";
+// import { CurlyCursor } from "@/components/CurlyCursor";
 
 
 const Index = () => {
@@ -23,7 +23,7 @@ const Index = () => {
     <main className="bg-background overflow-x-hidden relative">
 
       {/* ✅ GLOBAL CURSOR */}
-      <CurlyCursor />
+      {/* <CurlyCursor /> */}
  
       {/* ================= NAV + HERO ================= */}
       <Navigation />

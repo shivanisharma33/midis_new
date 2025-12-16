@@ -32,7 +32,7 @@ export const HeroSection = () => {
           start: "top top",
           end: "+=350%",
           pin: true,
-          scrub: 1.2,
+          scrub: 1.5,
           anticipatePin: 1,
         },
       });

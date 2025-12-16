@@ -51,9 +51,6 @@ export const ServicesSection = () => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      /* ===============================
-         HEADING ANIMATION
-      =============================== */
       gsap.from('.services-heading', {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -65,9 +62,6 @@ export const ServicesSection = () => {
         ease: 'power3.out',
       });
 
-      /* ===============================
-         INITIAL ITEM REVEAL
-      =============================== */
       gsap.from('.service-item', {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -80,9 +74,6 @@ export const ServicesSection = () => {
         ease: 'power3.out',
       });
 
-      /* ===============================
-         ONE-BY-ONE SCROLL ACTIVATION
-      =============================== */
       const items = gsap.utils.toArray<HTMLElement>('.service-item');
 
       items.forEach((item, index) => {
@@ -102,7 +93,7 @@ export const ServicesSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-16 sm:py-20 md:py-section bg-background"
+      className="py-16 sm:py-20 md:py-section bg-background font-playfair antialiased"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
 
@@ -114,7 +105,7 @@ export const ServicesSection = () => {
             Our Services
           </p>
 
-          <h2 className="text-3xl sm:text-4xl md:text-6xl xl:text-[5.5rem] font-anton text-foreground leading-[1.15] sm:leading-[1.1]">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl xl:text-[5.5rem] font-bold text-foreground leading-[1.1]">
             What We Offer
           </h2>
         </div>
@@ -129,7 +120,6 @@ export const ServicesSection = () => {
               className="service-item border-t border-border"
             >
               <div className="block py-6 sm:py-8 lg:py-12">
-
                 <div className="flex flex-col md:flex-row items-start justify-between gap-6 sm:gap-8 md:gap-12">
 
                   {/* LEFT CONTENT */}
@@ -146,9 +136,11 @@ export const ServicesSection = () => {
                           sm:text-[3.5rem]
                           md:text-[5rem]
                           lg:text-[6rem]
-                          font-extrabold
-                          leading-none
+                          font-bold
                           tracking-tight
+                          leading-[1.05]
+                          pb-[0.08em]
+                          overflow-visible
                           bg-gradient-to-r from-[#bfbfbf] to-[#6d6d6d]
                           text-transparent bg-clip-text
                           mb-3 sm:mb-4

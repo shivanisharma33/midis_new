@@ -18,50 +18,63 @@ export default function CrearistCollage() {
 
     if (!wrap || !textWrap || !left || !right) return;
 
+    const isMobile = window.innerWidth < 768;
+
     const getMoveX = () => {
       const w = window.innerWidth;
-      if (w < 480) return 120;
-      if (w < 768) return 170;
+      if (w < 480) return 90;
+      if (w < 768) return 130;
       if (w < 1024) return 200;
       return 245;
     };
 
     let moveX = getMoveX();
 
+    /* ===============================
+       MAIN TIMELINE (TEXT)
+    =============================== */
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: wrap,
         start: "top top",
-        end: "+=160%",
-        scrub: 1.2,
+
+        // 🚀 FAST MOBILE SCROLL
+        end: isMobile ? "+=90%" : "+=160%",
+
+        scrub: isMobile ? 0.3 : 1.2,
         pin: true,
+        anticipatePin: 1,
       },
     });
 
     // TEXT APPEAR → SCALE
     tl.set(textWrap, { opacity: 0, scale: 0.2 });
-    tl.to(textWrap, { opacity: 1, duration: 0.4 });
-    tl.to(textWrap, { scale: 1, duration: 1 });
+    tl.to(textWrap, { opacity: 1, duration: 0.25 });
+    tl.to(textWrap, { scale: 1, duration: 0.6 });
 
-    // LEFT COLLAGE
+    /* ===============================
+       LEFT COLLAGE
+    =============================== */
     gsap.to(left, {
       x: () => -moveX,
       scrollTrigger: {
         trigger: wrap,
         start: "top top",
-        end: "+=160%",
-        scrub: 1.5,
+        end: isMobile ? "+=90%" : "+=160%",
+        scrub: isMobile ? 0.4 : 1.5,
       },
     });
 
-    // RIGHT COLLAGE
+    /* ===============================
+       RIGHT COLLAGE
+    =============================== */
     gsap.to(right, {
       x: () => moveX,
       scrollTrigger: {
         trigger: wrap,
         start: "top top",
-        end: "+=160%",
-        scrub: 1.5,
+        end: isMobile ? "+=90%" : "+=160%",
+        scrub: isMobile ? 0.4 : 1.5,
       },
     });
 
@@ -75,12 +88,12 @@ export default function CrearistCollage() {
   }, []);
 
   return (
-    <div className="h-[240vh]">
+    <div className="h-[200vh] md:h-[240vh]">
       <section
         ref={wrapperRef}
         className="sticky top-0 h-screen w-full overflow-hidden bg-white"
       >
-        {/* BACKGROUND GRID IMAGE */}
+        {/* BACKGROUND IMAGE */}
         <div
           className="absolute inset-0 z-0 bg-center bg-cover"
           style={{ backgroundImage: "url('/images/midis-bg.jpg')" }}
@@ -92,10 +105,9 @@ export default function CrearistCollage() {
             src="/images/milestone.webp"
             className="absolute left-[8%] sm:left-[12%] md:left-[30%]
                        top-[38%] sm:top-[34%] md:top-[25%]
-                       w-[clamp(120px,35vw,240px)]
+                       w-[clamp(110px,35vw,240px)]
                        rounded-xl shadow-xl"
           />
-
           <img
             src="/images/partner-1.webp"
             className="absolute left-[12%] sm:left-[18%] md:left-[28%]
@@ -103,12 +115,11 @@ export default function CrearistCollage() {
                        w-[clamp(100px,30vw,200px)]
                        rounded-xl shadow-xl"
           />
-
           <img
             src="/images/partner-2.webp"
             className="absolute left-[10%] sm:left-[16%] md:left-[22%]
                        top-[55%] sm:top-[50%] md:top-[45%]
-                       w-[clamp(140px,42vw,280px)]
+                       w-[clamp(130px,42vw,280px)]
                        rounded-xl shadow-xl"
           />
         </div>
@@ -119,15 +130,14 @@ export default function CrearistCollage() {
             src="/images/partner-3.webp"
             className="absolute right-[10%] sm:right-[14%] md:right-[18%]
                        top-[14%] sm:top-[12%] md:top-[8%]
-                       w-[clamp(150px,45vw,350px)]
+                       w-[clamp(140px,45vw,350px)]
                        rounded-xl shadow-xl"
           />
-
           <img
             src="/images/partner-4.webp"
             className="absolute right-[6%] sm:right-[10%] md:right-[10%]
                        top-[30%] sm:top-[34%] md:top-[38%]
-                       w-[clamp(180px,55vw,420px)]
+                       w-[clamp(160px,55vw,420px)]
                        rounded-xl shadow-xl"
           />
         </div>
@@ -137,13 +147,13 @@ export default function CrearistCollage() {
           ref={textWrapRef}
           className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-center px-4 font-playfair antialiased"
         >
-          <h1 className="text-black text-[1.8rem] sm:text-[2.3rem] md:text-[3.2rem] lg:text-[4rem] font-bold leading-[1.1]">
+          <h1 className="text-black text-[1.6rem] sm:text-[2.3rem] md:text-[3.2rem] lg:text-[4rem] font-bold leading-[1.1]">
             YOUR TRUSTED
           </h1>
-          <h1 className="text-black text-[1.8rem] sm:text-[2.3rem] md:text-[3.2rem] lg:text-[4rem] font-bold leading-[1.1]">
+          <h1 className="text-black text-[1.6rem] sm:text-[2.3rem] md:text-[3.2rem] lg:text-[4rem] font-bold leading-[1.1]">
             PARTNER IN
           </h1>
-          <h1 className="text-black text-[1.8rem] sm:text-[2.3rem] md:text-[3.2rem] lg:text-[4rem] font-bold leading-[1.1]">
+          <h1 className="text-black text-[1.6rem] sm:text-[2.3rem] md:text-[3.2rem] lg:text-[4rem] font-bold leading-[1.1]">
             DESIGN EXCELLENCE
           </h1>
 

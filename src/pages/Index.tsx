@@ -6,7 +6,7 @@ import PortfolioMarquee from '@/components/PortfolioMarquee';
 import { ServicesSection } from '@/components/ServicesSection';
 import ShowcaseExcellenceSection from "@/components/ShowcaseExcellenceSection";
 import { ClientsMarquee } from '@/components/ClientsMarquee';
-import { CreateSection } from '@/components/CreateSection';
+
 import { ReasonsSection } from '@/components/ReasonsSection';
 import { TeamSection } from '@/components/TeamSection';
 import { AwardsSection } from '@/components/AwardsSection';
@@ -48,7 +48,7 @@ const Index = () => {
       <ClientsMarquee />
 
       {/* ================= CREATE / REASONS ================= */}
-      <CreateSection />
+   
       <ReasonsSection />
 
       {/* ================= TEAM ================= */}

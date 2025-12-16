@@ -299,5 +299,107 @@ body {
   background: rgba(255, 255, 255, 0.15);
   border-width: 1px;
 }
+/* ================= TEAM CARD ================= */
+
+.team-card {
+  cursor: pointer;
+}
+
+/* ================= IMAGE (FIXED) ================= */
+
+.team-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* 🔥 MAIN FIX – face/head safe */
+  object-position: top center;
+
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Safe zoom */
+.team-card:hover .team-img {
+  transform: scale(1.06);
+}
+
+/* ================= DIAGONAL RIBBON ================= */
+
+.corner-ribbon {
+  position: absolute;
+  top: 20px;
+  left: -65px;
+
+  background: #1b1b1b;
+  color: #fff;
+
+  padding: 12px 80px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+
+  transform: rotate(-45deg) translateY(-30px);
+  opacity: 0;
+
+  transition: all 0.5s ease;
+}
+
+.team-card:hover .corner-ribbon {
+  opacity: 1;
+  transform: rotate(-45deg) translateY(0);
+}
+
+/* ================= MARQUEE ================= */
+
+.marquee-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+
+  overflow: hidden;
+
+  transform: translateY(100%);
+  opacity: 0;
+
+  transition: all 0.45s ease;
+}
+
+.team-card:hover .marquee-wrap {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.marquee {
+  display: flex;
+  gap: 48px;
+  padding: 14px 0;
+  width: max-content;
+
+  animation: marquee 10s linear infinite;
+}
+
+.marquee span {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 
 

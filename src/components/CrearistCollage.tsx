@@ -31,29 +31,25 @@ export default function CrearistCollage() {
     let moveX = getMoveX();
 
     /* ===============================
-       MAIN TIMELINE (TEXT)
+       MAIN TEXT TIMELINE
     =============================== */
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: wrap,
         start: "top top",
-
-        // 🚀 FAST MOBILE SCROLL
         end: isMobile ? "+=90%" : "+=160%",
-
         scrub: isMobile ? 0.3 : 1.2,
         pin: true,
         anticipatePin: 1,
       },
     });
 
-    // TEXT APPEAR → SCALE
     tl.set(textWrap, { opacity: 0, scale: 0.2 });
     tl.to(textWrap, { opacity: 1, duration: 0.25 });
     tl.to(textWrap, { scale: 1, duration: 0.6 });
 
     /* ===============================
-       LEFT COLLAGE
+       LEFT COLLAGE MOVE
     =============================== */
     gsap.to(left, {
       x: () => -moveX,
@@ -66,7 +62,7 @@ export default function CrearistCollage() {
     });
 
     /* ===============================
-       RIGHT COLLAGE
+       RIGHT COLLAGE MOVE
     =============================== */
     gsap.to(right, {
       x: () => moveX,
@@ -88,11 +84,14 @@ export default function CrearistCollage() {
   }, []);
 
   return (
-    <div className="h-[200vh] md:h-[240vh]">
+    <div className="min-h-[140vh] md:min-h-[240vh]">
       <section
         ref={wrapperRef}
-        className="sticky top-0 h-screen w-full overflow-hidden bg-white"
+        className="sticky top-0 min-h-[100svh] w-full overflow-hidden bg-white"
       >
+        {/* FORCE WHITE BACKGROUND (NO BLACK GAP) */}
+        <div className="absolute inset-0 bg-white -z-10" />
+
         {/* BACKGROUND IMAGE */}
         <div
           className="absolute inset-0 z-0 bg-center bg-cover"
@@ -142,10 +141,11 @@ export default function CrearistCollage() {
           />
         </div>
 
-        {/* TEXT */}
+        {/* CENTER TEXT */}
         <div
           ref={textWrapRef}
-          className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 text-center px-4 font-playfair antialiased"
+          className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2
+                     text-center px-4 font-playfair antialiased"
         >
           <h1 className="text-black text-[1.6rem] sm:text-[2.3rem] md:text-[3.2rem] lg:text-[4rem] font-bold leading-[1.1]">
             YOUR TRUSTED

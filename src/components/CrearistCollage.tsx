@@ -56,7 +56,7 @@ export default function CrearistCollage() {
       scrollTrigger: {
         trigger: wrap,
         start: "top top",
-        end: isMobile ? "+=90%" : "+=160%",
+         end: isMobile ? "+=110%" : "+=350%",
         scrub: isMobile ? 0.4 : 1.5,
       },
     });

@@ -93,9 +93,9 @@ export const ServicesSection = () => {
                     {service.number}
                   </span>
 
-                  <div className="relative">
+                  <div className="relative w-full">
 
-                    {/* ✅ TITLE (ALWAYS VISIBLE) */}
+                    {/* TITLE */}
                     <h3
                       className="
                         font-bold tracking-tight
@@ -109,7 +109,26 @@ export const ServicesSection = () => {
                       {service.title}
                     </h3>
 
-                    {/* DESCRIPTION + TAGS (ONLY ACTIVE) */}
+                    {/* ✅ MOBILE IMAGE */}
+                    <AnimatePresence>
+                      {activeIndex === index && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 20 }}
+                          transition={{ duration: 0.4 }}
+                          className="md:hidden mb-6"
+                        >
+                          <img
+                            src={service.image}
+                            alt={service.title}
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* DESCRIPTION + TAGS */}
                     <AnimatePresence>
                       {activeIndex === index && (
                         <motion.div
@@ -139,7 +158,7 @@ export const ServicesSection = () => {
                   </div>
                 </div>
 
-                {/* IMAGE */}
+                {/* ✅ DESKTOP IMAGE */}
                 <AnimatePresence>
                   {activeIndex === index && (
                     <motion.div

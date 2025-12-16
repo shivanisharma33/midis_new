@@ -130,7 +130,7 @@ function NormalCard() {
   useCounters(countersRef, stats1);
 
   return (
-    <section className="w-full bg-white py-16 sm:py-20 md:py-24">
+    <section className="w-full bg-white  sm:py-20 md:py-24">
       <div
         className="
           max-w-[1500px] 

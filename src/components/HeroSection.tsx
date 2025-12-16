@@ -11,16 +11,17 @@ export const HeroSection = () => {
   useEffect(() => {
     if (!heroRef.current) return;
 
-    const ctx = gsap.context(() => {
+    const isMobile = window.innerWidth < 768;
 
+    const ctx = gsap.context(() => {
       /* ===============================
          INITIAL STATES
       =============================== */
-      gsap.set(".hero-bg-2", { opacity: 0, scale: 1.1 });
+      gsap.set(".hero-bg-2", { opacity: 0, scale: 1.05 });
       gsap.set(".hero-content", {
         opacity: 0,
-        y: 120,
-        filter: "blur(14px)",
+        y: 80,
+        filter: "blur(12px)",
       });
 
       /* ===============================
@@ -30,23 +31,29 @@ export const HeroSection = () => {
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-          end: "+=350%",
+
+          // 🚀 ULTRA FAST MOBILE
+          end: isMobile ? "+=110%" : "+=350%",
+
           pin: true,
-          scrub: 1.5,
+
+          // 🚀 VERY FAST SCRUB ON MOBILE
+          scrub: isMobile ? 0.25 : 1.5,
+
           anticipatePin: 1,
         },
       });
 
       /* ===============================
-         SCENE 1 — MIDIS EXIT (SMOOTH)
+         SCENE 1 — MIDIS EXIT
       =============================== */
       tl.to(".hero-title span", {
-        y: -140,
+        y: -120,
         opacity: 0,
-        scale: 1.6,
-        stagger: 0.06,
-        duration: 1.6,
-        ease: "power4.out",
+        scale: 1.4,
+        stagger: isMobile ? 0.04 : 0.06,
+        duration: isMobile ? 0.9 : 1.6,
+        ease: "power3.out",
       });
 
       /* ===============================
@@ -55,13 +62,13 @@ export const HeroSection = () => {
       tl.to(
         ".hero-bg-1 img",
         {
-          scale: 1.15,
-          y: -60,
+          scale: 1.12,
+          y: -40,
           opacity: 0,
-          duration: 1.4,
+          duration: isMobile ? 0.8 : 1.4,
           ease: "power2.out",
         },
-        "-=0.6"
+        "-=0.3"
       );
 
       tl.to(
@@ -69,10 +76,10 @@ export const HeroSection = () => {
         {
           opacity: 1,
           scale: 1,
-          duration: 1.6,
+          duration: isMobile ? 0.9 : 1.6,
           ease: "power2.out",
         },
-        "-=0.8"
+        "-=0.4"
       );
 
       /* ===============================
@@ -84,10 +91,10 @@ export const HeroSection = () => {
           opacity: 1,
           y: 0,
           filter: "blur(0px)",
-          duration: 1.8,
-          ease: "power4.out",
+          duration: isMobile ? 0.9 : 1.8,
+          ease: "power3.out",
         },
-        "-=0.6"
+        "-=0.3"
       );
 
       /* ===============================
@@ -100,7 +107,6 @@ export const HeroSection = () => {
         repeat: -1,
         yoyo: true,
       });
-
     }, heroRef);
 
     return () => ctx.revert();
@@ -134,7 +140,7 @@ export const HeroSection = () => {
 
       {/* ================= MIDIS TITLE ================= */}
       <div className="hero-title absolute inset-0 flex items-center justify-center z-20">
-        <h1 className="font-anton text-[8rem] md:text-[14rem] lg:text-[18rem] text-white flex">
+        <h1 className="font-anton text-[6rem] sm:text-[8rem] md:text-[14rem] lg:text-[18rem] text-white flex">
           {letters.map((letter, i) => (
             <span key={i} className="inline-block">
               {letter}
@@ -145,12 +151,12 @@ export const HeroSection = () => {
 
       {/* ================= FINAL CONTENT ================= */}
       <div className="hero-content absolute inset-0 flex items-center justify-center z-40">
-        <div className="text-center max-w-3xl mx-auto text-white px-8">
-          <h2 className="text-4xl md:text-6xl font-semibold mb-6 leading-tight">
+        <div className="text-center max-w-3xl mx-auto text-white px-6">
+          <h2 className="text-3xl md:text-6xl font-semibold mb-6 leading-tight">
             Powerful Digital Solutions for Future-Ready Brands
           </h2>
 
-          <p className="text-lg md:text-2xl text-gray-300 mb-10">
+          <p className="text-base md:text-2xl text-gray-300 mb-10">
             Websites, apps, branding & marketing — everything your business needs
             to scale.
           </p>

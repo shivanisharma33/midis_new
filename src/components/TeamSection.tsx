@@ -115,7 +115,7 @@ export const TeamSection: React.FC = () => {
     {
       img: "./images/puruv.jpg",
       name: "PURUVJIT",
-      role: "FULLSTACK DEVELOPER",
+      role: "CHIEF TECHNICAL OFFICER",
     },
   ];
 

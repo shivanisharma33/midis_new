@@ -10,7 +10,7 @@ const services = [
     number: "01",
     title: "WEB DESIGNING",
     description:
-      "Creative, user-friendly designs that enhance your brand’s online presence.",
+      "Creative, user-friendly designs that enhance your brand’s online presence Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     tags: ["Packaging", "Enclosure", "Labeling"],
     image: "/images/service-branding.webp",
   },
@@ -18,7 +18,7 @@ const services = [
     number: "02",
     title: "WEB DEVELOPMENT",
     description:
-      "Robust, scalable, and high-performing websites built to elevate your brand and user experience.",
+      "Robust, scalable, and high-performing websites built to elevate your brand and user experience Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     tags: ["Labeling", "Packaging", "Containerization"],
     image: "/images/service-ui.webp",
   },
@@ -26,7 +26,7 @@ const services = [
     number: "03",
     title: "SEARCH ENGINE OPTIMIZATION",
     description:
-      "Boost your website visibility, traffic, and ranking on Google with our expert SEO solutions.",
+      "Boost your website visibility, traffic, and ranking on Google with our expert SEO solutions Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     tags: ["Boxing", "Packaging", "Enclosure"],
     image: "/images/service-dev.webp",
   },
@@ -34,7 +34,7 @@ const services = [
     number: "04",
     title: "GRAPHIC DESIGNING",
     description:
-      "Captivating visuals that elevate your brand and grab attention instantly.",
+      "Captivating visuals that elevate your brand and grab attention instantly Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     tags: ["Wrapping", "Packaging", "Containerization"],
     image: "/images/service-strategy.webp",
   },
@@ -42,7 +42,7 @@ const services = [
     number: "05",
     title: "GOOGLE ADS & META ADS",
     description:
-      "Maximize your reach and ROI with high-performing ads across Google and Meta platforms.",
+      "Maximize your reach and ROI with high-performing ads across Google and Meta platforms Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     tags: ["Ads", "Marketing", "Paid Campaigns"],
     image: "/images/service-strategy.webp",
   },
@@ -137,9 +137,10 @@ export const ServicesSection = () => {
                           exit={{ y: 30, opacity: 0 }}
                           transition={{ duration: 0.5 }}
                         >
-                          <p className="text-base text-muted-foreground max-w-lg mb-4">
-                            {service.description}
-                          </p>
+                         <p className="text-base text-muted-foreground max-w-lg mb-4 ">
+  {service.description}
+</p>
+
 
                           <div className="flex flex-wrap gap-2">
                             {service.tags.map((tag) => (

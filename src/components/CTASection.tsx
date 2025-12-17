@@ -1,87 +1,141 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const CTASection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const imageWrapRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    const imageWrap = imageWrapRef.current;
+    if (!section || !imageWrap) return;
+
     const ctx = gsap.context(() => {
-      gsap.from('.cta-text span', {
+      /* ================= TEXT REVEAL ================= */
+      gsap.from(".cta-text span", {
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
+          trigger: section,
+          start: "top 80%",
         },
         y: 80,
         opacity: 0,
-        duration: 1,
         stagger: 0.1,
-        ease: 'power3.out',
+        duration: 1,
+        ease: "power3.out",
       });
 
-      gsap.from('.cta-image', {
+      /* ================= PIN + IMAGE ZOOM ================= */
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
+          trigger: section,
+          start: "top top",
+          end: "+=220%",
+          scrub: true,
+          pin: true,
+          anticipatePin: 1,
         },
-        scale: 0.8,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
       });
-    }, sectionRef);
+
+      tl.to({}, { duration: 0.01 });
+
+      tl.set(imageWrap, {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        xPercent: -50,
+        yPercent: -50,
+        zIndex: 50,
+      });
+
+      tl.fromTo(
+        imageWrap,
+        { scale: 0.85 },
+        { scale: 1.15, ease: "none" }
+      );
+
+      tl.to(imageWrap, {
+        width: "100vw",
+        height: "100vh",
+        borderRadius: 0,
+        ease: "none",
+      });
+    }, section);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-section bg-background overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-12">
-        <p className="text-xs text-muted-foreground tracking-widest uppercase mb-8 text-center">
-          join us today!
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen bg-white overflow-hidden flex items-center"
+    >
+      {/* 👇 text-black added here */}
+      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center text-black">
+        
+        {/* 👇 color changed to black */}
+        <p className="text-xs tracking-widest uppercase mb-10 text-black">
+          JOIN US TODAY!
         </p>
 
-        {/* Main CTA Text */}
-        <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8 mb-12">
-          <span className="cta-text text-display font-anton text-foreground overflow-hidden">
-            <span className="inline-block">Partner with</span>
+        {/* LINE 1 */}
+        <div className="flex justify-center mb-6">
+          <span className="cta-text text-[clamp(2.5rem,6vw,5rem)] font-extrabold overflow-hidden">
+            <span className="inline-block">PARTNER WITH</span>
+          </span>
+        </div>
+
+        {/* LINE 2 */}
+        <div className="flex justify-center items-center gap-6 mb-6">
+          <span className="cta-text text-[clamp(2.5rem,6vw,5rem)] font-extrabold overflow-hidden">
+            <span className="inline-block">EXPERIENCED</span>
           </span>
 
-          <div className="cta-image relative w-32 lg:w-48 h-20 lg:h-28 overflow-hidden rounded-full">
+          {/* INLINE IMAGE */}
+          <span
+            ref={imageWrapRef}
+            className="
+              inline-flex
+              w-28
+              h-16
+              lg:w-36
+              lg:h-20
+              rounded-full
+              overflow-hidden
+              align-middle
+              will-change-transform
+            "
+          >
             <img
-              src="/images/cta-video.webp"
-              alt="Video"
+              src="/images/testimonial-bg.webp"
+              alt="CTA"
               className="w-full h-full object-cover"
             />
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8 mb-12">
-          <span className="cta-text text-display font-playfair text-foreground italic overflow-hidden">
-            <span className="inline-block">experienced</span>
           </span>
-          <span className="cta-text text-display font-anton text-foreground overflow-hidden">
-            <span className="inline-block">designer</span>
+
+          <span className="cta-text text-[clamp(2.5rem,6vw,5rem)] font-extrabold overflow-hidden">
+            <span className="inline-block">DESIGNER</span>
           </span>
         </div>
 
-        {/* CTA Button */}
-        <div className="text-center">
-          <motion.a
-            href="#"
-            className="btn-animated inline-flex items-center gap-4 px-8 py-4 border border-foreground text-foreground"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <span className="btn-animated-content">
-              <span>let's get started</span>
-              <img src="/images/button-arrow.svg" alt="" className="w-4 h-4 invert" />
-            </span>
-          </motion.a>
+        {/* LINE 3 */}
+        <div className="flex justify-center mb-14">
+          <span className="cta-text text-[clamp(2.5rem,6vw,5rem)] font-extrabold overflow-hidden">
+            <span className="inline-block">PARTNER WITH</span>
+          </span>
         </div>
+
+        {/* BUTTON */}
+        <motion.a
+          href="#"
+          whileHover={{ scale: 1.05 }}
+          className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-black text-white text-sm font-semibold"
+        >
+          LET&apos;S GET STARTED →
+        </motion.a>
       </div>
     </section>
   );

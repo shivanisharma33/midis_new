@@ -108,7 +108,7 @@ export default function PortfolioMarquee() {
       </div>
 
       {/* ===== HEADING ===== */}
-      <div className="relative z-10 text-center mb-20 px-4">
+      <div className="relative z-10 text-center px-4">
         <div className="flex justify-center mb-4">
           <span className="h-[2px] w-16 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" />
         </div>
@@ -120,7 +120,7 @@ export default function PortfolioMarquee() {
         <h3 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mt-2 leading-tight">
           Matter{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
-            expertise
+            Expertise
           </span>
         </h3>
 

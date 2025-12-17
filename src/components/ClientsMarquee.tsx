@@ -35,44 +35,14 @@ export const ClientsMarquee = () => {
     <section ref={sectionRef} className="py-section bg-background overflow-hidden">
       <div className="container mx-auto px-6 lg:px-12 mb-12">
         <h2 className="clients-heading text-heading-md font-playfair text-foreground text-center">
-          Collaborating for Excellence Together We <span className="text-red-500">❤️</span> Make a Difference
+          Collaborating for Excellence Together We{' '}
+          <span className="text-red-500">❤️</span> Make a Difference
         </h2>
       </div>
 
-      {/* First Row */}
-      <div className="marquee mb-8">
-        <div className="marquee-content">
-          {[...clients, ...clients, ...clients].map((client, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 mx-14 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110"
-            >
-              <img
-                src={client}
-                alt="Client"
-                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
-              />
-            </div>
-          ))}
-        </div>
 
-        <div className="marquee-content" aria-hidden="true">
-          {[...clients, ...clients, ...clients].map((client, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 mx-14 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110"
-            >
-              <img
-                src={client}
-                alt="Client"
-                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
-              />
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Second Row - Reverse */}
+      {/* ================= SECOND ROW (REVERSE) ================= */}
       <div className="marquee">
         <div className="marquee-content marquee-content-reverse">
           {[...clients, ...clients, ...clients].map((client, index) => (
@@ -83,13 +53,16 @@ export const ClientsMarquee = () => {
               <img
                 src={client}
                 alt="Client"
-                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
+                className="h-20 lg:h-24 w-auto invert rounded-xl"
               />
             </div>
           ))}
         </div>
 
-        <div className="marquee-content marquee-content-reverse" aria-hidden="true">
+        <div
+          className="marquee-content marquee-content-reverse"
+          aria-hidden="true"
+        >
           {[...clients, ...clients, ...clients].map((client, index) => (
             <div
               key={index}
@@ -98,7 +71,7 @@ export const ClientsMarquee = () => {
               <img
                 src={client}
                 alt="Client"
-                className="h-14 w-auto invert rounded-xl"   // ⭐ BORDER RADIUS ADDED HERE
+                className="h-20 lg:h-24 w-auto invert rounded-xl"
               />
             </div>
           ))}

@@ -13,33 +13,52 @@ export const AboutSection = () => {
     const ctx = gsap.context(() => {
       const lines = gsap.utils.toArray<HTMLElement>(".reveal-line");
 
-      gsap.set(lines, {
-        y: 70,
-        opacity: 0,
-        filter: "blur(8px)",
-        color: "#9ca3af",
+      /* ================= INITIAL STATE ================= */
+      lines.forEach((line, i) => {
+        gsap.set(line, {
+          x: i <= 1 ? -140 : i % 2 === 0 ? -140 : 140,
+          opacity: 0,
+          filter: "blur(10px)",
+          color: "#9ca3af",
+        });
       });
 
+      /* ================= PINNED SCROLL ================= */
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=160%",
+          end: "+=180%",
           pin: true,
-          scrub: true,
+          scrub: 1.2,
           anticipatePin: 1,
         },
       });
 
-      lines.forEach((line) => {
-        tl.to(line, {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          color: "#0f172a",
-          duration: 1,
-          ease: "power3.out",
-        });
+      /* ================= STEP 1 (WELCOME + FIRST LINE TOGETHER) ================= */
+      tl.to([lines[0], lines[2]], {
+        x: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        color: "#0f172a",
+        duration: 1.1,
+        ease: "power4.out",
+      });
+
+      /* ================= STEP 2+ (ALTERNATING) ================= */
+      lines.slice(3).forEach((line) => {
+        tl.to(
+          line,
+          {
+            x: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            color: "#0f172a",
+            duration: 1,
+            ease: "power4.out",
+          },
+          "+=0.15"
+        );
       });
     }, sectionRef);
 
@@ -51,19 +70,31 @@ export const AboutSection = () => {
       ref={sectionRef}
       className="relative flex items-center justify-center bg-white overflow-hidden"
     >
-      {/* ✨ SOFT PREMIUM BACKGROUND */}
+      {/* ✨ BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-orange-400/20 rounded-full blur-[180px]" />
       </div>
 
       <div className="relative max-w-6xl mx-auto px-6 text-center py-32">
         
-        {/* TAGLINE */}
-        <p className="reveal-line uppercase text-xs sm:text-sm tracking-[0.25em] text-gray-500 mb-6">
+        {/* TAGLINE (BIGGER HEADING STYLE) */}
+        <p
+          className="
+            reveal-line
+            uppercase
+            font-semibold
+            tracking-[0.3em]
+            text-[0.9rem]
+            sm:text-[1rem]
+            md:text-[1.1rem]
+            text-gray-500
+   
+          "
+        >
           Welcome to MIDIS
         </p>
 
-        {/* SMALL DIVIDER */}
+        {/* DIVIDER */}
         <div className="flex justify-center mb-10">
           <span className="h-[2px] w-14 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full reveal-line" />
         </div>

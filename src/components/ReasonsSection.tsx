@@ -47,20 +47,25 @@ export const ReasonsSection: React.FC = () => {
     const isMobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
-      /* ================= TITLE REVEAL ================= */
+      /* ================= HEADING LEFT ANIMATION ================= */
       gsap.fromTo(
         ".reason-line",
-        { y: 60, opacity: 0, filter: "blur(6px)" },
         {
-          y: 0,
+          x: -120,
+          opacity: 0,
+          filter: "blur(6px)",
+        },
+        {
+          x: 0,
           opacity: 1,
           filter: "blur(0px)",
-          duration: 1,
-          stagger: 0.15,
-          ease: "power3.out",
+          duration: 1.1,
+          stagger: 0.18,
+          ease: "power4.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 80%",
+            start: "top bottom", // starts when section enters viewport
+            once: true,
           },
         }
       );
@@ -112,8 +117,10 @@ export const ReasonsSection: React.FC = () => {
       {/* ================= HEADING ================= */}
       <div className="min-h-[70vh] md:min-h-[80vh] flex items-center">
         <div className="max-w-7xl w-full px-4 sm:px-6 md:px-16 lg:px-24">
-          <h2 className="uppercase font-extrabold leading-[1.05] text-black
-            text-[2.4rem] sm:text-[3.2rem] md:text-[4.2rem] lg:text-[6.2rem]">
+          <h2
+            className="uppercase font-extrabold leading-[1.05] text-black
+            text-[2.4rem] sm:text-[3.2rem] md:text-[4.2rem] lg:text-[6.2rem]"
+          >
             <span className="reason-line block">HERE ARE A FEW</span>
             <span className="reason-line block">REASONS WHY</span>
             <span className="reason-line block text-gray-300">
@@ -153,10 +160,10 @@ export const ReasonsSection: React.FC = () => {
               <p className="text-xs sm:text-sm font-semibold mb-4 sm:mb-6">
                 {item.number}
               </p>
-             <h3 className="text-lg sm:text-xl font-bold whitespace-pre-line leading-tight text-black">
-  {item.title}
-</h3>
 
+              <h3 className="text-lg sm:text-xl font-bold whitespace-pre-line leading-tight text-black">
+                {item.title}
+              </h3>
             </div>
           ))}
         </div>
@@ -179,7 +186,7 @@ export const ReasonsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* ACTIVE STYLE */}
+      {/* ================= ACTIVE STYLE ================= */}
       <style>{`
         .reason-item {
           position: relative;

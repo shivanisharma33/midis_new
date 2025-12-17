@@ -79,43 +79,43 @@ export const TeamSection: React.FC = () => {
   const teamMembers = [
     {
       img: "https://www.midis.in/image/Alin.jpg",
-      name: "ROBERT MAKIN",
-      role: "CREATIVE DIRECTOR",
+      name: "ALIN MISHRA",
+      role: "SHOPIFY DEVELOPER",
     },
     {
       img: "https://www.midis.in/image/shiviiii.png",
       name: "SHIVANI",
-      role: "UI DESIGNER",
+      role: "FRONTEND DEVELOPER",
     },
     {
       img: "https://www.midis.in/image/member2.jpg",
-      name: "ALEX SMITH",
-      role: "DEVELOPER",
+      name: "OJASWINI SAINI",
+      role: "GRAPHIC DESIGNER",
     },
     {
       img: "https://www.midis.in/image/member1.jpg",
-      name: "JAMES LEE",
-      role: "MARKETER",
+      name: "SWAYAM GHANDHI",
+      role: "BACKEND DEVELOPER",
     },
     {
       img: "https://www.midis.in/image/member4.jpg",
-      name: "EMMA",
-      role: "STRATEGIST",
+      name: "RAHUL GEHLOT",
+      role: "GRAPHIC DESIGNER",
     },
     {
       img: "https://www.midis.in/image/member6.jpg",
-      name: "NOAH",
+      name: "NAVKIRAT BHOGAL",
       role: "SEO EXPERT",
     },
     {
       img: "https://www.midis.in/image/member3.jpg",
-      name: "LUCAS",
-      role: "DESIGNER",
+      name: "CHANDA ANGRAL",
+      role: "GRAPHIC DESIGNER",
     },
     {
-      img: "https://i.pravatar.cc/450?img=12",
-      name: "OLIVER",
-      role: "CONSULTANT",
+      img: "./images/Sagar-bakshi.jpg",
+      name: "SAGAR BAKSHI",
+      role: "DIRECTOR",
     },
   ];
 

@@ -162,9 +162,9 @@ export const HeroSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-orange-500 text-white rounded-xl text-lg hover:scale-105 transition">
-              Get Consultation
-            </button>
+             <button className="px-8 py-4 bg-black text-white rounded-xl text-lg hover:scale-105 transition">
+    Get Consultation
+  </button>
 
             <button className="px-8 py-4 bg-black text-white border border-white/30 rounded-xl text-lg hover:bg-white hover:text-black transition-all duration-300">
               View Portfolio

@@ -9,9 +9,9 @@ import { ClientsMarquee } from '@/components/ClientsMarquee';
 
 import { ReasonsSection } from '@/components/ReasonsSection';
 import { TeamSection } from '@/components/TeamSection';
-import { AwardsSection } from '@/components/AwardsSection';
+
 import { CTASection } from '@/components/CTASection';
-import { TestimonialsSection } from '@/components/TestimonialsSection';
+
 import { Footer } from '@/components/Footer';
 import CrearistCollage from "@/components/CrearistCollage";
 import FuelingYourGrowthWithFreshIdeas from "@/components/FuelingYourGrowthWithFreshIdeas";
@@ -55,11 +55,11 @@ const Index = () => {
       <TeamSection />
 
       {/* ================= AWARDS + CTA ================= */}
-      <AwardsSection />
+
       <CTASection />
 
       {/* ================= TESTIMONIALS ================= */}
-      <TestimonialsSection />
+   
 
       {/* ================= FOOTER ================= */}
       <Footer />

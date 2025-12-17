@@ -83,7 +83,7 @@ export const TeamSection: React.FC = () => {
       role: "SHOPIFY DEVELOPER",
     },
     {
-      img: "https://www.midis.in/image/shiviiii.png",
+      img: "/images/shivii.jpg",
       name: "SHIVANI",
       role: "FRONTEND DEVELOPER",
     },
@@ -152,12 +152,13 @@ export const TeamSection: React.FC = () => {
             {teamMembers.map((member, i) => (
               <div
                 key={i}
-                className="team-card relative w-full aspect-[3/4] overflow-hidden bg-black"
+                className="team-card relative w-full aspect-[3/4] bg-black flex items-center justify-center overflow-hidden"
               >
+                {/* ✅ IMAGE FIXED */}
                 <img
                   src={member.img}
                   alt={member.name}
-                  className="team-img w-full h-full object-cover"
+                  className="max-w-full max-h-full object-contain"
                 />
 
                 {/* ===== DIAGONAL CORNER TAG ===== */}

@@ -75,7 +75,7 @@ export const ServicesSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-20 bg-background font-playfair antialiased"
+      className=" bg-background font-playfair antialiased"
     >
       <div className="container mx-auto px-6 lg:px-12">
 

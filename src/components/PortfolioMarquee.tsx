@@ -153,7 +153,7 @@ export default function PortfolioMarquee() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-black flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[60vh] bg-black flex flex-col items-center justify-center overflow-hidden"
     >
       {/* ===== BACKGROUND EFFECTS ===== */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

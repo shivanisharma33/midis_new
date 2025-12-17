@@ -89,7 +89,7 @@ function StackContainer() {
   return (
     <div
       ref={wrapperRef}
-      className="relative w-full min-h-[140vh] sm:min-h-[150vh] md:min-h-[160vh]"
+      className="relative w-full  sm:min-h-[150vh] md:min-h-[160vh]"
     >
       {/* CARD 1 */}
       <div ref={card1Ref} className="relative z-0">

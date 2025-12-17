@@ -14,6 +14,9 @@ export default function PortfolioMarquee() {
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const indexRef = useRef(0);
 
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
   useLayoutEffect(() => {
     if (!sectionRef.current) return;
 
@@ -21,6 +24,9 @@ export default function PortfolioMarquee() {
       const cards = cardsRef.current;
       if (!cards.length) return;
 
+      const isMobile = () => window.innerWidth < 768;
+
+      /* ================= POSITIONS ================= */
       const getPositions = () => {
         const w = window.innerWidth;
 
@@ -55,6 +61,7 @@ export default function PortfolioMarquee() {
 
       let positions = getPositions();
 
+      /* ================= APPLY ================= */
       const applyPositions = () => {
         cards.forEach((card, i) => {
           const pos =
@@ -67,7 +74,7 @@ export default function PortfolioMarquee() {
             x: pos.x,
             scale: pos.scale,
             zIndex: pos.z,
-            duration: 1.2,
+            duration: 0.9,
             ease: "power4.out",
           });
         });
@@ -75,11 +82,55 @@ export default function PortfolioMarquee() {
 
       applyPositions();
 
-      const interval = setInterval(() => {
-        indexRef.current = (indexRef.current + 1) % cards.length;
-        applyPositions();
-      }, 2600);
+      /* ================= AUTO SLIDE (DESKTOP ONLY) ================= */
+      let interval: number | null = null;
 
+      if (!isMobile()) {
+        interval = window.setInterval(() => {
+          indexRef.current = (indexRef.current + 1) % cards.length;
+          applyPositions();
+        }, 2600);
+      }
+
+      /* ================= SWIPE (MOBILE ONLY) ================= */
+      const onTouchStart = (e: TouchEvent) => {
+        if (!isMobile()) return;
+        touchStartX.current = e.touches[0].clientX;
+      };
+
+      const onTouchMove = (e: TouchEvent) => {
+        if (!isMobile()) return;
+        touchEndX.current = e.touches[0].clientX;
+      };
+
+      const onTouchEnd = () => {
+        if (!isMobile()) return;
+        if (
+          touchStartX.current === null ||
+          touchEndX.current === null
+        )
+          return;
+
+        const diff = touchStartX.current - touchEndX.current;
+
+        if (Math.abs(diff) > 50) {
+          indexRef.current =
+            diff > 0
+              ? (indexRef.current + 1) % cards.length
+              : (indexRef.current - 1 + cards.length) % cards.length;
+
+          applyPositions();
+        }
+
+        touchStartX.current = null;
+        touchEndX.current = null;
+      };
+
+      sectionRef.current.addEventListener("touchstart", onTouchStart);
+      sectionRef.current.addEventListener("touchmove", onTouchMove);
+      sectionRef.current.addEventListener("touchend", onTouchEnd);
+
+      /* ================= RESIZE ================= */
       const onResize = () => {
         positions = getPositions();
         applyPositions();
@@ -88,8 +139,11 @@ export default function PortfolioMarquee() {
       window.addEventListener("resize", onResize);
 
       return () => {
-        clearInterval(interval);
+        interval && clearInterval(interval);
         window.removeEventListener("resize", onResize);
+        sectionRef.current?.removeEventListener("touchstart", onTouchStart);
+        sectionRef.current?.removeEventListener("touchmove", onTouchMove);
+        sectionRef.current?.removeEventListener("touchend", onTouchEnd);
       };
     }, sectionRef);
 
@@ -152,8 +206,6 @@ export default function PortfolioMarquee() {
               alt="portfolio"
               className="w-full h-full object-cover"
             />
-
-            {/* Glow overlay */}
             <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
           </div>
         ))}

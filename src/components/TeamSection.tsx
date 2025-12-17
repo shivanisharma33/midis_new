@@ -113,9 +113,9 @@ export const TeamSection: React.FC = () => {
       role: "GRAPHIC DESIGNER",
     },
     {
-      img: "./images/Sagar-bakshi.jpg",
-      name: "SAGAR BAKSHI",
-      role: "DIRECTOR",
+      img: "./images/puruv.jpg",
+      name: "PURUVJIT",
+      role: "FULLSTACK DEVELOPER",
     },
   ];
 
@@ -152,7 +152,7 @@ export const TeamSection: React.FC = () => {
             {teamMembers.map((member, i) => (
               <div
                 key={i}
-                className="team-card relative w-full aspect-[3/4] bg-black flex items-center justify-center overflow-hidden"
+                className="team-card relative w-full aspect-[4/4] bg-black flex items-center justify-center overflow-hidden"
               >
                 {/* ✅ IMAGE FIXED */}
                 <img

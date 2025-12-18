@@ -161,15 +161,55 @@ export const HeroSection = () => {
             to scale.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-             <button className="px-8 py-4 bg-black text-white rounded-xl text-lg hover:scale-105 transition">
-    Get Consultation
+        <div className="flex items-center justify-center gap-6 relative">
+  {/* Left Button */}
+  <button
+    className="btn-border-animate group relative overflow-hidden px-8 py-4 rounded-full text-lg font-medium
+    bg-gradient-to-b from-[#3a3a3a] to-[#1f1f1f]
+    text-gray-200 shadow-inner shadow-black/40"
+  >
+    {/* Text animation stays SAME */}
+    <div className="relative overflow-hidden h-[1.5em]">
+      <p className="transition-transform duration-[500ms]
+        ease-[cubic-bezier(0.19,1,0.22,1)]
+        group-hover:-translate-y-full">
+        Get in touch
+      </p>
+      <p className="absolute top-full left-0
+        transition-all duration-[500ms]
+        ease-[cubic-bezier(0.19,1,0.22,1)]
+        group-hover:top-0">
+        Get in touch
+      </p>
+    </div>
   </button>
 
-            <button className="px-8 py-4 bg-black text-white border border-white/30 rounded-xl text-lg hover:bg-white hover:text-black transition-all duration-300">
-              View Portfolio
-            </button>
-          </div>
+  {/* Line */}
+  <span className="hidden sm:block w-20 h-px bg-white/30"></span>
+
+  {/* Right Button */}
+  <button
+    className="btn-border-animate group relative overflow-hidden px-8 py-4 rounded-full text-lg font-medium
+    bg-gradient-to-b from-[#3a3a3a] to-[#1f1f1f]
+    text-gray-200 shadow-inner shadow-black/40"
+  >
+    <div className="relative overflow-hidden h-[1.5em]">
+      <p className="transition-transform duration-[500ms]
+        ease-[cubic-bezier(0.19,1,0.22,1)]
+        group-hover:-translate-y-full">
+        See My Work
+      </p>
+      <p className="absolute top-full left-0
+        transition-all duration-[500ms]
+        ease-[cubic-bezier(0.19,1,0.22,1)]
+        group-hover:top-0">
+        See My Work
+      </p>
+    </div>
+  </button>
+</div>
+
+
         </div>
       </div>
     </section>

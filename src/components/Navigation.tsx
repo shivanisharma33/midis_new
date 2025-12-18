@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
@@ -13,11 +13,31 @@ const navItems = [
 export const Navigation = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hideNav, setHideNav] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
   };
+
+  /* ================= SCROLL HIDE / SHOW ================= */
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setHideNav(true); // scrolling down
+      } else {
+        setHideNav(false); // scrolling up
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -26,13 +46,15 @@ export const Navigation = () => {
     <>
       {/* ================= HEADER ================= */}
       <nav
-        className="
-          sticky top-0 z-50
+        className={`
+          fixed top-0 left-0 w-full z-50
           px-4 sm:px-6 lg:px-12
           py-3 sm:py-4
           bg-black/70 backdrop-blur-lg
           border-b border-white/10
-        "
+          transition-transform duration-300 ease-in-out
+          ${hideNav ? '-translate-y-full' : 'translate-y-0'}
+        `}
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
 
@@ -51,7 +73,6 @@ export const Navigation = () => {
 
           {/* DESKTOP NAVIGATION */}
           <div className="hidden lg:flex items-center gap-6 bg-secondary/80 backdrop-blur-sm rounded-full px-6 py-2">
-
             {navItems.map((item) => (
               <Link
                 key={item.label}
@@ -88,11 +109,7 @@ export const Navigation = () => {
             onClick={toggleMobileMenu}
             className="lg:hidden relative z-50 p-2 text-white hover:text-orange-400 transition-colors"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </nav>
@@ -120,8 +137,7 @@ export const Navigation = () => {
             ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
           `}
         >
-          <div className="flex flex-col h-full pt-16 sm:pt-20 px-6 space-y-1">
-
+          <div className="flex flex-col h-full pt-20 px-6 space-y-1">
             {navItems.map((item) => (
               <Link
                 key={item.label}
@@ -144,10 +160,12 @@ export const Navigation = () => {
             >
               Book a Meeting
             </Link>
-
           </div>
         </div>
       </div>
+
+      {/* ================= NAV SPACER ================= */}
+      <div className="h-[80px] sm:h-[96px]" />
     </>
   );
 };

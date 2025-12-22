@@ -15,8 +15,9 @@ export const HeroSection = () => {
 
     const ctx = gsap.context(() => {
       /* ===============================
-         INITIAL STATES
+         INITIAL STATES (CRITICAL FIX)
       =============================== */
+      gsap.set(".hero-bg-1 video", { opacity: 1, scale: 1 });
       gsap.set(".hero-bg-2", { opacity: 0, scale: 1.05 });
       gsap.set(".hero-content", {
         opacity: 0,
@@ -24,29 +25,18 @@ export const HeroSection = () => {
         filter: "blur(12px)",
       });
 
-      /* ===============================
-         MAIN SCROLL TIMELINE
-      =============================== */
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-
-          // 🚀 ULTRA FAST MOBILE
           end: isMobile ? "+=110%" : "+=350%",
-
           pin: true,
-
-          // 🚀 VERY FAST SCRUB ON MOBILE
           scrub: isMobile ? 0.25 : 1.5,
-
           anticipatePin: 1,
         },
       });
 
-      /* ===============================
-         SCENE 1 — MIDIS EXIT
-      =============================== */
+      /* MIDIS EXIT */
       tl.to(".hero-title span", {
         y: -120,
         opacity: 0,
@@ -56,11 +46,9 @@ export const HeroSection = () => {
         ease: "power3.out",
       });
 
-      /* ===============================
-         SCENE 2 — BACKGROUND SWITCH
-      =============================== */
+      /* VIDEO FADE */
       tl.to(
-        ".hero-bg-1 img",
+        ".hero-bg-1 video",
         {
           scale: 1.12,
           y: -40,
@@ -82,9 +70,7 @@ export const HeroSection = () => {
         "-=0.4"
       );
 
-      /* ===============================
-         SCENE 3 — FINAL CONTENT
-      =============================== */
+      /* FINAL CONTENT */
       tl.to(
         ".hero-content",
         {
@@ -96,17 +82,6 @@ export const HeroSection = () => {
         },
         "-=0.3"
       );
-
-      /* ===============================
-         LIQUID OVERLAY LOOP
-      =============================== */
-      gsap.to(".liquid-overlay", {
-        backgroundPosition: "180% 180%",
-        duration: 18,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
     }, heroRef);
 
     return () => ctx.revert();
@@ -117,42 +92,47 @@ export const HeroSection = () => {
       ref={heroRef}
       className="relative h-screen overflow-hidden bg-black"
     >
-      {/* ================= LIQUID OVERLAY ================= */}
-      <div className="liquid-overlay absolute inset-0 z-10 pointer-events-none" />
+      {/* TRANSPARENT OVERLAY (FIXED) */}
+      <div className="absolute inset-0 z-10 pointer-events-none bg-transparent" />
 
-      {/* ================= BG IMAGE 1 ================= */}
+      {/* BG VIDEO */}
       <div className="hero-bg-1 absolute inset-0 z-0">
-        <img
-          src="/images/midis-hero.jpg"
-          alt=""
+        <video
+          src="/images/bg-video.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/images/video-poster.jpg"
           className="w-full h-full object-cover"
         />
       </div>
 
-      {/* ================= BG IMAGE 2 ================= */}
+      {/* BG IMAGE 2 */}
       <div className="hero-bg-2 absolute inset-0 z-0">
         <img
           src="/images/MIDIS.jpg"
-          alt=""
+          alt="MIDIS"
           className="w-full h-full object-cover"
         />
       </div>
 
-      {/* ================= MIDIS TITLE ================= */}
+      {/* MIDIS TEXT */}
       <div className="hero-title absolute inset-0 flex items-center justify-center z-20">
         <h1 className="font-anton text-[6rem] sm:text-[8rem] md:text-[14rem] lg:text-[18rem] text-white flex">
-          {letters.map((letter, i) => (
+          {letters.map((l, i) => (
             <span key={i} className="inline-block">
-              {letter}
+              {l}
             </span>
           ))}
         </h1>
       </div>
 
-      {/* ================= FINAL CONTENT ================= */}
+      {/* FINAL CONTENT */}
       <div className="hero-content absolute inset-0 flex items-center justify-center z-40">
         <div className="text-center max-w-3xl mx-auto text-white px-6">
-          <h2 className="text-3xl md:text-6xl font-semibold mb-6 leading-tight">
+          <h2 className="text-3xl md:text-6xl font-semibold mb-6">
             Powerful Digital Solutions for Future-Ready Brands
           </h2>
 
@@ -160,56 +140,6 @@ export const HeroSection = () => {
             Websites, apps, branding & marketing — everything your business needs
             to scale.
           </p>
-
-        <div className="flex items-center justify-center gap-6 relative">
-  {/* Left Button */}
-  <button
-    className="btn-border-animate group relative overflow-hidden px-8 py-4 rounded-full text-lg font-medium
-    bg-gradient-to-b from-[#3a3a3a] to-[#1f1f1f]
-    text-gray-200 shadow-inner shadow-black/40"
-  >
-    {/* Text animation stays SAME */}
-    <div className="relative overflow-hidden h-[1.5em]">
-      <p className="transition-transform duration-[500ms]
-        ease-[cubic-bezier(0.19,1,0.22,1)]
-        group-hover:-translate-y-full">
-        Get in touch
-      </p>
-      <p className="absolute top-full left-0
-        transition-all duration-[500ms]
-        ease-[cubic-bezier(0.19,1,0.22,1)]
-        group-hover:top-0">
-        Get in touch
-      </p>
-    </div>
-  </button>
-
-  {/* Line */}
-  <span className="hidden sm:block w-20 h-px bg-white/30"></span>
-
-  {/* Right Button */}
-  <button
-    className="btn-border-animate group relative overflow-hidden px-8 py-4 rounded-full text-lg font-medium
-    bg-gradient-to-b from-[#3a3a3a] to-[#1f1f1f]
-    text-gray-200 shadow-inner shadow-black/40"
-  >
-    <div className="relative overflow-hidden h-[1.5em]">
-      <p className="transition-transform duration-[500ms]
-        ease-[cubic-bezier(0.19,1,0.22,1)]
-        group-hover:-translate-y-full">
-        See My Work
-      </p>
-      <p className="absolute top-full left-0
-        transition-all duration-[500ms]
-        ease-[cubic-bezier(0.19,1,0.22,1)]
-        group-hover:top-0">
-        See My Work
-      </p>
-    </div>
-  </button>
-</div>
-
-
         </div>
       </div>
     </section>

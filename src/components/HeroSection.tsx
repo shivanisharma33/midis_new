@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,7 +20,7 @@ export const HeroSection = () => {
          INITIAL STATES (CRITICAL FIX)
       =============================== */
       gsap.set(".hero-bg-1 video", { opacity: 1, scale: 1 });
-      gsap.set(".hero-bg-2", { opacity: 0, scale: 1.05 });
+      gsap.set(".hero-bg-2 video", { opacity: 0, scale: 1.05 });
       gsap.set(".hero-content", {
         opacity: 0,
         y: 80,
@@ -46,7 +48,7 @@ export const HeroSection = () => {
         ease: "power3.out",
       });
 
-      /* VIDEO FADE */
+      /* BG VIDEO 1 EXIT */
       tl.to(
         ".hero-bg-1 video",
         {
@@ -59,8 +61,9 @@ export const HeroSection = () => {
         "-=0.3"
       );
 
+      /* BG VIDEO 2 ENTER */
       tl.to(
-        ".hero-bg-2",
+        ".hero-bg-2 video",
         {
           opacity: 1,
           scale: 1,
@@ -92,10 +95,10 @@ export const HeroSection = () => {
       ref={heroRef}
       className="relative h-screen overflow-hidden bg-black"
     >
-      {/* TRANSPARENT OVERLAY (FIXED) */}
+      {/* TRANSPARENT OVERLAY */}
       <div className="absolute inset-0 z-10 pointer-events-none bg-transparent" />
 
-      {/* BG VIDEO */}
+      {/* BG VIDEO 1 */}
       <div className="hero-bg-1 absolute inset-0 z-0">
         <video
           src="/images/bg-video.mp4"
@@ -109,11 +112,16 @@ export const HeroSection = () => {
         />
       </div>
 
-      {/* BG IMAGE 2 */}
+      {/* BG VIDEO 2 */}
       <div className="hero-bg-2 absolute inset-0 z-0">
-        <img
-          src="/images/MIDIS.jpg"
-          alt="MIDIS"
+        <video
+          src="/images/bg-video.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/images/video-poster.jpg"
           className="w-full h-full object-cover"
         />
       </div>

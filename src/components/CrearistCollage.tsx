@@ -41,7 +41,7 @@ export default function CrearistCollage() {
     /* ===============================
        PHASE 1 — PAUSE (IMAGES ONLY)
     =============================== */
-    tl.to({}, { duration: 0.6 });
+    tl.to({}, { duration: 0.2 });
 
     /* ===============================
        PHASE 2 — TEXT APPEARS

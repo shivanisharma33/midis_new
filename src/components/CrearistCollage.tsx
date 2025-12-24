@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,7 +19,6 @@ export default function CrearistCollage() {
 
     /* ===============================
        INITIAL STATE
-       (Text hidden, images visible)
     =============================== */
     gsap.set(textWrap, {
       opacity: 0,
@@ -25,27 +26,24 @@ export default function CrearistCollage() {
     });
 
     /* ===============================
-       MASTER PINNED TIMELINE
+       PINNED TIMELINE
     =============================== */
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: wrap,
         start: "top top",
-        end: isMobile ? "+=240%" : "+=340%",
+        end: isMobile ? "+=180%" : "+=240%", // 🔑 controls pin duration
         scrub: isMobile ? 0.5 : 1.3,
         pin: true,
+        pinSpacing: true, // ✅ releases section cleanly
         anticipatePin: 1,
       },
     });
 
-    /* ===============================
-       PHASE 1 — PAUSE (IMAGES ONLY)
-    =============================== */
-    tl.to({}, { duration: 0.2 });
+    /* PAUSE */
+    tl.to({}, { duration: 0.25 });
 
-    /* ===============================
-       PHASE 2 — TEXT APPEARS
-    =============================== */
+    /* TEXT IN */
     tl.to(textWrap, {
       opacity: 1,
       scale: 1,
@@ -53,9 +51,7 @@ export default function CrearistCollage() {
       ease: "power3.out",
     });
 
-    /* ===============================
-       PHASE 3 — IMAGE SPREAD
-    =============================== */
+    /* IMAGE SPREAD */
     tl.to(".img-1", { x: -240, y: -260, rotate: -6, ease: "power3.out" }, "<");
     tl.to(".img-2", { x: -60, y: -340, rotate: 4, scale: 0.95, ease: "power3.out" }, "<");
     tl.to(".img-3", { x: -220, y: 180, rotate: -3, ease: "power3.out" }, "<");
@@ -68,10 +64,10 @@ export default function CrearistCollage() {
   }, []);
 
   return (
-    <div className="min-h-[180vh] md:min-h-[280vh] bg-white">
+    <section className="bg-white">
       <section
         ref={wrapperRef}
-        className="relative min-h-[100svh] w-full overflow-hidden bg-white"
+        className="relative min-h-[60svh] w-full bg-white"
       >
         {/* BACKGROUND */}
         <div
@@ -79,76 +75,54 @@ export default function CrearistCollage() {
           style={{ backgroundImage: "url('/images/midis-bg.jpg')" }}
         />
 
-        {/* COLLAGE IMAGES — SAME AS IMAGE */}
+        {/* COLLAGE IMAGES */}
         <div className="absolute inset-0 z-10">
-
-          {/* LEFT LARGE PORTRAIT */}
           <img
             src="/images/milestone.webp"
-            className="collage-img img-1 absolute
-                       left-[8%] top-[32%]
-                       w-[clamp(240px,36vw,420px)]
-                       rounded-xl shadow-xl"
+            className="img-1 absolute left-[8%] top-[32%] w-[clamp(240px,36vw,420px)] rounded-xl shadow-xl"
           />
 
-          {/* GOLD SHAPE (LEFT-CENTER OVERLAP) */}
           <img
             src="/images/partner-1.webp"
-            className="collage-img img-2 absolute
-                       left-[28%] top-[26%]
-                       w-[clamp(130px,20vw,220px)]
-                       rounded-xl shadow-xl"
+            className="img-2 absolute left-[28%] top-[26%] w-[clamp(130px,20vw,220px)] rounded-xl shadow-xl"
           />
 
-          {/* CENTER FRUIT IMAGE */}
           <img
             src="/images/partner-2.webp"
-            className="collage-img img-3 absolute
-                       left-[40%] top-[40%]
-                       w-[clamp(150px,24vw,260px)]
-                       rounded-xl shadow-xl z-20"
+            className="img-3 absolute left-[40%] top-[40%] w-[clamp(150px,24vw,260px)] rounded-xl shadow-xl z-20"
           />
 
-          {/* RIGHT BACK IMAGE */}
           <img
             src="/images/partner-3.webp"
-            className="collage-img img-4 absolute
-                       right-[22%] top-[18%]
-                       w-[clamp(240px,34vw,420px)]
-                       rounded-xl shadow-xl opacity-90"
+            className="img-4 absolute right-[22%] top-[18%] w-[clamp(240px,34vw,420px)] rounded-xl shadow-xl opacity-90"
           />
 
-          {/* RIGHT FRONT CHARACTER */}
           <img
             src="/images/partner-4.webp"
-            className="collage-img img-5 absolute
-                       right-[10%] top-[30%]
-                       w-[clamp(190px,30vw,340px)]
-                       rounded-xl shadow-xl z-30"
+            className="img-5 absolute right-[10%] top-[30%] w-[clamp(190px,30vw,340px)] rounded-xl shadow-xl z-30"
           />
         </div>
 
         {/* CENTER TEXT */}
         <div
           ref={textWrapRef}
-          className="absolute inset-0 z-20 flex flex-col items-center justify-center
-                     text-center px-4 font-playfair pointer-events-none"
+          className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pointer-events-none"
         >
-          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold leading-tight">
+          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold">
             YOUR TRUSTED
           </h1>
-          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold leading-tight">
+          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold">
             PARTNER IN
           </h1>
-          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold leading-tight">
+          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold">
             DESIGN EXCELLENCE
           </h1>
 
-          <button className="mt-6 w-11 h-11 md:w-12 md:h-12 rounded-full border border-black text-black flex items-center justify-center">
+          <button className="mt-6 w-11 h-11 rounded-full border border-black flex items-center justify-center">
             ↓
           </button>
         </div>
       </section>
-    </div>
+    </section>
   );
 }

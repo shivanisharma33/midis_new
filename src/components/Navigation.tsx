@@ -165,7 +165,7 @@ export const Navigation = () => {
       </div>
 
       {/* ================= NAV SPACER ================= */}
-      <div className="h-[80px] sm:h-[96px]" />
+      <div className="h-[0px] sm:h-[90px]" />
     </>
   );
 };

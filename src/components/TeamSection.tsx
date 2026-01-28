@@ -94,7 +94,7 @@ export const TeamSection: React.FC = () => {
     },
     {
       img: "https://www.midis.in/image/member1.jpg",
-      name: "SWAYAM GHANDHI",
+      name: "SWAYAM GANDHI",
       role: "BACKEND DEVELOPER",
     },
     {

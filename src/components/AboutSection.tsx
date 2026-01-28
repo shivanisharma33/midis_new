@@ -1,75 +1,129 @@
-import { useRef } from "react";
+"use client";
 
-export const AboutSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+
+const TEXT =
+  "WE DELIVER INNOVATIVE SOLUTIONS TO HELP YOUR STARTUP THRIVE BY STRATEGICALLY BUILDING ITS PRESENCE IN THE MARKET.";
+
+const Word = ({
+  word,
+  index,
+  totalWords,
+  progress,
+}: {
+  word: string;
+  index: number;
+  totalWords: number;
+  progress: MotionValue<number>;
+}) => {
+  const start = index / totalWords;
+  const end = start + 1 / totalWords;
+
+  const color = useTransform(progress, [start, end], ["#d1d5db", "#1a1a2e"]);
+
+  return (
+    <motion.span
+      className="inline-block mr-[0.25em] sm:mr-[0.35em]"
+      style={{ color }}
+    >
+      {word}
+    </motion.span>
+  );
+};
+
+const AboutSection: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const words = TEXT.split(" ").filter(Boolean);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  // ✅ Faster reveal on mobile, smoother on desktop
+  const progress = useTransform(
+    scrollYProgress,
+    [0.1, 0.45],
+    [0, 1]
+  );
 
   return (
     <section
-      ref={sectionRef}
-      className="relative flex items-center justify-center bg-white overflow-hidden"
+      ref={containerRef}
+      className="
+        w-full
+        min-h-[110vh]
+        sm:min-h-[120vh]
+        bg-white
+        relative
+      "
     >
-      {/* ✨ BACKGROUND GLOW */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-orange-400/20 rounded-full blur-[180px]" />
-      </div>
+      {/* STICKY CONTENT */}
+      <div
+        className="
+          sticky
+          top-0
+          h-[100svh]
+          flex
+          items-center
+          justify-center
+          px-4
+          sm:px-6
+          md:px-12
+          lg:px-20
+        "
+      >
+        <div className="max-w-7xl mx-auto text-center">
+          {/* TOP LABEL */}
+          <motion.p
+            className="
+              text-[10px]
+              sm:text-[11px]
+              md:text-[13px]
+              tracking-[0.25em]
+              uppercase
+              mb-6
+              sm:mb-8
+              md:mb-10
+              text-black
+              font-semibold
+            "
+            style={{ fontFamily: "Inter, sans-serif" }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            Welcome to midis
+          </motion.p>
 
-      <div className="relative max-w-6xl mx-auto px-6 text-center py-32">
-        
-        {/* TAGLINE */}
-        <p
-          className="
-            uppercase
-            font-semibold
-            tracking-[0.3em]
-            text-[0.9rem]
-            sm:text-[1rem]
-            md:text-[1.1rem]
-            text-gray-500
-            mb-6
-          "
-        >
-          Welcome to MIDIS
-        </p>
-
-        {/* DIVIDER */}
-        <div className="flex justify-center mb-10">
-          <span className="h-[2px] w-14 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" />
+          {/* WORD-BY-WORD TEXT */}
+          <p
+            className="
+              uppercase
+              font-extrabold
+              tracking-tight
+              leading-[1.15]
+              text-[clamp(1.4rem,5.5vw,4rem)]
+              sm:text-[clamp(1.8rem,4.8vw,4rem)]
+            "
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            {words.map((word, i) => (
+              <Word
+                key={i}
+                word={word}
+                index={i}
+                totalWords={words.length}
+                progress={progress}
+              />
+            ))}
+          </p>
         </div>
-
-        {/* MAIN HEADING */}
-        <h2
-          className="
-            font-extrabold
-            tracking-tight
-            leading-[1.15]
-            text-[2rem]
-            sm:text-[2.8rem]
-            md:text-[3.6rem]
-            lg:text-[4.6rem]
-            xl:text-[5.4rem]
-            text-slate-900
-          "
-        >
-          <span className="block">
-            We Deliver
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
-              {" "}Innovative Solutions
-            </span>
-          </span>
-
-          <span className="block">
-            To Help Your Startup Thrive
-          </span>
-
-          <span className="block">
-            By Strategically Building
-          </span>
-
-          <span className="block text-gray-600 font-medium">
-            Its Presence In The Market.
-          </span>
-        </h2>
       </div>
     </section>
   );
 };
+
+export default AboutSection;

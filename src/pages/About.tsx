@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { TeamSection } from '@/components/TeamSection';
 import { Footer } from "@/components/Footer";
+import { AnimatedTextReveal } from "@/components/AnimatedTextReveal";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -71,12 +72,11 @@ const Page: React.FC = () => {
   const workflowRef = useRef<HTMLDivElement | null>(null);
   const workflowTrackRef = useRef<HTMLDivElement | null>(null);
 
-  /* ================= ABOUT GSAP ================= */
+  /* ================= ABOUT GSAP (paragraph animation only) ================= */
   useEffect(() => {
     if (!aboutRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.set(".reveal-line", { y: 120, opacity: 0 });
       gsap.set(".reveal-para", { y: 40, opacity: 0 });
 
       gsap
@@ -86,23 +86,12 @@ const Page: React.FC = () => {
             start: "top 70%",
           },
         })
-        .to(".reveal-line", {
+        .to(".reveal-para", {
           y: 0,
           opacity: 1,
-          stagger: 0.15,
-          duration: 1,
-          ease: "power4.out",
-        })
-        .to(
-          ".reveal-para",
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-          },
-          "-=0.4"
-        );
+          duration: 0.9,
+          ease: "power3.out",
+        });
     }, aboutRef);
 
     return () => ctx.revert();
@@ -342,16 +331,17 @@ useEffect(() => {
   "
 >
   <div className="max-w-[980px] text-center">
-    <h1
+    <AnimatedTextReveal
+      text="MIDIS CREATIVE STRATEGY REAL BUSINESS RESULTS."
+      as="h1"
       className="
-        text-black font-extrabold tracking-tight leading-[1]
+        text-black font-extrabold tracking-tight leading-[1.1]
         text-[36px] sm:text-[48px] md:text-[72px] lg:text-[96px] xl:text-[112px]
       "
-    >
-      <span className="block reveal-line">MIDIS CREATIVE STRATEGY</span>
-      <span className="block reveal-line">REAL BUSINESS</span>
-      <span className="block reveal-line">RESULTS.</span>
-    </h1>
+      blurAmount={10}
+      revealDistance={1.2}
+      fadeDuration={0.4}
+    />
 
     <p
       className="
@@ -362,7 +352,7 @@ useEffect(() => {
         reveal-para
       "
     >
-      At PixelReach, we don’t just create campaigns — we craft strategies
+      At PixelReach, we don't just create campaigns — we craft strategies
       that solve problems, spark engagement, and drive growth.
     </p>
   </div>

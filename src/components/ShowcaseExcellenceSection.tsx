@@ -110,7 +110,7 @@ function StackSection() {
           pointer-events-none
         "
       >
-        <div className="bg-white rounded-t-3xl shadow-2xl">
+        <div className="bg-white shadow-2xl">
           <StackedCard />
         </div>
       </div>
@@ -138,7 +138,7 @@ function NormalCard() {
       <div className="max-w-[1500px] mx-auto grid md:grid-cols-2 gap-16 px-6">
         <img
           src="/images/milestone.webp"
-          className="w-full rounded-xl object-cover"
+          className="w-full object-cover"
         />
 
         <div className="flex flex-col justify-center space-y-14">
@@ -186,10 +186,10 @@ function StackedCard() {
   useCounters(countersRef, stats);
 
   return (
-    <div className="max-w-[1500px] mx-auto grid md:grid-cols-2 gap-16 px-6 py-24">
+    <div className="max-w-[1500px] mx-auto grid md:grid-cols-2 gap-16 px-6 ">
       <img
         src="/images/partner-3.webp"
-        className="w-full rounded-xl object-cover"
+        className="w-full object-cover"
       />
 
       <div className="flex flex-col justify-center space-y-14">

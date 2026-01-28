@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const navItems = [
-  { label: 'Services', to: '/services2' },
-  { label: 'Blogs', to: '/blogs' },
-  { label: 'Case Study', to: '/case-study' },
-  { label: 'About', to: '/about' },
-  { label: 'Contact', to: '/contact' },
+  { label: "Home", to: "/" },
+  { label: "Pages", to: "/pages" },
+  { label: "Service", to: "/services2" },
+  { label: "Shop", to: "/shop" },
+  { label: "Contact", to: "/contact" },
 ];
 
 export const Navigation = () => {
@@ -16,10 +16,7 @@ export const Navigation = () => {
   const [hideNav, setHideNav] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const isActive = (path: string) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
-  };
+  const isActive = (path: string) => location.pathname === path;
 
   /* ================= SCROLL HIDE / SHOW ================= */
   useEffect(() => {
@@ -27,145 +24,112 @@ export const Navigation = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setHideNav(true); // scrolling down
+        setHideNav(true);
       } else {
-        setHideNav(false); // scrolling up
+        setHideNav(false);
       }
 
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
-
-  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
-  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <>
-      {/* ================= HEADER ================= */}
+      {/* ================= NAVBAR ================= */}
       <nav
-        className={`
-          fixed top-0 left-0 w-full z-50
-          px-4 sm:px-6 lg:px-12
-          py-3 sm:py-4
-          bg-black/70 backdrop-blur-lg
-          border-b border-white/10
-          transition-transform duration-300 ease-in-out
-          ${hideNav ? '-translate-y-full' : 'translate-y-0'}
-        `}
+        className={`fixed top-0 left-0 w-full z-50
+        bg-transparent
+        transition-transform duration-300 ease-in-out
+        ${hideNav ? "-translate-y-full" : "translate-y-0"}`}
       >
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-
-          {/* LOGO */}
-          <Link
-            to="/"
-            className="flex items-center relative z-50"
-            onClick={closeMobileMenu}
-          >
+        <div className="relative max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between">
+          {/* ================= LOGO (LEFT) ================= */}
+          <Link to="/" className="flex items-center z-10">
             <img
               src="/images/midis final logo-01.png"
               alt="Midis Logo"
-              className="h-8 sm:h-10 lg:h-20 w-auto object-contain"
+              className="h-10 lg:h-14 w-auto object-contain"
             />
           </Link>
 
-          {/* DESKTOP NAVIGATION */}
-          <div className="hidden lg:flex items-center gap-6 bg-secondary/80 backdrop-blur-sm rounded-full px-6 py-2">
+          {/* ================= CENTER WHITE PILL ================= */}
+          <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center bg-white rounded-full px-6 py-2 gap-6 shadow-lg">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.to}
-                className={`px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                className={`text-sm font-medium transition-colors ${
                   isActive(item.to)
-                    ? 'text-foreground'
-                    : 'text-foreground/80 hover:text-foreground'
+                    ? "text-black"
+                    : "text-black/60 hover:text-black"
                 }`}
               >
                 {item.label}
               </Link>
             ))}
 
-            {/* CTA */}
-            <Link
-              to="/book-meeting"
-              className="ml-4 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:scale-105 transition-all duration-300"
-            >
-              Book a Meeting
-            </Link>
+            <button className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center">
+              <ArrowUpRight size={16} />
+            </button>
           </div>
 
-          {/* TABLET CTA */}
-          <Link
-            to="/book-meeting"
-            className="hidden md:block lg:hidden px-3 py-2 rounded-full bg-white text-black text-xs sm:text-sm font-semibold hover:bg-orange-400 transition-all duration-300"
-          >
-            Book Meeting
-          </Link>
+          {/* ================= RIGHT SIDE ================= */}
+          <div className="hidden lg:flex items-center gap-3 z-10">
+            {["Facebook", "Instagram", "LinkedIn"].map((item) => (
+              <button
+                key={item}
+                className="px-4 py-2 rounded-full border border-white/30 text-xs text-white hover:bg-white hover:text-black transition"
+              >
+                {item}
+              </button>
+            ))}
 
-          {/* MOBILE MENU BUTTON */}
+            
+          </div>
+
+          {/* ================= MOBILE MENU BUTTON ================= */}
           <button
-            onClick={toggleMobileMenu}
-            className="lg:hidden relative z-50 p-2 text-white hover:text-orange-400 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-white z-10"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
       </nav>
 
-      {/* ================= MOBILE OVERLAY ================= */}
+      {/* ================= MOBILE MENU ================= */}
       <div
         className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
           isMobileMenuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* BACKDROP */}
         <div
-          className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-          onClick={closeMobileMenu}
+          className="absolute inset-0 bg-black/80"
+          onClick={() => setIsMobileMenuOpen(false)}
         />
 
-        {/* SLIDE-IN MENU */}
         <div
-          className={`absolute top-0 right-0 h-full w-full sm:w-80
-            bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a]
-            border-l border-white/10 shadow-2xl
-            transition-transform duration-300
-            ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-          `}
+          className={`absolute top-0 right-0 h-full w-80 bg-black p-6 pt-24
+          transition-transform duration-300
+          ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
-          <div className="flex flex-col h-full pt-20 px-6 space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                onClick={closeMobileMenu}
-                className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 rounded-lg"
-              >
-                {item.label}
-              </Link>
-            ))}
-
-            {/* MOBILE CTA */}
+          {navItems.map((item) => (
             <Link
-              to="/book-meeting"
-              onClick={closeMobileMenu}
-              className="mt-6 block w-full px-6 py-3 rounded-full
-              bg-gradient-to-r from-orange-500 to-pink-500
-              text-white text-center font-semibold
-              shadow-lg shadow-orange-500/25"
+              key={item.label}
+              to={item.to}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-3 text-white/80 hover:text-white"
             >
-              Book a Meeting
+              {item.label}
             </Link>
-          </div>
+          ))}
         </div>
       </div>
-
-      {/* ================= NAV SPACER ================= */}
-      <div className="h-[0px] sm:h-[90px]" />
     </>
   );
 };

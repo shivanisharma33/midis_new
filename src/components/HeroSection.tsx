@@ -1,155 +1,159 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useRef, useState } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+const SCROLL_THRESHOLD = 8;
 
-export const HeroSection = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const letters = "MIDIS".split("");
+const HeroSection: React.FC = () => {
+  const [imageSwapped, setImageSwapped] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  const scrollCountRef = useRef(0);
+  const isAnimatingRef = useRef(false);
 
   useEffect(() => {
-    if (!heroRef.current) return;
-
-    const isMobile = window.innerWidth < 768;
-
-    const ctx = gsap.context(() => {
-      /* ===============================
-         INITIAL STATES (CRITICAL FIX)
-      =============================== */
-      gsap.set(".hero-bg-1 video", { opacity: 1, scale: 1 });
-      gsap.set(".hero-bg-2 video", { opacity: 0, scale: 1.05 });
-      gsap.set(".hero-content", {
-        opacity: 0,
-        y: 80,
-        filter: "blur(12px)",
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: isMobile ? "+=110%" : "+=350%",
-          pin: true,
-          scrub: isMobile ? 0.25 : 1.5,
-          anticipatePin: 1,
-        },
-      });
-
-      /* MIDIS EXIT */
-      tl.to(".hero-title span", {
-        y: -120,
-        opacity: 0,
-        scale: 1.4,
-        stagger: isMobile ? 0.04 : 0.06,
-        duration: isMobile ? 0.9 : 1.6,
-        ease: "power3.out",
-      });
-
-      /* BG VIDEO 1 EXIT */
-      tl.to(
-        ".hero-bg-1 video",
-        {
-          scale: 1.12,
-          y: -40,
-          opacity: 0,
-          duration: isMobile ? 0.8 : 1.4,
-          ease: "power2.out",
-        },
-        "-=0.3"
-      );
-
-      /* BG VIDEO 2 ENTER */
-      tl.to(
-        ".hero-bg-2 video",
-        {
-          opacity: 1,
-          scale: 1,
-          duration: isMobile ? 0.9 : 1.6,
-          ease: "power2.out",
-        },
-        "-=0.4"
-      );
-
-      /* FINAL CONTENT */
-      tl.to(
-        ".hero-content",
-        {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: isMobile ? 0.9 : 1.8,
-          ease: "power3.out",
-        },
-        "-=0.3"
-      );
-    }, heroRef);
-
-    return () => ctx.revert();
+    setMounted(true);
   }, []);
 
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      const direction = e.deltaY > 0 ? "down" : "up";
+
+      if (isAnimatingRef.current) return;
+
+      // SCROLL DOWN
+      if (direction === "down" && !imageSwapped) {
+        e.preventDefault();
+        isAnimatingRef.current = true;
+
+        scrollCountRef.current += 1;
+        const progress = Math.min(scrollCountRef.current / SCROLL_THRESHOLD, 1);
+        setScrollProgress(progress);
+
+        if (scrollCountRef.current >= SCROLL_THRESHOLD) {
+          setImageSwapped(true);
+          setTimeout(() => {
+            isAnimatingRef.current = false;
+          }, 1800);
+        } else {
+          isAnimatingRef.current = false;
+        }
+      }
+
+      // SCROLL UP
+      if (direction === "up" && imageSwapped) {
+        e.preventDefault();
+        isAnimatingRef.current = true;
+
+        scrollCountRef.current -= 1;
+        const progress = Math.max(scrollCountRef.current / SCROLL_THRESHOLD, 0);
+        setScrollProgress(progress);
+
+        if (scrollCountRef.current <= 0) {
+          setImageSwapped(false);
+          setTimeout(() => {
+            isAnimatingRef.current = false;
+          }, 1800);
+        } else {
+          isAnimatingRef.current = false;
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [imageSwapped]);
+
+  const zoomScale = 1 + scrollProgress * 0.2;
+
   return (
-    <section
-      ref={heroRef}
-      className="relative h-screen overflow-hidden bg-black"
-    >
-      {/* TRANSPARENT OVERLAY */}
-      <div className="absolute inset-0 z-10 pointer-events-none bg-transparent" />
-
-      {/* BG VIDEO 1 */}
-      <div className="hero-bg-1 absolute inset-0 z-0">
-        <video
-          src="/images/bg-video.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster="/images/video-poster.jpg"
-          className="w-full h-full object-cover"
+    <section className="relative w-full h-screen overflow-hidden bg-neutral-900">
+      {/* BACKGROUND IMAGES */}
+      <div className="absolute inset-0">
+        {/* IMAGE 1 */}
+        <div
+          className={`absolute inset-0 bg-cover bg-center transition-all duration-[1800ms] ease-in-out
+            ${imageSwapped ? "opacity-0 scale-110" : "opacity-100"}`}
+          style={{
+            backgroundImage: "url('/images/banner.webp')",
+            transform: `scale(${imageSwapped ? 1.2 : zoomScale})`,
+          }}
         />
-      </div>
 
-      {/* BG VIDEO 2 */}
-      <div className="hero-bg-2 absolute inset-0 z-0">
-        <video
-          src="/images/bg-video.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster="/images/video-poster.jpg"
-          className="w-full h-full object-cover"
+        {/* IMAGE 2 */}
+        <div
+          className={`absolute inset-0 bg-cover bg-center transition-all duration-[1800ms] ease-in-out
+            ${imageSwapped ? "opacity-100" : "opacity-0 scale-90"}`}
+          style={{
+            backgroundImage: "url('/images/banner-about.webp')",
+            transform: `scale(${imageSwapped ? zoomScale : 0.9})`,
+          }}
         />
+
+        {/* GRADIENT OVERLAY */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
       </div>
 
-      {/* MIDIS TEXT */}
-      <div className="hero-title absolute inset-0 flex items-center justify-center z-20">
-        <h1 className="font-anton text-[6rem] sm:text-[8rem] md:text-[14rem] lg:text-[18rem] text-white flex">
-          {letters.map((l, i) => (
-            <span key={i} className="inline-block">
-              {l}
-            </span>
-          ))}
-        </h1>
-      </div>
+      {/* MAIN CONTENT */}
+      <div className="relative z-10 h-full flex flex-col">
 
-      {/* FINAL CONTENT */}
-      <div className="hero-content absolute inset-0 flex items-center justify-center z-40">
-        <div className="text-center max-w-3xl mx-auto text-white px-6">
-          <h2 className="text-3xl md:text-6xl font-semibold mb-6">
-            Powerful Digital Solutions for Future-Ready Brands
-          </h2>
 
-          <p className="text-base md:text-2xl text-gray-300 mb-10">
-            Websites, apps, branding & marketing — everything your business needs
-            to scale.
-          </p>
+        {/* CENTER HERO TEXT */}
+        <div className="flex-1 flex items-center justify-center px-8">
+          <div className="text-center max-w-6xl mx-auto">
+            <h1
+              className={`
+             pt-22 md:pt-38 lg:pt-44
+                leading-none
+                transition-all duration-[1500ms] ease-out
+                ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
+                text-white uppercase
+              `}
+              style={{
+                fontFamily: "Anton, sans-serif",
+                fontWeight: 800,
+                fontSize: "clamp(100px, 29vw, 500px)",
+                letterSpacing: "-5px",
+                lineHeight: 1,
+                WebkitTextFillColor: "transparent",
+                backgroundImage: "linear-gradient(90deg, #fff, #ffffff45 72%, #fff0)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                transform: "translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg)",
+                transformStyle: "preserve-3d",
+              }}
+            >
+              MIDIS
+            </h1>
+            <p
+              className={`
+                mt-6 md:mt-8 text-base md:text-xl lg:text-2xl text-white/90 font-light tracking-wide
+                transition-all duration-1000 delay-500
+                ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
+              `}
+            >
+              Innovative Solutions for Modern Challenges
+            </p>
+          </div>
         </div>
+
+
       </div>
+
+      {/* DECORATIVE ELEMENTS */}
+      <div
+        className={`absolute top-1/2 left-8 w-px h-24 bg-gradient-to-b from-transparent via-white/30 to-transparent
+          transition-all duration-1000 delay-1000
+          ${mounted ? "opacity-100" : "opacity-0"}`}
+      />
+      <div
+        className={`absolute top-1/2 right-8 w-px h-24 bg-gradient-to-b from-transparent via-white/30 to-transparent
+          transition-all duration-1000 delay-1000
+          ${mounted ? "opacity-100" : "opacity-0"}`}
+      />
     </section>
   );
 };
+
+export default HeroSection;

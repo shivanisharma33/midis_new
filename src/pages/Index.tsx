@@ -1,7 +1,9 @@
 import { Navigation } from '@/components/Navigation';
-import { HeroSection } from '@/components/HeroSection';
-import { AboutSection } from '@/components/AboutSection';
-import PortfolioMarquee from '@/components/PortfolioMarquee';
+import HeroSection from "@/components/HeroSection";
+
+import AboutSection from "@/components/AboutSection";
+
+// import PortfolioMarquee from '@/components/PortfolioMarquee';
 
 import { ServicesSection } from '@/components/ServicesSection';
 import ShowcaseExcellenceSection from "@/components/ShowcaseExcellenceSection";
@@ -34,8 +36,9 @@ const Index = () => {
 
 
       {/* ================= PORTFOLIO ================= */}
-      <PortfolioMarquee />
-      <CrearistCollage />
+        <CrearistCollage />
+      {/* <PortfolioMarquee /> */}
+    
 
       {/* ================= SHOWCASE ================= */}
       <ShowcaseExcellenceSection />

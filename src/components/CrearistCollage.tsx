@@ -7,153 +7,108 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CrearistCollage() {
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const textWrapRef = useRef<HTMLDivElement | null>(null);
-  const leftGroupRef = useRef<HTMLDivElement | null>(null);
-  const rightGroupRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const titleGroupRef = useRef<HTMLDivElement | null>(null);
+  const milestonesRef = useRef<HTMLDivElement | null>(null);
+
+  // Image Refs
+  const imgGuyRef = useRef<HTMLDivElement | null>(null);
+  const imgGoldRef = useRef<HTMLDivElement | null>(null);
+  const imgOrangeRef = useRef<HTMLDivElement | null>(null);
+  const imgRobotRef = useRef<HTMLDivElement | null>(null);
+  const imgMotionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const wrap = wrapperRef.current;
-    const textWrap = textWrapRef.current;
-    const leftGroup = leftGroupRef.current;
-    const rightGroup = rightGroupRef.current;
-    
-    if (!wrap || !textWrap || !leftGroup || !rightGroup) return;
+    const container = containerRef.current;
+    if (!container) return;
 
     const isMobile = window.innerWidth < 768;
 
     /* ===============================
-       INITIAL STATE
+       INITIAL SETUP
     =============================== */
-    gsap.set(textWrap, {
+
+    // Text starts fully hidden and set to small scale
+    gsap.set(titleGroupRef.current, {
       opacity: 0,
-      scale: 0.9,
-      zIndex: 5, // Start in front
+      scale: 0.6,
+      y: 0,
+      zIndex: 0
     });
 
+    // Milestones (Stage 4 content) hidden
+    gsap.set(milestonesRef.current, { opacity: 0, x: 200 });
+
     /* ===============================
-       MAIN ANIMATION TIMELINE
+       TIMELINE ANIMATION
     =============================== */
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: wrap,
+        trigger: container,
         start: "top top",
-        end: isMobile ? "+=400%" : "+=500%",
-        scrub: isMobile ? 1 : 1.5,
+        end: "+=700%", // Longer scroll for smoother multi-phase animation
+        scrub: 1,
         pin: true,
-        pinSpacing: true,
         anticipatePin: 1,
       },
     });
 
-    /* ===== PHASE 1: TEXT APPEARS SMALL ===== */
-    tl.to({}, { duration: 0.15 });
-    
-    tl.to(textWrap, {
+    /* --- PHASE 1: SHIFT IMAGES & SHOW SMALL TEXT (BEHIND) --- */
+    // This happens immediately upon scrolling
+    tl.to(titleGroupRef.current, {
       opacity: 1,
-      scale: 0.7,
-      duration: 0.3,
-      ease: "power2.out",
-    });
+      scale: 0.8, // Shows up small as requested
+      duration: 3,
+      ease: "power2.inOut"
+    }, 0);
 
-    /* ===== PHASE 2: IMAGES SPREAD & TEXT GOES BEHIND ===== */
-    tl.to(".img-1", { x: -100, y: -80, rotate: -3, ease: "power2.out", duration: 0.4 }, "<0.1");
-    tl.to(".img-2", { x: 20, y: -120, rotate: 4, scale: 0.95, ease: "power2.out", duration: 0.4 }, "<");
-    tl.to(".img-3", { x: -60, y: 80, rotate: -2, ease: "power2.out", duration: 0.4 }, "<");
-    tl.to(".img-4", { x: -30, y: 120, rotate: 5, scale: 0.9, ease: "power2.out", duration: 0.4 }, "<");
-    tl.to(".img-5", { x: 80, y: -100, rotate: 2, ease: "power2.out", duration: 0.4 }, "<");
-    tl.to(".img-6", { x: 140, y: 60, rotate: -3, ease: "power2.out", duration: 0.4 }, "<");
+    // Images shift dramatically to create the central gap for the text
+    tl.to(imgGuyRef.current, { x: "-20%", y: "-5%", duration: 3, ease: "power2.inOut" }, 0);
+    tl.to(imgGoldRef.current, { x: "-10%", y: "-10%", duration: 3, ease: "power2.inOut" }, 0);
+    tl.to(imgMotionRef.current, { x: "20%", y: "-5%", duration: 3, ease: "power2.inOut" }, 0);
+    tl.to(imgRobotRef.current, { x: "25%", duration: 3, ease: "power2.inOut" }, 0);
 
-    // Text goes behind images
-    tl.to(textWrap, {
-      zIndex: 5,
-      duration: 0.1,
-    }, "<0.5");
-
-    /* ===== PHASE 3: TEXT ZOOMS TO NORMAL SIZE ===== */
-    tl.to(textWrap, {
-      scale: 1,
-      duration: 0.6,
-      ease: "power2.inOut",
-    });
-
-    /* ===== PHASE 4: TEXT CONTINUES ZOOMING WITH SCROLL ===== */
-    tl.to(textWrap, {
-      scale: 1.2,
-      duration: 1.2,
-      ease: "power1.inOut",
-    });
-    
-    // Right images slide UP
-    tl.to(rightGroup, {
-      y: isMobile ? -250 : -400,
-      x: isMobile ? 50 : 100,
-      duration: 0.8,
-      ease: "power3.inOut",
-    }, "<0.3");
-    
-    /* ===== PHASE 5: LEFT SIDE EXPANDS ===== */
-    
-    // Left images expand to full left viewport
-    tl.to(leftGroup, {
-      x: isMobile ? -50 : -150,
-      scale: isMobile ? 1.3 : 1.6,
-      duration: 0.8,
-      ease: "power3.inOut",
-    }, "<0.2");
-    
-    tl.to(".img-1", { 
-      x: isMobile ? -80 : -200, 
-      y: -50, 
+    /* --- PHASE 2: TEXT GROWS & BACKGROUND BLURS --- */
+    tl.to(titleGroupRef.current, {
       scale: 1.4,
-      rotate: -2,
-      ease: "power3.inOut", 
-      duration: 0.8 
-    }, "<");
-    
-    tl.to(".img-2", { 
-      x: isMobile ? -40 : -120, 
-      y: -100, 
-      scale: 1.2,
-      rotate: 3,
-      ease: "power3.inOut", 
-      duration: 0.8 
-    }, "<");
-    
-    tl.to(".img-3", { 
-      x: isMobile ? -60 : -150, 
-      y: 100, 
-      scale: 1.3,
-      rotate: -4,
-      ease: "power3.inOut", 
-      duration: 0.8 
-    }, "<");
-    
-    tl.to(".img-4", { 
-      x: isMobile ? -50 : -140, 
-      y: 180, 
-      scale: 1.2,
-      ease: "power3.inOut", 
-      duration: 0.8 
+      opacity: 0.15, // Starts to fade as it gets very large
+      duration: 4,
+      ease: "sine.inOut"
+    }, ">");
+
+    /* --- PHASE 3: ASSETS EXPLODE AWAY --- */
+    tl.to(imgGoldRef.current, { x: "-300%", y: "-250%", opacity: 0, duration: 3 }, "<+1");
+    tl.to(imgOrangeRef.current, { x: "-200%", y: "250%", opacity: 0, duration: 3 }, "<");
+    tl.to(imgMotionRef.current, { x: "300%", y: "-150%", opacity: 0, scale: 2, duration: 3 }, "<");
+    tl.to(imgRobotRef.current, { x: "350%", y: "100%", opacity: 0, duration: 3 }, "<");
+    tl.to(titleGroupRef.current, { opacity: 0, duration: 1.5 }, "<+1.5");
+
+    /* --- PHASE 4: FINAL REVEAL (MILESTONES) --- */
+    // Main Guy settles into his definitive left position
+    tl.to(imgGuyRef.current, {
+      x: isMobile ? "0%" : "-155%",
+      y: isMobile ? "-20%" : "0%",
+      scale: isMobile ? 0.9 : 1.35,
+      width: isMobile ? "34%" : "34%", // Keep width consistent but shift
+      duration: 3.5,
+      ease: "power3.inOut"
+    }, ">-1.5");
+
+    // Reveal Milestone content
+    tl.to(milestonesRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 3.5,
+      ease: "power3.out"
     }, "<");
 
-    tl.to(".img-5", { 
-      y: isMobile ? -300 : -500, 
-      x: 50,
-      scale: 1.1,
-      opacity: 0.7,
-      ease: "power3.inOut", 
-      duration: 0.8 
-    }, "<");
-    
-    tl.to(".img-6", { 
-      y: isMobile ? -350 : -550, 
-      x: 80,
-      scale: 1.15,
-      opacity: 0.6,
-      ease: "power3.inOut", 
-      duration: 0.8 
-    }, "<");
+    tl.from(".milestone-stagger", {
+      y: 60,
+      opacity: 0,
+      stagger: 0.3,
+      duration: 2.5,
+      ease: "power2.out"
+    }, "<0.5");
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
@@ -161,75 +116,119 @@ export default function CrearistCollage() {
   }, []);
 
   return (
-    <section className="bg-white">
-      <section
-        ref={wrapperRef}
-        className="relative min-h-[100svh] w-full bg-white overflow-hidden"
+    <section ref={containerRef} className="relative w-full h-screen bg-white overflow-hidden">
+
+      {/* 1. LAYER: TEXT (BEHIND IMAGES) */}
+      <div
+        ref={titleGroupRef}
+        className="absolute inset-0 flex flex-col items-center justify-center z-0 select-none pointer-events-none text-center"
       >
-        {/* BACKGROUND */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100" />
+        <span className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-black/30 mb-6 uppercase">
+          15+ YEARS OF WORK EXPERIENCE
+        </span>
+        <h2 className="text-[clamp(3rem,10vw,8rem)] font-bold text-black leading-[0.85] uppercase tracking-tighter mb-10">
+          YOUR TRUSTED<br />
+          PARTNER IN DESIGN<br />
+          EXCELLENCE
+        </h2>
 
-        {/* LEFT SIDE IMAGE GROUP */}
-        <div ref={leftGroupRef} className="absolute inset-0 z-10">
-          {/* Image 1: Large portrait left - Blue/purple lighting */}
-          <img
-            src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/6826e26267d669b873e710d1_image%20(42)-p-800.webp"
-            alt="Creative portrait"
-            className="img-1 absolute left-[15%] top-[15%] w-[clamp(180px,24vw,260px)] h-[clamp(240px,32vw,350px)] object-cover shadow-2xl"
-          />
-
-          {/* Image 2: Gold/yellow hand top-center-left */}
-          <img
-            src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/680771c04782536da6d784cd_Partner.webp"
-            alt="Design element"
-            className="img-2 absolute left-[27%] top-[10%] w-[clamp(130px,17vw,190px)] h-[clamp(130px,17vw,190px)] object-cover shadow-2xl z-10"
-          />
-
-       
-
-          {/* Image 4: Orange slice small center-bottom */}
-          <img
-            src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67f3744155131a860ce7f378_image%20(20).webp"
-            alt="Design detail"
-            className="img-4 absolute left-[30%] bottom-[20%] w-[clamp(100px,13vw,150px)] h-[clamp(100px,13vw,150px)] object-cover rounded-sm shadow-xl z-5"
-          />
+        {/* Scroll Indicator */}
+        <div className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center bg-white/50 backdrop-blur-sm mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M7 13l5 5 5-5M12 6v12" />
+          </svg>
         </div>
+      </div>
 
-        {/* RIGHT SIDE IMAGE GROUP */}
-        <div ref={rightGroupRef} className="absolute inset-0 z-30">
-          {/* Image 5: Center portrait - Orange hoodie (MAIN FOCAL) */}
+      {/* 2. LAYER: COLLAGE ASSETS (IN FRONT) */}
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+
+        {/* Guy Portrait */}
+        <div
+          ref={imgGuyRef}
+          className="absolute left-[18%] top-[25%] w-[21vw] aspect-[3/4.4] overflow-hidden shadow-2xl z-20"
+        >
           <img
             src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/680771c062181f09a0bb7928_Partner%20(1)-p-500.webp"
-            alt="Creative portrait"
-            className="img-5 absolute right-[40%] top-[5%] w-[clamp(220px,29vw,320px)] h-[clamp(290px,38vw,420px)] object-cover shadow-2xl"
+            alt="Main Portrait"
+            className="w-full h-full object-cover"
           />
+        </div>
 
-          {/* Image 6: Right side - Cute character/robot */}
+        {/* Gold Shape */}
+        <div
+          ref={imgGoldRef}
+          className="absolute left-[30%] top-[15%] w-[13vw] aspect-square z-30 pointer-events-none"
+        >
+          <img
+            src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/680771c04782536da6d784cd_Partner.webp"
+            alt="Gold Asset"
+            className="w-full h-full object-contain"
+          />
+        </div>
+
+        {/* Orange Fruit */}
+        <div
+          ref={imgOrangeRef}
+          className="absolute left-[37%] top-[54%] w-[11vw] aspect-square z-25 pointer-events-none"
+        >
+          <img
+            src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67f3744155131a860ce7f378_image%20(20).webp"
+            alt="Orange"
+            className="w-full h-full object-contain"
+          />
+        </div>
+
+        {/* Large Blur Center Portrait */}
+        <div
+          ref={imgMotionRef}
+          className="absolute left-[47%] top-[10%] w-[25vw] aspect-[3/4.2] overflow-hidden shadow-xl z-10"
+        >
+          <img
+            src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/6826e26267d669b873e710d1_image%20(42)-p-800.webp"
+            alt="Motion Portrait"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Robot */}
+        <div
+          ref={imgRobotRef}
+          className="absolute left-[68%] top-[32%] w-[19vw] aspect-[4/3] z-20"
+        >
           <img
             src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67f3744155131a860ce7f375_image%20(21).webp"
-            alt="3D character"
-            className="img-6 absolute right-[25%] top-[17%] w-[clamp(170px,22vw,240px)] h-[clamp(150px,20vw,210px)] object-cover shadow-2xl"
+            alt="Asset"
+            className="w-full h-full object-contain"
           />
         </div>
+      </div>
 
-        {/* FIRST TEXT (GOES BEHIND IMAGES & ZOOMS) */}
-        <div
-          ref={textWrapRef}
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none"
-        >
-          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold leading-tight">
-            YOUR TRUSTED
-          </h1>
-          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold leading-tight">
-            PARTNER IN
-          </h1>
-          <h1 className="text-black text-[1.6rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4.2rem] font-bold leading-tight">
-            DESIGN EXCELLENCE
-          </h1>
+      {/* 3. LAYER: FINAL MILESTONES (In Front) */}
+      <div
+        ref={milestonesRef}
+        className="absolute inset-0 flex flex-col items-end justify-center px-12 md:px-32 z-40 pointer-events-none"
+      >
+        <div className="max-w-xl text-black">
+          <h2 className="milestone-stagger text-[clamp(2.5rem,7vw,6.5rem)] font-bold uppercase leading-[0.8] mb-16 tracking-tighter">
+            MILESTONES<br />THAT SHOWCASE<br />OUR EXCELLENCE
+          </h2>
 
-        
+          <div className="grid grid-cols-2 gap-x-12 pt-12 border-t border-black/10">
+            <div className="flex flex-col">
+              <span className="milestone-stagger text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 mb-6 font-semibold border-b border-black/5 pb-2">SUCCESS THROUGH CLIENTS</span>
+              <span className="milestone-stagger text-7xl md:text-9xl font-black">98%</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="milestone-stagger text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 mb-6 font-semibold border-b border-black/5 pb-2">IDEAS DELIVERED</span>
+              <span className="milestone-stagger text-7xl md:text-9xl font-black">15M</span>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none z-0 bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:50px_50px]"></div>
     </section>
   );
 }

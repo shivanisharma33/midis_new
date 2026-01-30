@@ -24,7 +24,7 @@ const services = [
   },
   {
     number: "03",
-    title: "SEARCH ENGINE OPTIMIZATION",
+    title: "SEO OPTIMIZATION",
     description:
       "Dominate search rankings and drive organic traffic with our strategic SEO solutions. We optimize every aspect of your digital presence to increase visibility, engage your target audience, and maximize conversions.",
     tags: ["On-Page SEO", "Technical SEO", "Content Strategy", "Link Building"],
@@ -40,7 +40,7 @@ const services = [
   },
   {
     number: "05",
-    title: "GOOGLE ADS & META ADS",
+    title: "GOOGLE & META ADS",
     description:
       "Maximize your advertising ROI with data-driven paid campaigns. Our specialists craft and optimize high-converting ads across Google and Meta platforms.",
     tags: ["Google Ads", "Facebook Ads", "Campaign Management", "Analytics"],
@@ -53,7 +53,6 @@ export const ServicesSection = () => {
   const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // ✅ Responsive detection
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -61,18 +60,16 @@ export const ServicesSection = () => {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // ✅ ScrollTrigger (desktop only)
   useEffect(() => {
     if (!sectionRef.current || isMobile) return;
 
     const ctx = gsap.context(() => {
       const items = gsap.utils.toArray<HTMLElement>(".service-item");
-
       items.forEach((item, index) => {
         ScrollTrigger.create({
           trigger: item,
           start: "top 60%",
-          end: "bottom 60%",
+          end: "bottom 40%",
           onEnter: () => setActiveIndex(index),
           onEnterBack: () => setActiveIndex(index),
         });
@@ -85,8 +82,7 @@ export const ServicesSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-background antialiased"
-      style={{ fontFamily: "Inter, sans-serif" }}
+      className="bg-[#0B0B0B] py-24 md:py-32 antialiased text-white"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {services.map((service, index) => {
@@ -95,89 +91,110 @@ export const ServicesSection = () => {
           return (
             <div
               key={service.number}
-              className="service-item border-t border-border"
+              className={`service-item border-white/5 transition-all duration-700 ease-in-out border-t ${isActive ? "border-white/20" : "border-white/5"
+                }`}
             >
-              <div className="py-12 sm:py-16">
-                <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+              <div className="py-12 md:py-16">
 
-                  {/* LEFT CONTENT */}
-                  <div className="flex gap-4 sm:gap-6 w-full">
-                    <span className="text-xs sm:text-sm text-muted-foreground pt-2">
+                {/* 1. TITLE & NUMBER HEADER */}
+                <div className="relative w-full flex justify-between items-start">
+
+                  <div className="flex flex-col">
+                    <span className="text-[10px] md:text-sm font-medium text-white/40 mb-2 ml-1">
                       {service.number}
                     </span>
-
-                    <div className="w-full">
-
-                      {/* TITLE */}
-                      <h3
-                        className="
-                          font-bold tracking-tight leading-[1.05] mb-4
-                          text-transparent bg-clip-text
-                          bg-gradient-to-r from-[#bfbfbf] to-[#6d6d6d]
-                          text-[clamp(1.8rem,8vw,5rem)]
-                        "
-                      >
-                        {service.title}
-                      </h3>
-
-                      {/* MOBILE IMAGE */}
-                      <div className="md:hidden mb-5">
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-40 sm:h-48 object-cover rounded-lg"
-                        />
-                      </div>
-
-                      {/* DESCRIPTION + TAGS */}
-                      <AnimatePresence>
-                        {(isActive || isMobile) && (
-                          <motion.div
-                            initial={{ y: 16, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: 16, opacity: 0 }}
-                            transition={{ duration: 0.5, ease: "easeOut" }}
-                          >
-                            <p className="text-sm sm:text-base text-muted-foreground max-w-xl mb-4">
-                              {service.description}
-                            </p>
-
-                            <div className="flex flex-wrap gap-2">
-                              {service.tags.map((tag) => (
-                                <span
-                                  key={tag}
-                                  className="text-[11px] sm:text-xs border border-border px-3 py-1 rounded-full"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                    <h3
+                      className={`
+                        font-bold tracking-tight uppercase transition-all duration-700 
+                        text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.8] mb-0
+                        ${isActive ? "text-white opacity-100" : "text-white/10 opacity-10"}
+                      `}
+                    >
+                      {service.title}
+                    </h3>
                   </div>
 
-                  {/* DESKTOP IMAGE */}
-                  <AnimatePresence>
-                    {!isMobile && isActive && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.96, y: 10 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="hidden md:block w-64 lg:w-72 h-40 lg:h-48 flex-shrink-0"
-                      >
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-full object-cover rounded-lg"
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
+                  {/* Circular Button */}
+                  <div
+                    className={`
+                      w-10 h-10 md:w-16 md:h-16 rounded-full border border-white/20 
+                      flex items-center justify-center transition-all duration-700 ease-out
+                      ${isActive ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75"}
+                    `}
+                  >
+                    <svg
+                      width="20" height="20" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                    >
+                      <path d="M7 7L17 17M17 17H7M17 17V7" />
+                    </svg>
+                  </div>
                 </div>
+
+                {/* 2. REVEALED CONTENT */}
+                <AnimatePresence>
+                  {(isActive || isMobile) && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      onAnimationComplete={() => ScrollTrigger.refresh()}
+                      transition={{
+                        duration: 0.8,
+                        ease: [0.16, 1, 0.3, 1]
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col md:flex-row gap-10 md:gap-16 pt-12 pb-6">
+
+                        {/* LEFT CONTENT: Desc + Tags */}
+                        <div className="w-full md:w-[60%] flex flex-col justify-end md:pl-[20%]">
+                          <motion.p
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            className="text-sm md:text-base text-white/50 leading-relaxed max-w-md mb-10"
+                          >
+                            {service.description}
+                          </motion.p>
+
+                          <motion.div
+                            initial={{ y: 15, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.1 }}
+                            className="flex flex-wrap gap-3"
+                          >
+                            {service.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="text-[9px] md:text-[10px] uppercase tracking-widest font-bold border border-white/20 px-4 py-2 rounded-full hover:bg-white hover:text-black transition-all duration-300 cursor-default"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </motion.div>
+                        </div>
+
+                        {/* RIGHT CONTENT: Image */}
+                        <div className="w-full md:w-[40%] flex justify-end">
+                          <motion.div
+                            initial={{ clipPath: "inset(0 0 100% 0)", opacity: 0 }}
+                            animate={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
+                            transition={{ duration: 1 }}
+                            className="w-full aspect-[4/3] md:aspect-[1.5/1] overflow-hidden rounded-sm"
+                          >
+                            <img
+                              src={service.image}
+                              alt={service.title}
+                              className="w-full h-full object-cover transition-transform duration-[2000ms] hover:scale-110"
+                            />
+                          </motion.div>
+                        </div>
+
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
               </div>
             </div>
           );

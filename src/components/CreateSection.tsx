@@ -1,101 +1,124 @@
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const CreateSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  const container = useRef<HTMLElement>(null);
+  const leftImageRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
+  useGSAP(() => {
+    // Animation for the left image - subtle scale/move as you scroll the section
+    gsap.to(".left-image", {
+      scale: 1.1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: container.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+      },
+    });
 
-    const ctx = gsap.context(() => {
-      gsap.from(".create-heading span", {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-        },
-        y: 100,
+    // Right side elements fade in/up
+    const rightElements = gsap.utils.toArray(".right-item");
+    rightElements.forEach((el: any) => {
+      gsap.from(el, {
+        y: 50,
         opacity: 0,
         duration: 1,
-        stagger: 0.12,
         ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+        },
       });
-    }, sectionRef);
+    });
 
-    return () => ctx.revert();
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = sectionRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
-
-    x = Math.max(80, Math.min(x, rect.width - 80));
-    y = Math.max(100, Math.min(y, rect.height - 100));
-
-    setMousePosition({ x, y });
-  };
+  }, { scope: container });
 
   return (
     <section
-      ref={sectionRef}
-      className="
-        py-16 sm:py-20 md:py-section
-        bg-background relative overflow-hidden
-      "
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      ref={container}
+      className="relative flex flex-col md:flex-row w-full bg-white text-black min-h-[200vh]"
     >
-      {/* Hover Image */}
-      <motion.div
-        className="
-          pointer-events-none absolute md:fixed
-          z-50 w-40 h-52 xs:w-48 xs:h-64 sm:w-56 sm:h-72 md:w-64 md:h-80
-        "
-        style={{
-          left: mousePosition.x - 80,
-          top: mousePosition.y - 120,
-        }}
-        animate={{
-          opacity: isHovering ? 1 : 0,
-          scale: isHovering ? 1 : 0.85,
-        }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
-      >
-        <img
-          src="/images/hover-image.webp"
-          alt="Hover"
-          className="w-full h-full object-cover rounded-xl"
-        />
-      </motion.div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-        <h2
-          className="
-            create-heading
-            inline-flex flex-wrap justify-center
-            gap-x-14 gap-y-10
-            text-3xl xs:text-4xl sm:text-5xl md:text-display lg:text-hero
-            font-anton
-            text-foreground
-            text-center
-            leading-[1.1] sm:leading-[1.15] md:leading-[1.2]
-            overflow-hidden
-          "
+      {/* LEFT COLUMN - STICKY */}
+      <div className="w-full md:w-1/2 h-[50vh] md:h-screen sticky top-0 flex items-center justify-center overflow-hidden bg-neutral-100">
+        <div
+          ref={leftImageRef}
+          className="left-image relative w-[80%] h-[80%] shadow-2xl overflow-hidden rounded-lg"
         >
-          <span className="inline-block">Let's</span>
-          <span className="inline-block">Create</span>
-          <span className="inline-block">Something</span>
-          <span className="inline-block">Extraordinary!</span>
-        </h2>
+          <img
+            src="/images/banner.webp"
+            alt="Design Excellence"
+            className="w-full h-full object-cover"
+          />
+          {/* Authentic glitch/neon effect overlay similar to reference */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-pink-500/20 mix-blend-overlay" />
+        </div>
+      </div>
+
+      {/* RIGHT COLUMN - SCROLLABLE */}
+      <div className="w-full md:w-1/2 flex flex-col p-8 md:p-20 gap-24 md:gap-40 bg-white">
+
+        {/* Item 1: Abstract Image */}
+        <div className="right-item w-full flex justify-end">
+          <div className="w-full max-w-md aspect-square bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+            <img
+              src="/images/hover-image.webp"
+              alt="Abstract Art"
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        </div>
+
+        {/* Item 2: Main Text */}
+        <div className="right-item flex flex-col items-center text-center my-10">
+          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">
+            15+ Years of Work Experience
+          </p>
+          <h2 className="text-5xl md:text-7xl font-black leading-[0.9] tracking-tight uppercase mb-8">
+            Your Trusted <br />
+            Partner in <br />
+            Design <br />
+            Excellence
+          </h2>
+          <button className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center hover:scale-110 transition-transform">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Item 3: Object/Product */}
+        <div className="right-item w-full flex justify-start">
+          <div className="w-full max-w-sm aspect-[4/3] bg-orange-50 rounded-2xl overflow-hidden shadow-lg transform -rotate-2 hover:rotate-0 transition-transform duration-500">
+            {/* Using a placeholder div to mimic the orange slice/abstract object */}
+            <div className="w-full h-full flex items-center justify-center bg-orange-100">
+              <img
+                src="/images/banner-about.webp"
+                alt="Creative Object"
+                className="w-full h-full object-cover mix-blend-multiply"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Item 4: Character/Mascot */}
+        <div className="right-item w-full flex justify-end">
+          <div className="relative w-full max-w-md aspect-square rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src="/images/hover-image.webp"
+              alt="Character Design"
+              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   );

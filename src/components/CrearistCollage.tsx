@@ -17,116 +17,159 @@ export default function CrearistCollage() {
   const imgOrangeRef = useRef<HTMLDivElement | null>(null);
   const imgRobotRef = useRef<HTMLDivElement | null>(null);
   const imgMotionRef = useRef<HTMLDivElement | null>(null);
+  const cardStackRef = useRef<HTMLDivElement | null>(null);
+  const imgStack2Ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const isMobile = window.innerWidth < 768;
+    const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
 
-    /* ===============================
-       INITIAL SETUP
-    =============================== */
+      /* ===============================
+         INITIAL SETUP
+      =============================== */
+      gsap.set(titleGroupRef.current, {
+        opacity: 1,
+        scale: 0.1,
+        y: 0,
+        zIndex: 0
+      });
 
-    // Text starts fully hidden and set to small scale
-    gsap.set(titleGroupRef.current, {
-      opacity: 0,
-      scale: 0.6,
-      y: 0,
-      zIndex: 0
-    });
+      gsap.set(milestonesRef.current, { opacity: 0, x: 100 });
+      gsap.set(cardStackRef.current, { y: "100%", opacity: 0 });
+      gsap.set(imgStack2Ref.current, { opacity: 0 });
 
-    // Milestones (Stage 4 content) hidden
-    gsap.set(milestonesRef.current, { opacity: 0, x: 200 });
+      /* ===============================
+         TIMELINE ANIMATION
+      =============================== */
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top top",
+          end: "+=1000%",
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
 
-    /* ===============================
-       TIMELINE ANIMATION
-    =============================== */
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: "top top",
-        end: "+=700%", // Longer scroll for smoother multi-phase animation
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
+      /* --- PHASE 1: IMAGES SHIFT --- */
+      tl.to(titleGroupRef.current, {
+        scale: 0.2,
+        duration: 3,
+        ease: "power2.inOut"
+      }, 0);
 
-    /* --- PHASE 1: SHIFT IMAGES & SHOW SMALL TEXT (BEHIND) --- */
-    // This happens immediately upon scrolling
-    tl.to(titleGroupRef.current, {
-      opacity: 1,
-      scale: 0.8, // Shows up small as requested
-      duration: 3,
-      ease: "power2.inOut"
-    }, 0);
+      tl.to(imgGuyRef.current, { x: "-35%", y: "-10%", duration: 3, ease: "power2.inOut" }, 0);
+      tl.to(imgGoldRef.current, { x: "-30%", y: "-25%", duration: 3, ease: "power2.inOut" }, 0);
+      tl.to(imgMotionRef.current, { x: "35%", y: "-10%", duration: 3, ease: "power2.inOut" }, 0);
+      tl.to(imgRobotRef.current, { x: "45%", duration: 3, ease: "power2.inOut" }, 0);
 
-    // Images shift dramatically to create the central gap for the text
-    tl.to(imgGuyRef.current, { x: "-20%", y: "-5%", duration: 3, ease: "power2.inOut" }, 0);
-    tl.to(imgGoldRef.current, { x: "-10%", y: "-10%", duration: 3, ease: "power2.inOut" }, 0);
-    tl.to(imgMotionRef.current, { x: "20%", y: "-5%", duration: 3, ease: "power2.inOut" }, 0);
-    tl.to(imgRobotRef.current, { x: "25%", duration: 3, ease: "power2.inOut" }, 0);
+      /* --- PHASE 2: TEXT ZOOMS IN --- */
+      tl.to(titleGroupRef.current, {
+        scale: 0.8,
+        duration: 4,
+        ease: "power2.inOut"
+      }, ">");
 
-    /* --- PHASE 2: TEXT GROWS & BACKGROUND BLURS --- */
-    tl.to(titleGroupRef.current, {
-      scale: 1.4,
-      opacity: 0.15, // Starts to fade as it gets very large
-      duration: 4,
-      ease: "sine.inOut"
-    }, ">");
+      tl.to(imgGuyRef.current, { x: "-100%", y: "-15%", duration: 4, ease: "power2.inOut" }, "<");
+      tl.to(imgGoldRef.current, { x: "-110%", y: "-110%", duration: 4, ease: "power2.inOut" }, "<");
+      tl.to(imgMotionRef.current, { x: "100%", y: "-20%", duration: 4, ease: "power2.inOut" }, "<");
+      tl.to(imgRobotRef.current, { x: "120%", y: "30%", duration: 4, ease: "power2.inOut" }, "<");
+      tl.to(imgOrangeRef.current, { x: "0%", y: "110%", duration: 4, ease: "power2.inOut" }, "<");
 
-    /* --- PHASE 3: ASSETS EXPLODE AWAY --- */
-    tl.to(imgGoldRef.current, { x: "-300%", y: "-250%", opacity: 0, duration: 3 }, "<+1");
-    tl.to(imgOrangeRef.current, { x: "-200%", y: "250%", opacity: 0, duration: 3 }, "<");
-    tl.to(imgMotionRef.current, { x: "300%", y: "-150%", opacity: 0, scale: 2, duration: 3 }, "<");
-    tl.to(imgRobotRef.current, { x: "350%", y: "100%", opacity: 0, duration: 3 }, "<");
-    tl.to(titleGroupRef.current, { opacity: 0, duration: 1.5 }, "<+1.5");
+      /* --- PHASE 3: TEXT SLIDE UP & IMAGE TO LEFT --- */
+      tl.to(titleGroupRef.current, {
+        y: -150,
+        opacity: 0,
+        duration: 2,
+        ease: "power3.inOut"
+      }, ">");
 
-    /* --- PHASE 4: FINAL REVEAL (MILESTONES) --- */
-    // Main Guy settles into his definitive left position
-    tl.to(imgGuyRef.current, {
-      x: isMobile ? "0%" : "-155%",
-      y: isMobile ? "-20%" : "0%",
-      scale: isMobile ? 0.9 : 1.35,
-      width: isMobile ? "34%" : "34%", // Keep width consistent but shift
-      duration: 3.5,
-      ease: "power3.inOut"
-    }, ">-1.5");
+      tl.to(imgMotionRef.current, {
+        left: 0,
+        top: 0,
+        width: isMobile ? "100%" : "50vw",
+        height: isMobile ? "50%" : "100vh",
+        x: 0,
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        zIndex: 50,
+        duration: 4,
+        ease: "power3.inOut"
+      }, "<");
 
-    // Reveal Milestone content
-    tl.to(milestonesRef.current, {
-      opacity: 1,
-      x: 0,
-      duration: 3.5,
-      ease: "power3.out"
-    }, "<");
+      tl.to([imgGuyRef.current, imgGoldRef.current, imgOrangeRef.current, imgRobotRef.current], {
+        opacity: 0,
+        scale: 0.5,
+        y: 50,
+        duration: 1.5,
+        stagger: 0.1,
+        ease: "power2.in"
+      }, "<");
 
-    tl.from(".milestone-stagger", {
-      y: 60,
-      opacity: 0,
-      stagger: 0.3,
-      duration: 2.5,
-      ease: "power2.out"
-    }, "<0.5");
+      /* --- PHASE 4: FINAL REVEAL (MILESTONES) --- */
+      tl.to(milestonesRef.current, {
+        opacity: 1,
+        x: 0,
+        duration: 3,
+        ease: "power3.out"
+      }, "<+0.5");
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
+      tl.from(".milestone-reveal", {
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 1.5,
+        ease: "power2.out"
+      }, "<+0.2");
+
+      /* --- PHASE 6: STACK CARD (Directly after Milestones) --- */
+      tl.to(milestonesRef.current, {
+        scale: 0.96,
+        y: -40,
+        duration: 4,
+        ease: "power2.inOut"
+      }, ">+1");
+
+      tl.to(imgMotionRef.current, {
+        opacity: 0,
+        duration: 2,
+        ease: "power3.inOut"
+      }, "<");
+
+      tl.to(imgStack2Ref.current, {
+        opacity: 1,
+        duration: 3,
+        ease: "power3.out"
+      }, "<+1");
+
+      tl.to(cardStackRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 5,
+        ease: "power2.out"
+      }, "<+0.5");
+    }, container);
+
+    return () => ctx.revert();
   }, []);
 
   return (
     <section ref={containerRef} className="relative w-full h-screen bg-white overflow-hidden">
 
-      {/* 1. LAYER: TEXT (BEHIND IMAGES) */}
+      {/* 1. LAYER: TEXT (BEHIND IMAGES - z-0) */}
       <div
         ref={titleGroupRef}
         className="absolute inset-0 flex flex-col items-center justify-center z-0 select-none pointer-events-none text-center"
       >
-        <span className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-black/30 mb-6 uppercase">
+        <span className="text-[8px] md:text-[10px] font-bold tracking-[0.25em] text-black/30 mb-6 uppercase">
           15+ YEARS OF WORK EXPERIENCE
         </span>
-        <h2 className="text-[clamp(3rem,10vw,8rem)] font-bold text-black leading-[0.85] uppercase tracking-tighter mb-10">
+        <h2 className="text-[clamp(2.5rem,8vw,6.5rem)] font-bold text-black leading-[0.85] uppercase tracking-tighter mb-10">
           YOUR TRUSTED<br />
           PARTNER IN DESIGN<br />
           EXCELLENCE
@@ -140,7 +183,7 @@ export default function CrearistCollage() {
         </div>
       </div>
 
-      {/* 2. LAYER: COLLAGE ASSETS (IN FRONT) */}
+      {/* 2. LAYER: COLLAGE ASSETS (IN FRONT - z-10+) */}
       <div className="absolute inset-0 flex items-center justify-center z-10">
 
         {/* Guy Portrait */}
@@ -182,7 +225,7 @@ export default function CrearistCollage() {
         {/* Large Blur Center Portrait */}
         <div
           ref={imgMotionRef}
-          className="absolute left-[47%] top-[10%] w-[25vw] aspect-[3/4.2] overflow-hidden shadow-xl z-10"
+          className="absolute left-[47%] top-[10%] w-[25vw] h-[35vw] overflow-hidden z-10"
         >
           <img
             src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/6826e26267d669b873e710d1_image%20(42)-p-800.webp"
@@ -207,27 +250,83 @@ export default function CrearistCollage() {
       {/* 3. LAYER: FINAL MILESTONES (In Front) */}
       <div
         ref={milestonesRef}
-        className="absolute inset-0 flex flex-col items-end justify-center px-12 md:px-32 z-40 pointer-events-none"
+        className="absolute inset-0 flex z-40 pointer-events-none"
       >
-        <div className="max-w-xl text-black">
-          <h2 className="milestone-stagger text-[clamp(2.5rem,7vw,6.5rem)] font-bold uppercase leading-[0.8] mb-16 tracking-tighter">
-            MILESTONES<br />THAT SHOWCASE<br />OUR EXCELLENCE
-          </h2>
+        <div className="hidden md:block w-1/2 h-full" />
+        <div className="w-full md:w-1/2 h-full bg-white flex flex-col items-center justify-center pointer-events-auto">
+          <div className="w-full max-w-2xl px-8 md:px-16">
+            <h2 className="milestone-reveal text-[clamp(2rem,6vw,5rem)] font-bold text-black leading-[0.9] mb-16 tracking-tight uppercase">
+              MILESTONES<br />
+              THAT SHOWCASE<br />
+              OUR EXCELLENCE
+            </h2>
 
-          <div className="grid grid-cols-2 gap-x-12 pt-12 border-t border-black/10">
-            <div className="flex flex-col">
-              <span className="milestone-stagger text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 mb-6 font-semibold border-b border-black/5 pb-2">SUCCESS THROUGH CLIENTS</span>
-              <span className="milestone-stagger text-7xl md:text-9xl font-black">98%</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="milestone-stagger text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 mb-6 font-semibold border-b border-black/5 pb-2">IDEAS DELIVERED</span>
-              <span className="milestone-stagger text-7xl md:text-9xl font-black">15M</span>
+            <div className="grid grid-cols-2 relative">
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-black/5"></div>
+              <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-black/5"></div>
+              <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-black/5"></div>
+
+              <div className="pt-10 pb-12 pr-6">
+                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
+                  SUCCESS THROUGH<br />OUR CLIENTS
+                </span>
+                <div className="flex items-center gap-3 relative">
+                  <span className="absolute -left-4 w-1.5 h-1.5 rounded-full bg-red-500 milestone-reveal"></span>
+                  <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">98%</span>
+                </div>
+              </div>
+
+              <div className="pt-10 pb-12 pl-10">
+                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
+                  CREATIVE IDEAS<br />DELIVERED
+                </span>
+                <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">15M</span>
+              </div>
+
+              <div className="pt-12 pr-6">
+                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
+                  SOCIAL MEDIA<br />IMPRESSIONS
+                </span>
+                <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">32%</span>
+              </div>
+
+              <div className="pt-12 pl-10">
+                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
+                  HIGH-VALUE PROJECTS<br />DELIVERED
+                </span>
+                <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">$428K</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Grid Pattern Overlay */}
+      <div
+        ref={cardStackRef}
+        className="absolute inset-0 flex z-50 pointer-events-none"
+      >
+        <div ref={imgStack2Ref} className="hidden md:block w-1/2 h-full overflow-hidden">
+          <img
+            src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/680771c045ce1011349f054e_Milestone-p-1080.webp"
+            alt="Stack 2"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="w-full md:w-1/2 h-full bg-white text-black flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.1)]">
+          <div className="w-full max-w-2xl px-8 md:px-16">
+            <span className="block text-[10px] md:text-xs uppercase tracking-[0.3em] text-black/30 mb-8 font-bold">OUR APPROACH</span>
+            <h2 className="text-[clamp(2.5rem,6vw,5.5rem)] font-bold leading-[0.9] mb-12 tracking-tighter uppercase">
+              DRIVEN BY<br />
+              <span className="text-black/20">STRATEGY &</span><br />
+              PASSION
+            </h2>
+            <div className="pt-12 border-t border-black/5">
+              <p className="text-sm uppercase tracking-widest font-bold">View Portfolio</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none z-0 bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:50px_50px]"></div>
     </section>
   );

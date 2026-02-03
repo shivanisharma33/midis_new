@@ -97,17 +97,23 @@ export const ServicesSection = () => {
               <div className="py-12 md:py-16">
 
                 {/* 1. TITLE & NUMBER HEADER */}
-                <div className="relative w-full flex justify-between items-start">
+                <div className="relative w-full flex justify-between items-end group cursor-pointer pb-2">
 
-                  <div className="flex flex-col">
-                    <span className="text-[10px] md:text-sm font-medium text-white/40 mb-2 ml-1">
+                  <div className="relative">
+                    {/* Number positioned at the top left of the title as in reference image */}
+                    <span className={`
+                      absolute -top-1 -left-4 md:-top-3 md:-left-10
+                      text-[10px] md:text-[16px] font-bold tracking-tight transition-all duration-700
+                      ${isActive ? "text-white/40" : "text-white/5"}
+                    `}>
                       {service.number}
                     </span>
                     <h3
                       className={`
-                        font-bold tracking-tight uppercase transition-all duration-700 
-                        text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.8] mb-0
-                        ${isActive ? "text-white opacity-100" : "text-white/10 opacity-10"}
+                        font-black tracking-tighter uppercase transition-colors duration-700 
+                        text-[clamp(2.5rem,12vw,10rem)] leading-[0.8] mb-0 select-none
+                        ${isActive ? "text-[#909090]" : "text-[#151515]"}
+                        group-hover:text-[#909090]
                       `}
                     >
                       {service.title}
@@ -117,14 +123,14 @@ export const ServicesSection = () => {
                   {/* Circular Button */}
                   <div
                     className={`
-                      w-10 h-10 md:w-16 md:h-16 rounded-full border border-white/20 
+                      mb-6 w-10 h-10 md:w-20 md:h-20 rounded-full border border-white/10 
                       flex items-center justify-center transition-all duration-700 ease-out
-                      ${isActive ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-75"}
+                      ${isActive ? "opacity-100 scale-100 rotate-0 bg-white text-black" : "opacity-0 scale-75"}
                     `}
                   >
                     <svg
-                      width="20" height="20" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                      width="28" height="28" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                     >
                       <path d="M7 7L17 17M17 17H7M17 17V7" />
                     </svg>

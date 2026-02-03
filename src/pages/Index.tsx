@@ -2,7 +2,6 @@ import { Navigation } from '@/components/Navigation';
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import { ServicesSection } from '@/components/ServicesSection';
-import ShowcaseExcellenceSection from "@/components/ShowcaseExcellenceSection";
 import { ClientsMarquee } from '@/components/ClientsMarquee';
 
 import { ReasonsSection } from '@/components/ReasonsSection';
@@ -25,9 +24,6 @@ const Index = () => {
 
       {/* ================= PORTFOLIO ================= */}
       <CrearistCollage />
-
-      {/* ================= SHOWCASE ================= */}
-      <ShowcaseExcellenceSection />
 
       {/* ================= SERVICES ================= */}
       <ServicesSection />

@@ -3,39 +3,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { projects } from "@/data/projects";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const projects = [
-    {
-        title: "DIGITAL INNOVATION",
-        category: "STRATEGY • DESIGN",
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
-        color: "#E5E5E5",
-        textColor: "#000000"
-    },
-    {
-        title: "BRAND EVOLUTION",
-        category: "IDENTITY • MOTION",
-        image: "https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?q=80&w=2564&auto=format&fit=crop",
-        color: "#1A1A1A",
-        textColor: "#FFFFFF"
-    },
-    {
-        title: "FUTURE ARCHITECTURE",
-        category: "3D RENDERING • VR",
-        image: "https://images.unsplash.com/photo-1633167606207-d843b5021b65?q=80&w=2564&auto=format&fit=crop",
-        color: "#F5F5F5",
-        textColor: "#000000"
-    },
-    {
-        title: "CREATIVE SYNERGY",
-        category: "ART DIRECTION • CODE",
-        image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2564&auto=format&fit=crop",
-        color: "#0B0B0B",
-        textColor: "#FFFFFF"
-    }
-];
 
 export default function StackedCards() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -46,84 +16,84 @@ export default function StackedCards() {
 
         if (!container || cards.length === 0) return;
 
-        // Pin the entire container while cards stack
-        const totalScrollHeight = window.innerHeight * cards.length;
+        const ctx = gsap.context(() => {
+            // Pin the entire container while cards stack
+            const totalScrollHeight = window.innerHeight * cards.length;
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: container,
-                start: "top top",
-                end: `+=${totalScrollHeight}`,
-                scrub: 1,
-                pin: true,
-                anticipatePin: 1,
-            }
-        });
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: container,
+                    start: "top top",
+                    end: `+=${totalScrollHeight}`,
+                    scrub: 1,
+                    pin: true,
+                    anticipatePin: 1,
+                }
+            });
 
-        cards.forEach((card, index) => {
-            // First card: animate its content immediately or on scroll
-            if (index === 0) {
-                gsap.fromTo(card.querySelectorAll(".animate-text"),
-                    { opacity: 0, y: 30, filter: "blur(10px)" },
+            cards.forEach((card, index) => {
+                // First card: animate its content immediately or on scroll
+                if (index === 0) {
+                    gsap.fromTo(card.querySelectorAll(".animate-text"),
+                        { opacity: 0, y: 30, filter: "blur(10px)" },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            filter: "blur(0px)",
+                            duration: 1.2,
+                            stagger: 0.1,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: card,
+                                start: "top 80%"
+                            }
+                        }
+                    );
+                    return;
+                }
+
+                // Timeline for subsequent cards
+                tl.fromTo(card,
+                    {
+                        y: "100%",
+                        scale: 0.95,
+                    },
+                    {
+                        y: "0%",
+                        scale: 1,
+                        duration: 2,
+                        ease: "none"
+                    },
+                    index - 1
+                );
+
+                // Animate content of the card as it becomes active
+                tl.fromTo(card.querySelectorAll(".animate-text"),
+                    { opacity: 0, y: 40, filter: "blur(8px)" },
                     {
                         opacity: 1,
                         y: 0,
                         filter: "blur(0px)",
-                        duration: 1.2,
+                        duration: 1,
                         stagger: 0.1,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: card,
-                            start: "top 80%"
-                        }
-                    }
+                        ease: "power2.out"
+                    },
+                    index - 0.5
                 );
-                return;
-            }
 
-            // Timeline for subsequent cards
-            tl.fromTo(card,
-                {
-                    y: "100%",
-                    scale: 0.95,
-                },
-                {
-                    y: "0%",
-                    scale: 1,
+                // Previous card effect
+                const prevCard = cards[index - 1];
+                tl.to(prevCard, {
+                    scale: 0.9,
+                    opacity: 0.4,
+                    filter: "blur(4px)",
                     duration: 2,
                     ease: "none"
-                },
-                index - 1
-            );
+                }, index - 1);
+            });
+        }, container);
 
-            // Animate content of the card as it becomes active
-            tl.fromTo(card.querySelectorAll(".animate-text"),
-                { opacity: 0, y: 40, filter: "blur(8px)" },
-                {
-                    opacity: 1,
-                    y: 0,
-                    filter: "blur(0px)",
-                    duration: 1,
-                    stagger: 0.1,
-                    ease: "power2.out"
-                },
-                index - 0.5
-            );
-
-            // Previous card effect
-            const prevCard = cards[index - 1];
-            tl.to(prevCard, {
-                scale: 0.9,
-                opacity: 0.4,
-                filter: "blur(4px)",
-                duration: 2,
-                ease: "none"
-            }, index - 1);
-        });
-
-        return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
+        return () => ctx.revert();
     }, []);
 
     return (

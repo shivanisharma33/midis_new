@@ -7,11 +7,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /* =======================================================
+   TYPES
+======================================================= */
+interface Stat {
+  label: string;
+  value: number;
+  suffix: "%" | "M" | "$K";
+}
+
+/* =======================================================
    COUNTER HOOK
 ======================================================= */
 function useCounters(
   countersRef: React.MutableRefObject<(HTMLElement | null)[]>,
-  stats: any[]
+  stats: Stat[]
 ) {
   useEffect(() => {
     stats.forEach((stat, i) => {
@@ -47,7 +56,7 @@ function useCounters(
         },
       });
     });
-  }, []);
+  }, [countersRef, stats]);
 }
 
 /* =======================================================
@@ -138,6 +147,9 @@ function NormalCard() {
       <div className="max-w-[1500px] mx-auto grid md:grid-cols-2 gap-16 px-6">
         <img
           src="/images/milestone.webp"
+          alt="Milestone"
+          loading="lazy"
+          decoding="async"
           className="w-full object-cover"
         />
 
@@ -189,6 +201,9 @@ function StackedCard() {
     <div className="max-w-[1500px] mx-auto grid md:grid-cols-2 gap-16 px-6 ">
       <img
         src="/images/partner-3.webp"
+        alt="Partner"
+        loading="lazy"
+        decoding="async"
         className="w-full object-cover"
       />
 

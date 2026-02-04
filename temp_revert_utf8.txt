@@ -1,0 +1,220 @@
+﻿"use client";
+
+import { motion } from "framer-motion";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { ServicesSection } from "@/components/ServicesSection";
+
+/* ================= ANIMATION VARIANTS ================= */
+const fadeUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
+
+/* ================= WHEEL DATA ================= */
+const wheelCards = [
+  { title: "Web Design", image: "/images/service-branding.webp" },
+  { title: "Web Development", image: "/images/Futuristic VR Portrait.webp" },
+  { title: "SEO Optimization", image: "/images/team-8.webp" },
+  { title: "Content Writing", image: "/images/joker.webp" },
+  { title: "YouTube Management", image: "/images/fresh-idea-2.webp" },
+  { title: "Email Marketing", image: "/images/fresh-idea-2.webp" },
+  { title: "E-Commerce Strategy", image: "/images/award-2.webp" },
+  { title: "Graphic Design", image: "/images/service-strategy.webp" },
+  { title: "Google & Meta Ads", image: "/images/Futuristic Portrait.png" },
+  { title: "Brand Strategy", image: "/images/service-strategy.webp" },
+];
+
+/* ================= 3D WHEEL (DESKTOP UNCHANGED ┬À MOBILE ENABLED) ================= */
+const ThreeDWheel = () => {
+  return (
+    <div
+      className="
+        relative flex items-center justify-center
+        w-[560px] h-[560px]
+        scale-[0.6] sm:scale-[0.75] lg:scale-100
+      "
+    >
+      {/* CAMERA */}
+      <div
+        className="relative w-full h-full flex items-center justify-center"
+        style={{ perspective: "1500px" }}
+      >
+        {/* ROTATING RING */}
+        <motion.div
+          className="relative w-full h-full"
+          style={{
+            transformStyle: "preserve-3d",
+            transformOrigin: "50% 50%",
+          }}
+          animate={{ rotateY: 360 }}
+          transition={{
+            duration: 36,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        >
+          {wheelCards.map((card, index) => {
+            const angle = (360 / wheelCards.length) * index;
+
+            return (
+              <div
+                key={card.title}
+                className="
+                  absolute inset-0 m-auto
+                  w-[260px] h-[340px]
+                  rounded-2xl bg-black text-white
+                  overflow-hidden shadow-2xl
+                "
+                style={{
+                  transform: `
+                    rotateY(${angle}deg)
+                    translateZ(460px)
+                  `,
+                }}
+              >
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold">{card.title}</h3>
+                  <p className="text-sm opacity-70 mt-2">
+                    High-impact digital solutions
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+/* ================= PAGE ================= */
+export default function ServicesPage() {
+  return (
+    <>
+      {/* NAV */}
+      <div className="fixed top-0 left-0 w-full z-[9999] bg-background">
+        <Navigation />
+      </div>
+
+      <motion.main
+        initial="hidden"
+        animate="visible"
+        className="bg-background text-foreground overflow-hidden pt-[90px]"
+      >
+        {/* HERO */}
+        <section className="relative min-h-[95vh] flex items-center px-6 lg:px-24 overflow-hidden">
+          <div className="relative w-full max-w-7xl mx-auto">
+            <motion.h1
+              initial={{ x: -120, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="text-[clamp(3.2rem,7.5vw,7.5rem)] font-extrabold leading-[0.92]"
+            >
+              Digital Services <br /> Built to Perform
+            </motion.h1>
+
+            <motion.p
+              initial={{ x: -80, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mt-8 max-w-xl text-lg text-muted-foreground"
+            >
+              Strategy-led services designed to scale brands, revenue,
+              and digital authority.
+            </motion.p>
+          </div>
+        </section>
+
+        {/* SERVICES */}
+        <ServicesSection />
+
+        {/* 3D WHEEL SECTION */}
+        <section className="py-40 px-6 lg:px-20 border-t border-border">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="max-w-6xl mx-auto text-center"
+          >
+            <motion.h2 variants={fadeUp} className="text-5xl font-bold">
+              Explore Our Capabilities
+            </motion.h2>
+
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 text-muted-foreground max-w-2xl mx-auto"
+            >
+              A complete ecosystem of services designed to grow, scale,
+              and monetize your digital presence.
+            </motion.p>
+
+            <div className="mt-24 flex justify-center overflow-hidden">
+              <ThreeDWheel />
+            </div>
+          </motion.div>
+        </section>
+
+        {/* RESULTS */}
+        <section className="py-32 px-6 lg:px-20 bg-muted/30">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="max-w-6xl mx-auto"
+          >
+            <motion.h2 variants={fadeUp} className="text-5xl font-bold mb-6">
+              Results WeÔÇÖve Delivered
+            </motion.h2>
+
+            <motion.p
+              variants={fadeUp}
+              className="text-muted-foreground max-w-2xl mb-20"
+            >
+              We donÔÇÖt just promise growth ÔÇö we deliver measurable outcomes
+              that help brands scale faster and smarter.
+            </motion.p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+              {[
+                { value: "3x", label: "Lead Growth" },
+                { value: "120+", label: "Projects Delivered" },
+                { value: "98%", label: "Client Retention" },
+                { value: "5+ Years", label: "Industry Experience" },
+              ].map((item) => (
+                <motion.div
+                  key={item.label}
+                  variants={fadeUp}
+                  whileHover={{ y: -8 }}
+                  className="p-10 bg-background border border-border"
+                >
+                  <h3 className="text-6xl font-extrabold leading-none">
+                    {item.value}
+                  </h3>
+                  <p className="mt-4 text-xl font-semibold">
+                    {item.label}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+
+        {/* FOOTER */}
+        <Footer />
+      </motion.main>
+    </>
+  );
+}

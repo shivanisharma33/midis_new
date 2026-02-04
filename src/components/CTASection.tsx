@@ -75,7 +75,7 @@ export const CTASection = () => {
     >
       {/* 👇 text-black added here */}
       <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center text-black">
-        
+
         {/* 👇 color changed to black */}
         <p className="text-xs tracking-widest uppercase mb-10 text-black">
           JOIN US TODAY!
@@ -112,6 +112,8 @@ export const CTASection = () => {
             <img
               src="/images/testimonial-bg.webp"
               alt="CTA"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </span>

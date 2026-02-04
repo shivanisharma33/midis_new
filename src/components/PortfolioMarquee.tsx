@@ -139,7 +139,7 @@ export default function PortfolioMarquee() {
       window.addEventListener("resize", onResize);
 
       return () => {
-        interval && clearInterval(interval);
+        if (interval) clearInterval(interval);
         window.removeEventListener("resize", onResize);
         sectionRef.current?.removeEventListener("touchstart", onTouchStart);
         sectionRef.current?.removeEventListener("touchmove", onTouchMove);

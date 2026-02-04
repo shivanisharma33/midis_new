@@ -15,4 +15,19 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    sourcemap: mode === "development",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "gsap-vendor": ["gsap"],
+          "ui-vendor": ["framer-motion", "lucide-react"],
+          "query-vendor": ["@tanstack/react-query"],
+        },
+      },
+    },
+    minify: "esbuild",
+    chunkSizeWarningLimit: 600,
+  },
 }));

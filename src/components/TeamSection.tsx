@@ -120,7 +120,7 @@ export const TeamSection: React.FC = () => {
   ];
 
   return (
-    
+
     <section
       ref={sectionRef}
       className="relative bg-[#0B0C0E] overflow-hidden h-screen min-h-[700px]"

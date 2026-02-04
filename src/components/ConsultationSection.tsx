@@ -11,22 +11,28 @@ const ConsultationSection = () => {
   useEffect(() => {
     const elements = elementsRef.current;
 
-    elements.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 70 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.3,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-          },
+    const ctx = gsap.context(() => {
+      elements.forEach((el) => {
+        if (el) {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 70 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1.3,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 85%",
+              },
+            }
+          );
         }
-      );
-    });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (

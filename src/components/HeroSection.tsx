@@ -172,12 +172,12 @@ const HeroSection: React.FC = () => {
       {/* SCROLL INDICATOR - shows when animation not complete */}
       {!animationComplete && (
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 z-20">
-          <span className="text-xs uppercase tracking-widest">
+          {/* <span className="text-xs uppercase tracking-widest">
             {revealProgress > 0 ? "Scroll up to reverse" : "Scroll to reveal"}
-          </span>
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+          </span> */}
+          {/* <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
             <div className="w-1 h-2 bg-white/60 rounded-full animate-bounce" />
-          </div>
+          </div> */}
           {/* Progress bar */}
           <div className="w-20 h-1 bg-white/20 rounded-full overflow-hidden mt-2">
             <div

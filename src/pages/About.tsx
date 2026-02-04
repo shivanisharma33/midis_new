@@ -1,582 +1,403 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
-import { TeamSection } from '@/components/TeamSection';
 import { Footer } from "@/components/Footer";
-import { AnimatedTextReveal } from "@/components/AnimatedTextReveal";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowUpRight, Plus, ChevronDown, Award, Star, Zap, Target, Users } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+/* ================= TYPES & DATA ================= */
 
-/* ================= WORKFLOW DATA (FIXED) ================= */
-const workflowCards = [
-  {
-    heading: "SEO & Organic Growth",
-    description:
-      "Drive long-term traffic and visibility with our SEO and organic growth strategies. From on-page optimization to content planning, we help your brand rank higher and attract the right audience.",
-    sub: "Think of our process as a friendly collaboration",
-  },
-  {
-    heading: "Social Media",
-    description:
-      "Engage your audience and grow your brand with our expert social media management. We create, schedule, and optimize content across platforms to boost visibility, build trust, and drive real engagement.",
-    sub: "Design meets purpose",
-  },
-  {
-    heading: "Web Development & Design",
-    description:
-      "Our team builds scalable solutions using modern technologies and best practices.",
-    sub: "Clean, fast & future-ready",
-  },
-  {
-    heading: "Email Marketing",
-    description:
-      "We launch, optimize, and iterate campaigns to ensure measurable business growth.",
-    sub: "Long-term success focus",
-  },
+const stats = [
+  { label: "Design Projects", value: "365+" },
+  { label: "Client Satisfaction", value: "98%" },
+  { label: "Awards Won", value: "45+" },
+  { label: "Years Experience", value: "15+" },
 ];
 
-/* ================= WHAT WE DO DATA ================= */
-const whatWeDoItems = [
-  {
-    label: "Goal-Focused",
-    number: "01",
-    image:
-      "https://cdn.prod.website-files.com/68de4d484f15cd7c9cd565f8/68e70d3c687c5b5913be04c3_About%20Hero%20Image%201.jpg",
-  },
-  {
-    label: "Data-Driven",
-    number: "02",
-    image: "images/Futuristic Portrait.png",
-  },
-  {
-    label: "Creative Team",
-    number: "03",
-    image: "images/Futuristic VR Portrait.png",
-  },
-  {
-    label: "Customized",
-    number: "04",
-    image: "images/Futuristic Glitch Portrait.png",
-  },
+const awards = [
+  { title: "BEST UI/UX DESIGN", year: "2024", image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d10d18f7f9092d93761_Img%20(5)-p-500.webp" },
+  { title: "DEVELOPMENT EXCELLENCE", year: "2023", image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp" },
+  { title: "BRANDING INNOVATION", year: "2023", image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63c7ba173bf929fe05bd6_Img%20(2)-p-500.webp" },
+  { title: "ANIMATION OF THE YEAR", year: "2022", image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63c81162c2494e4bed2f6_Img%20(3)%20(1)-p-500.webp" },
 ];
 
-const Page: React.FC = () => {
-  const [bgImage, setBgImage] = useState<string | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+const faqs = [
+  { q: "WHAT SERVICES DO YOU OFFER?", a: "We provide end-to-end creative solutions including UI/UX Design, Branding, Web Development, and Digital Strategy." },
+  { q: "HOW DO YOU APPROACH A NEW PROJECT?", a: "Our process starts with deep research and discovery, followed by strategic planning, creative execution, and rigorous testing." },
+  { q: "WHO WILL BE WORKING ON MY PROJECT?", a: "You'll have a dedicated team of senior designers and developers working directly with you throughout the lifecycle." },
+  { q: "DO YOU PROVIDE POST-LAUNCH SUPPORT?", a: "Yes, we offer comprehensive maintenance and support packages to ensure your digital products stay ahead of the curve." },
+];
 
-  const aboutRef = useRef<HTMLDivElement | null>(null);
-  const whatWeDoRef = useRef<HTMLDivElement | null>(null);
-  const workflowRef = useRef<HTMLDivElement | null>(null);
-  const workflowTrackRef = useRef<HTMLDivElement | null>(null);
+/* ================= COMPONENTS ================= */
 
-  /* ================= ABOUT GSAP (paragraph animation only) ================= */
-  useEffect(() => {
-    if (!aboutRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.set(".reveal-para", { y: 40, opacity: 0 });
-
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: aboutRef.current,
-            start: "top 70%",
-          },
-        })
-        .to(".reveal-para", {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power3.out",
-        });
-    }, aboutRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  /* ================= WHAT WE DO PIN ================= */
-  useEffect(() => {
-    if (!whatWeDoRef.current) return;
-
-    const trigger = ScrollTrigger.create({
-      trigger: whatWeDoRef.current,
-      start: "top top",
-      end: "+=400%",
-      pin: true,
-      scrub: true,
-      onUpdate: (self) => {
-        const index = Math.min(
-          whatWeDoItems.length - 1,
-          Math.floor(self.progress * whatWeDoItems.length)
-        );
-        setActiveIndex(index);
-      },
-    });
-
-    return () => trigger.kill();
-  }, []);
-
-  /* ================= WORKFLOW GSAP ================= */
-useEffect(() => {
-  if (!workflowRef.current || !workflowTrackRef.current) return;
-
-  const mm = gsap.matchMedia();
-
-  /* =====================================================
-     💻 DESKTOP (≥1024px) — YOUR ORIGINAL ANIMATION
-     ===================================================== */
-  mm.add("(min-width: 1024px)", () => {
-    const cards = gsap.utils.toArray<HTMLElement>(".workflow-card");
-    const heading = workflowRef.current!.querySelector("h1");
-
-    const CARD_WIDTH = 520;
-    const GAP = 60;
-
-    const scrollDistance =
-      (CARD_WIDTH + GAP) * (cards.length - 1);
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: workflowRef.current,
-        start: "top top",
-        end: `+=${scrollDistance}`,
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1,
-      },
-    });
-
-    /* HOLD FIRST FRAME */
-    tl.to({}, { duration: 0.2 });
-
-    /* MOVE LEFT HEADING */
-    tl.to(heading, {
-      x: -820,
-      ease: "power2.out",
-      duration: 0.6,
-    });
-
-    /* MOVE CARDS */
-    tl.to(
-      workflowTrackRef.current,
-      {
-        x: -scrollDistance,
-        ease: "none",
-        duration: 1,
-      },
-      "<"
-    );
-
-    return () => {
-      tl.kill();
-    };
-  });
-
-  /* =====================================================
-     📱 MOBILE (<1024px) — LEFT ↔ RIGHT CARD ANIMATION
-     ===================================================== */
-  mm.add("(max-width: 1023px)", () => {
-    const cards = gsap.utils.toArray<HTMLElement>(".workflow-card");
-
-    cards.forEach((card, index) => {
-      const fromX = index % 2 === 0 ? -120 : 120;
-
-      gsap.fromTo(
-        card,
-        { opacity: 0, x: fromX },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
-  });
-
-  return () => mm.revert();
-}, []);
-
-
+const AboutHero = () => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, -100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -50]);
 
   return (
-    <>
-      <Navigation />
-
-      {/* ================= HERO ================= */}
- <section
-  className="
-    relative w-full min-h-screen bg-white overflow-hidden
-    flex items-center justify-center
-    px-4 sm:px-6 lg:px-0
-  "
-  style={{
-    backgroundImage: bgImage ? `url(${bgImage})` : undefined,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
->
-  {/* ===== MOBILE TEXT (VISIBLE ALWAYS) ===== */}
-  <div className="absolute top-10 w-full text-center z-[20] lg:hidden">
-    <h1 className="text-black font-extrabold tracking-tight text-[48px] leading-none">
-      GRO
-    </h1>
-    <h1 className="text-black font-extrabold tracking-tight text-[42px] leading-none mt-2">
-      WITH
-    </h1>
-  </div>
-
-  {/* ===== DESKTOP TEXT ===== */}
-  <h1
-    className="
-      hidden lg:block absolute left-[60px]
-      text-black font-extrabold tracking-tight leading-none z-[10]
-      text-[140px]
-    "
-  >
-    GRO
-  </h1>
-
-  <h1
-    className="
-      hidden lg:block absolute right-[60px]
-      text-black font-extrabold tracking-tight leading-none z-[10]
-      text-[110px]
-    "
-  >
-    WITH
-  </h1>
-
-  {/* ===== IMAGES ===== */}
-  <div
-    className="
-      relative flex items-center justify-center
-      z-[5] lg:z-[2]
-      scale-[0.7] sm:scale-[0.85] md:scale-[0.95] lg:scale-100
-    "
-  >
-    {/* LEFT IMAGE */}
-    <div
-      onMouseEnter={() =>
-        setBgImage(
-          "https://cdn.prod.website-files.com/68de4d484f15cd7c9cd565f8/68e70d3c687c5b5913be04c3_About%20Hero%20Image%201.jpg"
-        )
-      }
-      onMouseLeave={() => setBgImage(null)}
-      className="
-        w-[180px] h-[260px]
-        sm:w-[240px] sm:h-[340px]
-        lg:w-[300px] lg:h-[420px]
-        rounded-2xl bg-cover bg-center
-        rotate-[-8deg]
-        translate-x-[40px] sm:translate-x-[80px] lg:translate-x-[120px]
-      "
-      style={{
-        backgroundImage:
-          "url('https://cdn.prod.website-files.com/68de4d484f15cd7c9cd565f8/68e70d3c687c5b5913be04c3_About%20Hero%20Image%201.jpg')",
-      }}
-    />
-
-    {/* CENTER IMAGE */}
-    <div
-      onMouseEnter={() => setBgImage("/images/milestone.webp")}
-      onMouseLeave={() => setBgImage(null)}
-      className="
-        w-[200px] h-[320px]
-        sm:w-[240px] sm:h-[380px]
-        lg:w-[260px] lg:h-[460px]
-        rounded-2xl bg-cover bg-center shadow-xl z-[6]
-      "
-      style={{ backgroundImage: "url('/images/milestone.webp')" }}
-    />
-
-    {/* RIGHT IMAGE */}
-    <div
-      onMouseEnter={() => setBgImage("/images/team-8.webp")}
-      onMouseLeave={() => setBgImage(null)}
-      className="
-        w-[180px] h-[260px]
-        sm:w-[240px] sm:h-[340px]
-        lg:w-[300px] lg:h-[420px]
-        rounded-2xl bg-cover bg-center
-        rotate-[8deg]
-        translate-x-[-40px] sm:translate-x-[-80px] lg:translate-x-[-120px]
-      "
-      style={{ backgroundImage: "url('/images/team-8.webp')" }}
-    />
-  </div>
-</section>
-
-
-      {/* ================= ABOUT ================= */}
-    <section
-  ref={aboutRef}
-  className="
-    w-full min-h-screen bg-white
-    px-4 sm:px-6 md:px-12 lg:px-[80px]
-    py-16 sm:py-20 md:py-24
-    flex items-center justify-center
-  "
->
-  <div className="max-w-[980px] text-center">
-    <AnimatedTextReveal
-      text="MIDIS CREATIVE STRATEGY REAL BUSINESS RESULTS."
-      as="h1"
-      className="
-        text-black font-extrabold tracking-tight leading-[1.1]
-        text-[36px] sm:text-[48px] md:text-[72px] lg:text-[96px] xl:text-[112px]
-      "
-      blurAmount={10}
-      revealDistance={1.2}
-      fadeDuration={0.4}
-    />
-
-    <p
-      className="
-        mt-6 sm:mt-8 md:mt-10
-        max-w-[720px] mx-auto
-        text-[14px] sm:text-[16px] md:text-[18px]
-        leading-[1.7] text-gray-700
-        reveal-para
-      "
-    >
-      At PixelReach, we don't just create campaigns — we craft strategies
-      that solve problems, spark engagement, and drive growth.
-    </p>
-  </div>
-</section>
-
-
-      {/* ================= WHAT WE DO ================= */}
-   <section
-  ref={whatWeDoRef}
-  className="
-    w-full min-h-screen bg-white overflow-hidden
-    flex flex-col lg:flex-row
-  "
->
-  {/* ================= LEFT CONTENT ================= */}
-  <div
-    className="
-      w-full lg:w-1/2
-      flex flex-col justify-between
-      px-4 sm:px-6 md:px-12 lg:px-[90px]
-      py-10 sm:py-14 lg:py-[80px]
-      relative
-    "
-  >
-    {/* LIST */}
-    <div className="space-y-4 sm:space-y-[18px]">
-      {whatWeDoItems.map((item, index) => (
-        <div
-          key={index}
-          className={`flex items-center gap-3 transition-all duration-500 ${
-            activeIndex === index ? "opacity-100" : "opacity-40"
-          }`}
-        >
-          {/* ACTIVE DOT */}
-          <span
-            className={`w-[8px] h-[8px] sm:w-[10px] sm:h-[10px] rounded-full transition-all duration-500 ${
-              activeIndex === index
-                ? "bg-black scale-100"
-                : "bg-gray-300 scale-75"
-            }`}
-          />
-
-          <p
-            className={`transition-all duration-500
-              text-[14px] sm:text-[16px] lg:text-[17px]
-              ${
-                activeIndex === index
-                  ? "text-black font-semibold translate-x-[6px]"
-                  : "text-gray-400 font-medium"
-              }
-            `}
-          >
-            {item.label}
-          </p>
-        </div>
-      ))}
-    </div>
-
-    {/* HEADING */}
-    <h1
-      className="
-        mt-10 lg:mt-0
-        text-black font-extrabold tracking-tight leading-[1.05]
-        text-[36px] sm:text-[44px] md:text-[54px] lg:text-[68px]
-        max-w-full lg:max-w-[420px]
-      "
-    >
-      DATA-BACKED <br /> DECISIONS
-    </h1>
-  </div>
-
-  {/* ================= RIGHT IMAGE ================= */}
-  <div
-    className="
-      w-full lg:w-1/2
-      relative overflow-hidden
-      h-[280px] sm:h-[360px] md:h-[440px] lg:h-auto
-    "
-  >
-    {whatWeDoItems.map((item, index) => (
-      <img
-        key={index}
-        src={item.image}
-        alt={item.label}
-        className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out
-          ${
-            activeIndex === index
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-[1.05]"
-          }
-        `}
-      />
-    ))}
-
-    {/* DARK GRADIENT OVERLAY */}
-    <div className="absolute inset-0 bg-gradient-to-l from-black/20 to-transparent pointer-events-none" />
-  </div>
-</section>
-
-
-      {/* ================= WORKFLOW ================= */}
-<section
-  ref={workflowRef}
-  className="
-    w-full min-h-screen bg-[#0b0b0b] overflow-hidden relative
-    flex flex-col lg:flex-row
-    items-start lg:items-center
-  "
->
-  {/* ================= LEFT HEADING ================= */}
-  <div
-    className="
-      w-full lg:w-auto
-      static lg:absolute
-      lg:left-[80px] lg:top-1/2 lg:-translate-y-1/2
-      px-4 sm:px-6 md:px-12 lg:px-0
-      pt-16 lg:pt-0
-      z-10
-      max-w-full lg:max-w-[420px]
-    "
-  >
-    <h1
-      className="
-        text-white font-extrabold tracking-tight leading-[0.95]
-        text-[36px] sm:text-[48px] md:text-[64px] lg:text-[110px]
-      "
-    >
-      What <br className="hidden lg:block" /> We Do
-    </h1>
-  </div>
-
-  {/* ================= CARD TRACK ================= */}
-  <div
-    ref={workflowTrackRef}
-    className="
-      w-full
-      flex flex-col lg:flex-row
-      gap-6 sm:gap-8 lg:gap-[60px]
-      px-4 sm:px-6 md:px-12
-      lg:pl-[520px] lg:pr-[120px]
-      pb-16 lg:pb-0
-    "
-  >
-    {workflowCards.map((item, index) => (
-      <div
-        key={index}
-        className="
-          workflow-card
-          w-full lg:flex-shrink-0
-        "
-        style={{ width: "100%", maxWidth: "520px" }} // responsive + desktop safe
+    <section className="relative min-h-[110vh] bg-[#0C0E12] flex flex-col items-center pt-48 overflow-hidden">
+      {/* Top Badge */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold text-white tracking-[0.3em] uppercase mb-12 backdrop-blur-sm"
       >
-        <div
-          className="
-            relative
-            h-auto lg:h-[440px]
-            rounded-[28px] lg:rounded-[36px]
-            px-6 sm:px-8 lg:px-[48px]
-            py-8 sm:py-10 lg:py-[52px]
-            bg-white/95 backdrop-blur-xl
-            shadow-[0_30px_90px_rgba(0,0,0,0.35)]
-            lg:shadow-[0_40px_120px_rgba(0,0,0,0.35)]
-            border border-black/5
-            transition-all duration-500 ease-out
-            hover:-translate-y-[6px]
-            hover:shadow-[0_60px_160px_rgba(0,0,0,0.45)]
-          "
+        Since 2009
+      </motion.div>
+
+      {/* Main Heading */}
+      <div className="relative z-10 text-center max-w-[1200px] px-6">
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-[14vw] md:text-[10vw] font-black text-white leading-[0.8] tracking-tighter uppercase mb-6"
         >
-          {/* INDEX BADGE */}
-          <span
-            className="
-              absolute top-6 right-6 lg:top-[32px] lg:right-[36px]
-              text-[28px] sm:text-[36px] lg:text-[48px]
-              font-extrabold text-black/5
-            "
-          >
-            {String(index + 1).padStart(2, "0")}
+          GET TO <br />
+          <span className="flex items-center justify-center gap-4">
+            KNOW US
+            <motion.div
+              animate={{ rotate: [0, 10, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
+              className="w-[0.6em] h-[0.6em] bg-orange-600 rounded-lg flex items-center justify-center -rotate-12"
+            >
+              <ArrowUpRight className="text-white w-full h-full p-2" />
+            </motion.div>
           </span>
-
-          <div className="relative z-10">
-            <h2
-              className="
-                font-bold text-black tracking-tight
-                text-[20px] sm:text-[24px] lg:text-[30px]
-                leading-tight
-              "
-            >
-              {item.heading}
-            </h2>
-
-            <p
-              className="
-                mt-4 lg:mt-[18px]
-                text-[14px] sm:text-[15px] lg:text-[16px]
-                leading-[1.7] lg:leading-[1.75]
-                text-gray-700
-              "
-            >
-              {item.description}
-            </p>
-          </div>
-
-          <div
-            className="
-              pt-6 lg:pt-[28px]
-              border-t border-gray-200
-              mt-6 lg:mt-[32px]
-            "
-          >
-            <p className="text-[13px] lg:text-[14px] text-gray-500">
-              {item.sub}
-            </p>
-          </div>
-        </div>
+        </motion.h1>
       </div>
-    ))}
-  </div>
-</section>
 
-
-
-      <Footer />
-    </>
+      {/* Image Collage Bottom */}
+      <div className="absolute bottom-0 left-0 w-full h-[40vh] flex items-end justify-center gap-4 px-4">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <motion.div
+            key={i}
+            style={{ y: i % 2 === 0 ? y1 : y2 }}
+            className={`w-full max-w-[300px] aspect-[3/4] rounded-t-[40px] overflow-hidden shadow-2xl ${i > 3 ? 'hidden md:block' : ''}`}
+          >
+            <img
+              src={`https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d69162c2494e4bf9c3e_img%20(17)-p-500.webp`}
+              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              alt="Work"
+            />
+          </motion.div>
+        ))}
+      </div>
+    </section>
   );
 };
 
-export default Page;
+const GrowthSection = () => {
+  return (
+    <section className="bg-white py-32 px-6 overflow-hidden">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div>
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-xs font-bold text-gray-400 tracking-widest uppercase block mb-6"
+          >
+            About Us
+          </motion.span>
+          <h2 className="text-5xl md:text-7xl font-black uppercase text-[#0C0E12] leading-[1] tracking-tighter mb-10 max-w-xl">
+            Driving Startup <span className="text-gray-200">Growth</span>—Crafting Your Brand with Precision & Impact
+          </h2>
+          <p className="text-lg text-gray-500 max-w-lg leading-relaxed">
+            We collaborate with ambitious startups and established enterprises to define their digital future through cutting-edge design and technology.
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center lg:items-end">
+          <div className="relative">
+            <span className="text-[12rem] font-black text-[#0C0E12] leading-none tracking-tighter">15</span>
+            <span className="absolute top-8 -right-10 text-6xl font-black text-orange-600">+</span>
+            <p className="text-right text-sm font-bold tracking-[0.2em] uppercase text-gray-400 mt-2">Years of Excellence</p>
+          </div>
+
+          <div className="mt-20 flex flex-wrap justify-end gap-12 opacity-30 grayscale lg:max-w-md">
+            {['FORBES', 'TECHCRUNCH', 'WIRED', 'NYT'].map(logo => (
+              <span key={logo} className="text-xl font-black tracking-tighter">{logo}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const InteractiveList = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  return (
+    <section className="bg-[#f8f8f8] py-32 px-6">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="border-t border-black/10">
+          {awards.map((award, i) => (
+            <div
+              key={i}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="group relative border-b border-black/10 py-12 flex items-center justify-between cursor-pointer overflow-visible"
+            >
+              <div className="flex items-center gap-12 z-10 transition-transform duration-500 group-hover:translate-x-4">
+                <span className="text-sm font-bold text-gray-400">{award.year}</span>
+                <h3 className="text-4xl md:text-6xl font-black uppercase text-[#0C0E12] tracking-tighter">
+                  {award.title}
+                </h3>
+              </div>
+
+              <div className="flex items-center gap-4 z-10">
+                <div className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all">
+                  <ArrowUpRight size={20} />
+                </div>
+              </div>
+
+              {/* Floating Image Reveal */}
+              <AnimatePresence>
+                {hoveredIndex === i && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, x: 20 }}
+                    className="absolute right-[10%] top-[-20%] w-[350px] aspect-[4/5] z-0 pointer-events-none hidden lg:block"
+                  >
+                    <img
+                      src={award.image}
+                      className="w-full h-full object-cover rounded-3xl shadow-5xl"
+                      alt="Award"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ReasonsSection = () => {
+  const reasons = [
+    { title: "INNOVATIVE REPORT", desc: "Digital Strategy & Research", icon: <Target className="w-8 h-8" /> },
+    { title: "CREATIVE VISION", desc: "Design & Art Direction", icon: <Star className="w-8 h-8" /> },
+    { title: "SMART EXECUTION", desc: "High-End Development", icon: <Zap className="w-8 h-8" /> },
+    { title: "FUTURE READY", desc: "Scalable Infrastructure", icon: <Users className="w-8 h-8" /> },
+  ];
+
+  return (
+    <section className="bg-white py-32 px-6">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-10">
+          <h2 className="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter max-w-2xl">
+            Here are some reasons you'll love working with us!
+          </h2>
+          <div className="w-16 h-16 bg-[#0C0E12] text-white rounded-full flex items-center justify-center rotate-45">
+            <Plus size={32} />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 px-1 bg-gray-100 border border-gray-100 rounded-[40px] overflow-hidden">
+          {reasons.map((r, i) => (
+            <div key={i} className="bg-white p-12 hover:bg-black group transition-all duration-500">
+              <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mb-10 group-hover:bg-white/10 group-hover:text-white transition-colors">
+                {r.icon}
+              </div>
+              <h4 className="text-xl font-black uppercase mb-4 tracking-tighter group-hover:text-white transition-colors">{r.title}</h4>
+              <p className="text-gray-500 group-hover:text-gray-400 transition-colors uppercase text-xs font-bold tracking-widest">{r.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const DualCTA = () => {
+  return (
+    <section className="bg-white grid grid-cols-1 lg:grid-cols-2 h-[80vh] min-h-[600px]">
+      <motion.div
+        whileHover="hover"
+        className="relative overflow-hidden group border-r border-white/10"
+      >
+        <img
+          src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp"
+          className="absolute inset-0 w-full h-full object-cover grayscale transition-transform duration-1000 group-hover:scale-110 group-hover:grayscale-0"
+        />
+        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all" />
+        <div className="absolute inset-0 p-16 flex flex-col justify-between items-start text-white">
+          <h3 className="text-6xl md:text-7xl font-black uppercase leading-none tracking-tighter max-w-md">
+            Have a project in mind?
+          </h3>
+          <button className="px-8 py-4 bg-white text-black rounded-full font-black text-xs tracking-widest uppercase hover:bg-orange-600 hover:text-white transition-all">
+            Let's Talk
+          </button>
+        </div>
+      </motion.div>
+
+      <motion.div
+        whileHover="hover"
+        className="relative overflow-hidden group"
+      >
+        <img
+          src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d10d18f7f9092d93761_Img%20(5)-p-500.webp"
+          className="absolute inset-0 w-full h-full object-cover grayscale transition-transform duration-1000 group-hover:scale-110 group-hover:grayscale-0"
+        />
+        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all" />
+        <div className="absolute inset-0 p-16 flex flex-col justify-between items-start text-white">
+          <h3 className="text-6xl md:text-7xl font-black uppercase leading-none tracking-tighter max-w-md">
+            looking to hire an agency?
+          </h3>
+          <button className="px-8 py-4 bg-white text-black rounded-full font-black text-xs tracking-widest uppercase hover:bg-orange-600 hover:text-white transition-all">
+            Join Us
+          </button>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState(0);
+
+  return (
+    <section className="bg-white py-32 px-6">
+      <div className="max-w-[800px] mx-auto">
+        <div className="space-y-4">
+          {faqs.map((f, i) => (
+            <div key={i} className="border-b border-black/10">
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
+                className="w-full py-8 flex items-center justify-between text-left group"
+              >
+                <h4 className={`text-xl md:text-2xl font-black uppercase tracking-tighter transition-colors ${openIndex === i ? 'text-orange-600' : 'text-[#0C0E12]'}`}>
+                  {f.q}
+                </h4>
+                <div className={`w-10 h-10 border border-black/10 rounded-full flex items-center justify-center transition-transform duration-500 ${openIndex === i ? 'rotate-180' : ''}`}>
+                  <ChevronDown size={20} />
+                </div>
+              </button>
+              <AnimatePresence>
+                {openIndex === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p className="pb-8 text-lg text-gray-500 leading-relaxed font-medium">
+                      {f.a}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const AboutMarquee = () => {
+  return (
+    <div className="bg-[#0C0E12] py-10 overflow-hidden relative flex border-y border-white/5">
+      <motion.div
+        animate={{ x: [0, -1000] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="flex whitespace-nowrap gap-10"
+      >
+        {[1, 2, 3, 4].map(i => (
+          <span key={i} className="text-[12vw] font-black uppercase text-white tracking-tighter opacity-10 leading-none">
+            About Us * About Us * About Us *
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+/* ================= PAGE EXPORT ================= */
+
+const AboutPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <main className="bg-white min-h-screen font-sans selection:bg-orange-600 selection:text-white overflow-x-hidden">
+      <Navigation />
+
+      <AboutHero />
+      <GrowthSection />
+
+      <div className="w-full flex justify-center py-20 bg-white">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="w-80 h-80 rounded-full border-4 border-[#0C0E12]/5 flex items-center justify-center p-8 opacity-20"
+        >
+          <div className="w-full h-full rounded-full border-8 border-[#0C0E12] border-t-transparent" />
+        </motion.div>
+      </div>
+
+      <ReasonsSection />
+      <AboutMarquee />
+
+      {/* Visual Collage Grid from screenshot */}
+      <section className="bg-white py-32 px-6">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[1200px]">
+          {/* Box 1: Design Stat */}
+          <div className="md:col-span-4 bg-gray-50 rounded-[40px] p-12 flex flex-col justify-between">
+            <div className="aspect-square w-full rounded-2xl overflow-hidden mb-10">
+              <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d69162c2494e4bf9c3e_img%20(17)-p-500.webp" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 className="text-6xl font-black tracking-tighter">365+</h3>
+              <p className="uppercase text-xs font-bold tracking-widest text-gray-400 mt-2">Projects Delivered</p>
+            </div>
+          </div>
+
+          {/* Box 2: Glass Box Image */}
+          <div className="md:col-span-8 bg-gray-50 rounded-[40px] overflow-hidden group">
+            <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+          </div>
+
+          {/* Box 3: Portrait Image */}
+          <div className="md:col-span-5 bg-gray-50 rounded-[40px] overflow-hidden relative group">
+            <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d10d18f7f9092d93761_Img%20(5)-p-500.webp" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent p-12 flex flex-col justify-end">
+              <h3 className="text-white text-5xl font-black tracking-tighter">98%</h3>
+              <p className="text-white/60 uppercase text-xs font-bold tracking-widest mt-2">Success Rate</p>
+            </div>
+          </div>
+
+          {/* Box 4: Tall Branding Showcase */}
+          <div className="md:col-span-7 bg-orange-600 rounded-[40px] overflow-hidden group">
+            <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63c7ba173bf929fe05bd6_Img%20(2)-p-500.webp" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+          </div>
+        </div>
+      </section>
+
+      <InteractiveList />
+      <DualCTA />
+      <FAQSection />
+
+      <section className="bg-white py-20 px-6 border-t border-black/5">
+        <div className="max-w-[1400px] mx-auto flex flex-col items-center">
+          <h2 className="text-[12vw] font-black uppercase text-[#0C0E12] tracking-tighter mb-16 leading-[0.8] text-center">
+            LET'S WORK <br /> TOGETHER
+          </h2>
+          <div className="w-full max-w-4xl h-px bg-black/10 mb-16" />
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+};
+
+export default AboutPage;

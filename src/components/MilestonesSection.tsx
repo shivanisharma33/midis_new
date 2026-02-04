@@ -5,14 +5,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 // Count-up helper
-const animateValue = (el: any, start: number, end: number, duration: number) => {
+const animateValue = (el: HTMLElement, start: number, end: number, duration: number) => {
   let startTimestamp: number | null = null;
 
   const step = (timestamp: number) => {
     if (!startTimestamp) startTimestamp = timestamp;
 
     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    el.innerText = Math.floor(progress * (end - start) + start);
+    el.innerText = Math.floor(progress * (end - start) + start).toString();
 
     if (progress < 1) {
       window.requestAnimationFrame(step);
@@ -46,7 +46,7 @@ export const MilestonesSection = () => {
       });
 
       // 2️⃣ ADVANCED PARALLAX (Zoom + Upward Motion)
-      gsap.utils.toArray(".milestone-img-wrapper img").forEach((img: any) => {
+      gsap.utils.toArray<HTMLImageElement>(".milestone-img-wrapper img").forEach((img) => {
         gsap.fromTo(
           img,
           {
@@ -81,9 +81,9 @@ export const MilestonesSection = () => {
       });
 
       // 4️⃣ COUNT UP NUMBERS
-      const numberItems = gsap.utils.toArray(".milestone-number");
+      const numberItems = gsap.utils.toArray<HTMLElement>(".milestone-number");
 
-      numberItems.forEach((item: any) => {
+      numberItems.forEach((item) => {
         const finalValue = item.getAttribute("data-value");
 
         ScrollTrigger.create({
@@ -91,8 +91,10 @@ export const MilestonesSection = () => {
           start: "top 85%",
           once: true,
           onEnter: () => {
-            let cleaned = finalValue.replace(/[^0-9]/g, "");
-            animateValue(item, 0, parseInt(cleaned), 1200);
+            if (finalValue) {
+              const cleaned = finalValue.replace(/[^0-9]/g, "");
+              animateValue(item, 0, parseInt(cleaned), 1200);
+            }
           },
         });
       });
@@ -113,6 +115,8 @@ export const MilestonesSection = () => {
             <img
               src="/images/milestone.webp"
               alt=""
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>
@@ -121,6 +125,8 @@ export const MilestonesSection = () => {
             <img
               src="/images/milestone-2.webp"
               alt=""
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>

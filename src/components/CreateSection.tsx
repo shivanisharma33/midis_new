@@ -25,8 +25,8 @@ export const CreateSection = () => {
     });
 
     // Right side elements fade in/up
-    const rightElements = gsap.utils.toArray(".right-item");
-    rightElements.forEach((el: any) => {
+    const rightElements = gsap.utils.toArray<HTMLElement>(".right-item");
+    rightElements.forEach((el) => {
       gsap.from(el, {
         y: 50,
         opacity: 0,
@@ -55,6 +55,8 @@ export const CreateSection = () => {
           <img
             src="/images/banner.webp"
             alt="Design Excellence"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
           />
           {/* Authentic glitch/neon effect overlay similar to reference */}
@@ -71,6 +73,8 @@ export const CreateSection = () => {
             <img
               src="/images/hover-image.webp"
               alt="Abstract Art"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             />
           </div>
@@ -102,6 +106,8 @@ export const CreateSection = () => {
               <img
                 src="/images/banner-about.webp"
                 alt="Creative Object"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover mix-blend-multiply"
               />
             </div>

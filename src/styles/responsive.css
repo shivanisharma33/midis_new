@@ -1,0 +1,332 @@
+/**
+ * Mobile-First Responsive Design System
+ * Tailwind CSS custom utilities and mobile-first patterns
+ */
+
+/* ===========================================
+   CONTAINER UTILITIES - Mobile First
+   =========================================== */
+
+.container-responsive {
+  @apply w-full px-4 mx-auto;
+  @apply sm:px-6;
+  @apply md:px-8;
+  @apply lg:px-12;
+  @apply xl:px-16;
+  @apply 2xl:px-20;
+  @apply max-w-[1920px];
+}
+
+.container-fluid {
+  @apply w-full px-4;
+  @apply sm:px-6;
+  @apply md:px-10;
+  @apply lg:px-16;
+  @apply xl:px-24;
+}
+
+.container-tight {
+  @apply w-full px-3;
+  @apply sm:px-4;
+  @apply md:px-6;
+  @apply lg:px-8;
+  @apply xl:px-10;
+  @apply max-w-7xl mx-auto;
+}
+
+/* ===========================================
+   TYPOGRAPHY - Mobile First Scaling
+   =========================================== */
+
+/* Display headings - Hero titles */
+.text-display {
+  @apply text-4xl font-bold leading-tight;
+  @apply sm:text-5xl;
+  @apply md:text-6xl;
+  @apply lg:text-7xl;
+  @apply xl:text-8xl;
+}
+
+/* Large headings - Section titles */
+.text-heading-lg {
+  @apply text-3xl font-semibold leading-tight;
+  @apply sm:text-4xl;
+  @apply md:text-5xl;
+  @apply lg:text-6xl;
+}
+
+/* Medium headings - Subsection titles */
+.text-heading-md {
+  @apply text-2xl font-semibold leading-snug;
+  @apply sm:text-3xl;
+  @apply md:text-4xl;
+  @apply lg:text-5xl;
+}
+
+/* Small headings - Card titles */
+.text-heading-sm {
+  @apply text-xl font-medium leading-snug;
+  @apply sm:text-2xl;
+  @apply md:text-3xl;
+}
+
+/* Body text - Regular content */
+.text-body {
+  @apply text-sm leading-relaxed;
+  @apply sm:text-base;
+  @apply md:text-lg;
+}
+
+/* Small text - Captions, labels */
+.text-caption {
+  @apply text-xs;
+  @apply sm:text-sm;
+  @apply md:text-base;
+}
+
+/* ===========================================
+   SPACING - Mobile First
+   =========================================== */
+
+/* Section spacing - top/bottom */
+.section-spacing {
+  @apply py-12;
+  @apply sm:py-16;
+  @apply md:py-20;
+  @apply lg:py-24;
+  @apply xl:py-28;
+}
+
+.section-spacing-sm {
+  @apply py-8;
+  @apply sm:py-10;
+  @apply md:py-12;
+  @apply lg:py-16;
+}
+
+.section-spacing-lg {
+  @apply py-16;
+  @apply sm:py-20;
+  @apply md:py-28;
+  @apply lg:py-32;
+  @apply xl:py-40;
+}
+
+/* Element spacing - internal padding */
+.element-padding {
+  @apply p-4;
+  @apply sm:p-6;
+  @apply md:p-8;
+  @apply lg:p-10;
+  @apply xl:p-12;
+}
+
+.element-padding-sm {
+  @apply p-3;
+  @apply sm:p-4;
+  @apply md:p-5;
+  @apply lg:p-6;
+}
+
+/* ===========================================
+   GRID SYSTEMS - Mobile First
+   =========================================== */
+
+/* Standard responsive grid */
+.grid-responsive {
+  @apply grid grid-cols-1 gap-4;
+  @apply sm:grid-cols-2 sm:gap-6;
+  @apply md:grid-cols-3 md:gap-8;
+  @apply lg:gap-10;
+}
+
+/* 2-column layout */
+.grid-2-col {
+  @apply grid grid-cols-1 gap-4;
+  @apply md:grid-cols-2 md:gap-6;
+  @apply lg:gap-8;
+  @apply xl:gap-10;
+}
+
+/* 3-column layout */
+.grid-3-col {
+  @apply grid grid-cols-1 gap-4;
+  @apply sm:grid-cols-2 sm:gap-5;
+  @apply md:grid-cols-3 md:gap-6;
+  @apply lg:gap-8;
+}
+
+/* 4-column layout */
+.grid-4-col {
+  @apply grid grid-cols-1 gap-4;
+  @apply sm:grid-cols-2 sm:gap-5;
+  @apply md:grid-cols-3 md:gap-6;
+  @apply lg:grid-cols-4 lg:gap-8;
+}
+
+/* Auto-fit grid with min-max */
+.grid-auto-fit {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  @apply sm:gap-6;
+  @apply md:gap-8;
+}
+
+@media (min-width: 640px) {
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+/* ===========================================
+   FLEX UTILITIES - Mobile First
+   =========================================== */
+
+/* Stack on mobile, row on desktop */
+.flex-stack-to-row {
+  @apply flex flex-col gap-4;
+  @apply sm:gap-5;
+  @apply md:flex-row md:gap-6;
+  @apply lg:gap-8;
+}
+
+/* Center content with responsive gaps */
+.flex-center {
+  @apply flex flex-col items-center justify-center gap-3;
+  @apply sm:gap-4;
+  @apply md:gap-5;
+  @apply lg:gap-6;
+}
+
+/* ===========================================
+   IMAGE UTILITIES - Mobile First
+   =========================================== */
+
+/* Responsive image container */
+.img-responsive {
+  @apply w-full h-auto;
+  @apply object-cover;
+}
+
+.img-container {
+  @apply relative overflow-hidden;
+  @apply aspect-video;
+  @apply sm:aspect-[4/3];
+  @apply md:aspect-[16/9];
+  @apply lg:aspect-[21/9];
+}
+
+/* Avatar sizes */
+.avatar-sm {
+  @apply w-8 h-8;
+  @apply sm:w-10 sm:h-10;
+  @apply md:w-12 md:h-12;
+}
+
+.avatar-md {
+  @apply w-12 h-12;
+  @apply sm:w-14 sm:h-14;
+  @apply md:w-16 md:h-16;
+  @apply lg:w-20 lg:h-20;
+}
+
+.avatar-lg {
+  @apply w-16 h-16;
+  @apply sm:w-20 sm:h-20;
+  @apply md:w-24 md:h-24;
+  @apply lg:w-32 lg:h-32;
+}
+
+/* ===========================================
+   BUTTONS - Mobile First
+   =========================================== */
+
+.btn-responsive {
+  @apply px-4 py-2 text-sm;
+  @apply sm:px-5 sm:py-2.5 sm:text-base;
+  @apply md:px-6 md:py-3;
+  @apply lg:px-8 lg:py-4;
+}
+
+.btn-responsive-lg {
+  @apply px-6 py-3 text-base;
+  @apply sm:px-8 sm:py-4 sm:text-lg;
+  @apply md:px-10 md:py-5;
+  @apply lg:px-12 lg:py-6;
+}
+
+/* ===========================================
+   CARDS - Mobile First
+   =========================================== */
+
+.card-responsive {
+  @apply p-4 rounded-lg;
+  @apply sm:p-5 sm:rounded-xl;
+  @apply md:p-6;
+  @apply lg:p-8 lg:rounded-2xl;
+}
+
+/* ===========================================
+   VISIBILITY UTILITIES - Mobile First
+   =========================================== */
+
+/* Show on mobile, hide on desktop */
+.show-mobile {
+  @apply block md:hidden;
+}
+
+/* Hide on mobile, show on desktop */
+.show-desktop {
+  @apply hidden md:block;
+}
+
+/* Show on tablet and up */
+.show-tablet {
+  @apply hidden sm:block;
+}
+
+/* ===========================================
+   RESPONSIVE BREAKPOINT HELPERS
+   =========================================== */
+
+/* Add visual debugging for breakpoints (development only) */
+.debug-breakpoints::before {
+  @apply fixed top-0 left-0 z-[9999] bg-black/80 text-white px-2 py-1 text-xs;
+  content: 'XS: < 640px';
+}
+
+@media (min-width: 640px) {
+  .debug-breakpoints::before {
+    content: 'SM: ≥ 640px';
+  }
+}
+
+@media (min-width: 768px) {
+  .debug-breakpoints::before {
+    content: 'MD: ≥ 768px';
+  }
+}
+
+@media (min-width: 1024px) {
+  .debug-breakpoints::before {
+    content: 'LG: ≥ 1024px';
+  }
+}
+
+@media (min-width: 1280px) {
+  .debug-breakpoints::before {
+    content: 'XL: ≥ 1280px';
+  }
+}
+
+@media (min-width: 1536px) {
+  .debug-breakpoints::before {
+    content: '2XL: ≥ 1536px';
+  }
+}

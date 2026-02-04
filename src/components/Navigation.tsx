@@ -1,40 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-
-const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Pages", to: "/pages" },
-  { label: "Service", to: "/services2" },
-  { label: "Shop", to: "/shop" },
-  { label: "Contact", to: "/contact" },
-];
+import { navItems } from "@/data/navigation";
+import { SOCIAL_PLATFORMS } from "@/constants/contact";
+import { useScrollHide } from "@/hooks/useScrollHide";
 
 export const Navigation = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [hideNav, setHideNav] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const hideNav = useScrollHide();
 
   const isActive = (path: string) => location.pathname === path;
-
-  /* ================= SCROLL HIDE / SHOW ================= */
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setHideNav(true);
-      } else {
-        setHideNav(false);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   return (
     <>
@@ -61,11 +37,10 @@ export const Navigation = () => {
               <Link
                 key={item.label}
                 to={item.to}
-                className={`text-sm font-medium transition-colors ${
-                  isActive(item.to)
-                    ? "text-black"
-                    : "text-black/60 hover:text-black"
-                }`}
+                className={`text-sm font-medium transition-colors ${isActive(item.to)
+                  ? "text-black"
+                  : "text-black/60 hover:text-black"
+                  }`}
               >
                 {item.label}
               </Link>
@@ -78,7 +53,7 @@ export const Navigation = () => {
 
           {/* ================= RIGHT SIDE ================= */}
           <div className="hidden lg:flex items-center gap-3 z-10">
-            {["Facebook", "Instagram", "LinkedIn"].map((item) => (
+            {SOCIAL_PLATFORMS.map((item) => (
               <button
                 key={item}
                 className="px-4 py-2 rounded-full border border-white/30 text-xs text-white hover:bg-white hover:text-black transition"
@@ -87,7 +62,7 @@ export const Navigation = () => {
               </button>
             ))}
 
-            
+
           </div>
 
           {/* ================= MOBILE MENU BUTTON ================= */}
@@ -102,11 +77,10 @@ export const Navigation = () => {
 
       {/* ================= MOBILE MENU ================= */}
       <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
-          isMobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${isMobileMenuOpen
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+          }`}
       >
         <div
           className="absolute inset-0 bg-black/80"

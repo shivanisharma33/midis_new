@@ -78,7 +78,7 @@ export const ScrollingVideoZoom = () => {
                 >
                     <video
                         ref={videoRef}
-                        src="/images/bg-video.mp4"
+                        src="/images/18069786-uhd_2160_3840_30fps.mp4"
                         autoPlay
                         muted
                         loop

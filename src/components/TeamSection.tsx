@@ -113,7 +113,7 @@ export const TeamSection: React.FC = () => {
       role: "GRAPHIC DESIGNER",
     },
     {
-      img: "./images/puruv.jpg",
+      img: "/images/puruv.jpg",
       name: "PURUVJIT",
       role: "CHIEF TECHNOLOGY OFFICER",
     },

@@ -13,6 +13,7 @@ const Services = lazy(() => import("./pages/Services"));
 const Services2 = lazy(() => import("./pages/Services2"));
 const Blogs = lazy(() => import("./pages/Blogs"));
 const CaseStudy = lazy(() => import("./pages/CaseStudy"));
+const Work = lazy(() => import("./pages/Work"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -51,6 +52,7 @@ const App = () => {
               <Route path="/services2" element={<Services2 />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/case-study" element={<CaseStudy />} />
+              <Route path="/work" element={<Work />} />
               <Route path="/contact" element={<Contact />} />
 
               {/* 404 */}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -91,14 +91,14 @@ export const Footer = () => {
 
       {/* ================= MAIN GRID ================= */}
       <div className="footer-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 border-t border-white/10 pt-16 pb-10">
-        
+
         <div className="footer-col">
           <h3 className="text-lg font-semibold mb-4">Company</h3>
           <ul className="space-y-3 text-gray-400 text-sm">
-            <li className="hover:text-white transition">About Us</li>
-            <li className="hover:text-white transition">Our Services</li>
-            <li className="hover:text-white transition">Case Studies</li>
-            <li className="hover:text-white transition">Blogs</li>
+            <li><a href="/about" className="hover:text-white transition">About Us</a></li>
+            <li><a href="/work" className="hover:text-white transition">Our Work</a></li>
+            <li><a href="/services2" className="hover:text-white transition">Our Services</a></li>
+            <li><a href="/contact" className="hover:text-white transition">Contact Us</a></li>
           </ul>
         </div>
 

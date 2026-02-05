@@ -92,9 +92,9 @@ const FuelingYourGrowthWithFreshIdeas: React.FC = () => {
             min-h-[60vh] sm:min-h-[70vh] md:min-h-[100svh]
           "
         >
-          <img src="./images/fresh-idea-3.webp" />
+          <img src="/images/fresh-idea-3.webp" />
           <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80" />
-          <img src="./images/fresh-idea-2.webp" />
+          <img src="/images/fresh-idea-2.webp" />
         </div>
 
         {/* RIGHT CONTENT */}
@@ -109,25 +109,25 @@ const FuelingYourGrowthWithFreshIdeas: React.FC = () => {
             "
           >
             <h1 className="font-extrabold text-black leading-[1.1] mb-6 text-[36px] sm:text-[45px] md:text-[55px]">
-              FUELING YOUR <br />
-              GROWTH WITH <br />
-              FRESH IDEAS
+              EMPOWERING <br />
+              DIGITAL GROWTH <br />
+              FOR STARTUPS
             </h1>
 
             <p className="text-[15px] sm:text-[17px] text-gray-600 leading-7 max-w-[480px] mb-8">
-              We combine creativity and strategy to deliver innovative solutions,
-              helping your business thrive and achieve sustainable growth with fresh ideas.
+              We blend performance with creativity to offer powerful digital marketing strategies—SEO,
+              branding, and social media solutions that get results for global brands.
             </p>
 
             <div className="mb-10">
               <p className="text-[16px] sm:text-[18px] font-medium text-black">
-                (888) 123 4560
+                +91 91703 14141
               </p>
               <a
-                href="#"
+                href="mailto:info@midis.in"
                 className="text-black border-b border-gray-700 pb-[3px] text-[14px] sm:text-[16px]"
               >
-                INFO@EXAMPLE.COM
+                INFO@MIDIS.IN
               </a>
             </div>
 

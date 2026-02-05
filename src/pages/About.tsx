@@ -63,7 +63,7 @@ const AboutHero = () => {
             className="w-1/3 aspect-[4/5] rounded-[30px] lg:rounded-[50px] overflow-hidden shadow-2xl z-0 transform-gpu origin-right border-4 border-[#0C0E12]"
           >
             <img
-              src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63c7ba173bf929fe05bd6_Img%20(2)-p-500.webp"
+              src="/images/Futuristic Portrait.webp"
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
               alt="Visual 1"
             />
@@ -77,7 +77,7 @@ const AboutHero = () => {
             className="w-2/5 aspect-[4/5] rounded-[40px] lg:rounded-[60px] overflow-hidden z-20 shadow-[0_50px_100px_rgba(0,0,0,0.8)] border-4 border-[#0C0E12]"
           >
             <img
-              src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d69162c2494e4bf9c3e_img%20(17)-p-500.webp"
+              src="/images/Virtual Reality Immersion.png"
               className="w-full h-full object-cover"
               alt="Visual 2"
             />
@@ -91,7 +91,7 @@ const AboutHero = () => {
             className="w-1/3 aspect-[4/5] rounded-[30px] lg:rounded-[50px] overflow-hidden shadow-2xl z-0 transform-gpu origin-left border-4 border-[#0C0E12]"
           >
             <img
-              src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp"
+              src="/images/Neon Aesthetic Portrait.png"
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
               alt="Visual 3"
             />
@@ -114,7 +114,7 @@ const GrowthSection = () => {
           <h2 className="text-[7.5vw] md:text-[5.5vw] font-black uppercase text-[#0C0E12] leading-[0.9] tracking-tighter">
             DRIVING STARTUP <br />
             GROWTH—CRAFTING <br />
-            <span className="text-gray-200">YOUR BRAND WITH <br />
+            <span className="text-orange">YOUR BRAND WITH <br />
               PRECISION & IMPACT</span>
           </h2>
 
@@ -477,7 +477,7 @@ const AboutPage = () => {
       <FAQSection />
 
       <section className="bg-white py-48 text-center px-6">
-        <h2 className="text-[14vw] font-black uppercase tracking-tighter leading-[0.8]">
+        <h2 className="text-[14vw] font-black uppercase tracking-tighter leading-[0.8] text-[#0C0E12]">
           LET'S WORK <br /> <span className="text-orange-600">TOGETHER</span>
         </h2>
       </section>

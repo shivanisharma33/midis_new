@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ArrowUpRight, Plus, ChevronDown, Star, Zap, Target, Users, ArrowDown } from "lucide-react";
+import { ScrollingVideoZoom } from "@/components/ScrollingVideoZoom";
 
 /* ================= TYPES & DATA ================= */
 
@@ -172,7 +173,7 @@ const GrowthSection = () => {
 
 const CreativeSection = () => {
   return (
-    <section className="bg-white py-32 px-6 lg:px-24">
+    <section className="bg-white pt-32 pb-0 px-6 lg:px-24">
       <div className="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center gap-24">
         <div className="w-full md:w-[500px] aspect-[4/5] rounded-[40px] overflow-hidden shadow-6xl">
           <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d69162c2494e4bf9c3e_img%20(17)-p-500.webp" className="w-full h-full object-cover" />
@@ -194,41 +195,99 @@ const CreativeSection = () => {
 };
 
 const ReasonsSection = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(1); // Default to second one like in image
+
   const reasons = [
-    { title: "INNOVATIVE REPORT", desc: "Digital Strategy & Research", icon: <Target className="w-10 h-10" /> },
-    { title: "CREATIVE VISION", desc: "Design & Art Direction", icon: <Star className="w-10 h-10" /> },
-    { title: "SMART EXECUTION", desc: "High-End Development", icon: <Zap className="w-10 h-10" /> },
-    { title: "FUTURE READY", desc: "Scalable Infrastructure", icon: <Users className="w-10 h-10" /> },
+    {
+      title: "24/7 CUSTOMER SUPPORT",
+      desc: "Lorem ipsum dolor posuere at scelerisque turpis. Morbi laoreet lorem venenatis suscipit ullamcorperem ipm dolor posuere at scelerisque ac turpis.",
+      image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d69162c2494e4bf9c3e_img%20(17)-p-500.webp"
+    },
+    {
+      title: "EXPERTISE & SPECIALIZATION",
+      desc: "We bring specialized knowledge and deep industry expertise to every project, ensuring that your unique challenges are met with precision and innovative solutions.",
+      image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp"
+    },
+    {
+      title: "COST-EFFECTIVE SOLUTIONS",
+      desc: "Our strategic approach focuses on delivering maximum value and ROI, optimizing your budget through efficient workflows and high-impact design strategies.",
+      image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63c7ba173bf929fe05bd6_Img%20(2)-p-500.webp"
+    },
+    {
+      title: "CONSISTENT BRANDING",
+      desc: "We ensure your brand identity remains cohesive across all digital touchpoints, building trust and recognition through pixel-perfect execution and strategic alignment.",
+      image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d10d18f7f9092d93761_Img%20(5)-p-500.webp"
+    },
+    {
+      title: "FRESH PERSPECTIVES",
+      desc: "Our creative team constantly explores new trends and technologies to bring fresh, groundbreaking ideas that set your brand apart in a crowded marketplace.",
+      image: "https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63c81162c2494e4bed2f6_Img%20(3)%20(1)-p-500.webp"
+    },
   ];
 
   return (
-    <section className="bg-white py-48">
-      <div className="px-6 lg:px-24 mb-24">
-        <h2 className="text-6xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter max-w-2xl">
+    <section className="bg-white pt-20 pb-48">
+      <div className="px-6 lg:px-24 mb-20">
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black block mb-6">Why You Choose Us</span>
+        <h2 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter max-w-4xl text-[#111317]">
           HERE ARE SOME REASONS YOU'LL LOVE WORKING WITH US!
         </h2>
       </div>
 
-      <div className="relative bg-[#f8f8f8] py-32 overflow-hidden px-6 lg:px-24">
-        <div className="absolute inset-0 opacity-[0.03] z-0 flex items-center justify-center">
-          <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp" className="w-full h-full object-cover" />
-        </div>
-
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-black/5 border-y border-black/5">
-          {reasons.map((r, i) => (
-            <div key={i} className="group p-16 hover:bg-black transition-all duration-700 cursor-pointer">
-              <div className="flex flex-col justify-between h-full">
-                <div>
-                  <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-12 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-all">
-                    {r.icon}
-                  </div>
-                  <h4 className="text-2xl font-black uppercase mb-4 tracking-tighter group-hover:text-white transition-all">{r.title}</h4>
-                </div>
-                <p className="text-gray-400 uppercase text-xs font-bold tracking-[0.2em]">{r.desc}</p>
-              </div>
+      <div className="flex w-full h-[600px] border-y border-black/10 bg-[#fbfaf8]">
+        {reasons.map((r, i) => (
+          <div
+            key={i}
+            onMouseEnter={() => setHoveredIndex(i)}
+            className={`relative flex transition-all duration-700 ease-[0.16,1,0.3,1] border-r border-black/10 last:border-r-0 cursor-pointer overflow-hidden ${hoveredIndex === i ? "flex-[2.5] bg-[#f5f3f0]" : "flex-1 hover:bg-[#efedea]"
+              }`}
+          >
+            {/* Vertical Title Container */}
+            <div className={`flex flex-col justify-end p-8 w-full h-full transition-opacity duration-500 ${hoveredIndex === i ? "opacity-0 invisible" : "opacity-100 visible"}`}>
+              <h4 className="text-2xl font-black uppercase tracking-tighter [writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-[#111317]">
+                {r.title}
+              </h4>
             </div>
-          ))}
-        </div>
+
+            {/* Expanded Content */}
+            <AnimatePresence>
+              {hoveredIndex === i && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-0 flex flex-col p-12"
+                >
+                  {/* Vertical Title (Side) */}
+                  <div className="absolute left-8 bottom-8">
+                    <h4 className="text-2xl font-black uppercase tracking-tighter [writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-[#111317]">
+                      {r.title}
+                    </h4>
+                  </div>
+
+                  <div className="ml-24 max-w-md">
+                    <div className="relative mb-8 pt-6">
+                      {/* Red Dot Decoration */}
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-red-600 rounded-full" />
+
+                      <div className="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl">
+                        <img
+                          src={r.image}
+                          className="w-full h-full object-cover"
+                          alt={r.title}
+                        />
+                      </div>
+                    </div>
+                    <p className="text-[#111317]/60 text-sm font-medium leading-relaxed uppercase tracking-tight">
+                      {r.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -397,12 +456,7 @@ const AboutPage = () => {
       <AboutHero />
       <GrowthSection />
 
-      {/* Decorative Rotating Element */}
-      <div className="flex justify-center py-20">
-        <motion.div animate={{ rotate: 360 }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} className="w-96 h-96 relative opacity-10">
-          <div className="absolute inset-0 border-[20px] border-black rounded-full border-t-transparent" />
-        </motion.div>
-      </div>
+      <ScrollingVideoZoom />
 
       <CreativeSection />
       <ReasonsSection />

@@ -131,6 +131,7 @@ export default function CrearistCollage() {
       tl.to(milestonesRef.current, {
         scale: 0.96,
         y: -40,
+        opacity: 0.3,
         duration: 4,
         ease: "power2.inOut"
       }, ">+1");
@@ -167,12 +168,12 @@ export default function CrearistCollage() {
         className="absolute inset-0 flex flex-col items-center justify-center z-0 select-none pointer-events-none text-center"
       >
         <span className="text-[8px] md:text-[10px] font-bold tracking-[0.25em] text-black/30 mb-6 uppercase">
-          15+ YEARS OF WORK EXPERIENCE
+          TOP RATED GLOBAL DIGITAL AGENCY
         </span>
-        <h2 className="text-[clamp(2.5rem,8vw,6.5rem)] font-bold text-black leading-[0.85] uppercase tracking-tighter mb-10">
-          YOUR TRUSTED<br />
-          PARTNER IN DESIGN<br />
-          EXCELLENCE
+        <h2 className="text-[clamp(2.5rem,7vw,6rem)] font-bold text-black leading-[1.1] uppercase tracking-tight mb-10">
+          BUILDING BRANDS,<br />
+          DRIVING GROWTH,<br />
+          GROWING BEYOND LIMITS
         </h2>
 
         {/* Scroll Indicator */}
@@ -253,48 +254,47 @@ export default function CrearistCollage() {
         className="absolute inset-0 flex z-40 pointer-events-none"
       >
         <div className="hidden md:block w-1/2 h-full" />
-        <div className="w-full md:w-1/2 h-full bg-white flex flex-col items-center justify-center pointer-events-auto">
-          <div className="w-full max-w-2xl px-8 md:px-16">
-            <h2 className="milestone-reveal text-[clamp(2rem,6vw,5rem)] font-bold text-black leading-[0.9] mb-16 tracking-tight uppercase">
-              MILESTONES<br />
-              THAT SHOWCASE<br />
-              OUR EXCELLENCE
+        <div className="w-full md:w-1/2 h-full bg-white flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.05)]">
+          <div className="w-full max-w-2xl px-8 md:px-12 lg:px-16">
+            <h2 className="milestone-reveal text-[clamp(2rem,4.5vw,4rem)] font-bold text-black leading-[1.1] mb-12 tracking-tight uppercase">
+              RESULTS THAT<br />
+              POWER REAL<br />
+              BUSINESS GROWTH
             </h2>
 
-            <div className="grid grid-cols-2 relative">
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-black/5"></div>
+            <div className="grid grid-cols-2 relative border-t border-black/5">
               <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-black/5"></div>
               <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-black/5"></div>
 
-              <div className="pt-10 pb-12 pr-6">
-                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
-                  SUCCESS THROUGH<br />OUR CLIENTS
+              <div className="pt-8 pb-10 px-4 md:px-6">
+                <span className="milestone-reveal block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  CLIENT ROI<br />INCREASE
                 </span>
                 <div className="flex items-center gap-3 relative">
                   <span className="absolute -left-4 w-1.5 h-1.5 rounded-full bg-red-500 milestone-reveal"></span>
-                  <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">98%</span>
+                  <span className="milestone-reveal block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">3.4X</span>
                 </div>
               </div>
 
-              <div className="pt-10 pb-12 pl-10">
-                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
-                  CREATIVE IDEAS<br />DELIVERED
+              <div className="pt-8 pb-10 px-6 md:px-8">
+                <span className="milestone-reveal block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  ORGANIC TRAFFIC<br />GROWTH
                 </span>
-                <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">15M</span>
+                <span className="milestone-reveal block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">120%</span>
               </div>
 
-              <div className="pt-12 pr-6">
-                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
-                  SOCIAL MEDIA<br />IMPRESSIONS
+              <div className="pt-10 pb-4 px-4 md:px-6">
+                <span className="milestone-reveal block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  SUPPORT COST<br />SAVINGS
                 </span>
-                <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">32%</span>
+                <span className="milestone-reveal block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">40%</span>
               </div>
 
-              <div className="pt-12 pl-10">
-                <span className="milestone-reveal block text-[9px] md:text-[11px] uppercase tracking-[0.05em] text-gray-400 mb-6 font-bold leading-tight">
-                  HIGH-VALUE PROJECTS<br />DELIVERED
+              <div className="pt-10 pb-4 px-6 md:px-8">
+                <span className="milestone-reveal block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  CSAT SCORE<br />IMPROVEMENT
                 </span>
-                <span className="milestone-reveal block text-[clamp(2.5rem,7vw,7rem)] font-bold text-[#141414] leading-none">$428K</span>
+                <span className="milestone-reveal block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">+25%</span>
               </div>
             </div>
           </div>
@@ -312,16 +312,48 @@ export default function CrearistCollage() {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="w-full md:w-1/2 h-full bg-white text-black flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.1)]">
-          <div className="w-full max-w-2xl px-8 md:px-16">
-            <span className="block text-[10px] md:text-xs uppercase tracking-[0.3em] text-black/30 mb-8 font-bold">OUR APPROACH</span>
-            <h2 className="text-[clamp(2.5rem,6vw,5.5rem)] font-bold leading-[0.9] mb-12 tracking-tighter uppercase">
-              DRIVEN BY<br />
-              <span className="text-black/20">STRATEGY &</span><br />
-              PASSION
+        <div className="w-full md:w-1/2 h-full bg-white flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.05)]">
+          <div className="w-full max-w-2xl px-8 md:px-12 lg:px-16">
+            <h2 className="text-[clamp(2rem,4.5vw,4rem)] font-bold text-black leading-[1.1] mb-12 tracking-tight uppercase">
+              WHY TOP BRANDS<br />
+              TRUST OUR<br />
+              EXPERTISE
             </h2>
-            <div className="pt-12 border-t border-black/5">
-              <p className="text-sm uppercase tracking-widest font-bold">View Portfolio</p>
+
+            <div className="grid grid-cols-2 relative border-t border-black/5">
+              <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-black/5"></div>
+              <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-black/5"></div>
+
+              <div className="pt-8 pb-10 px-4 md:px-6">
+                <span className="block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  GLOBAL BRANDING<br />SOLUTIONS
+                </span>
+                <div className="flex items-center gap-3 relative">
+                  <span className="absolute -left-4 w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                  <span className="block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">360°</span>
+                </div>
+              </div>
+
+              <div className="pt-8 pb-10 px-6 md:px-8">
+                <span className="block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  DEDICATED TEAM<br />EXPERTS
+                </span>
+                <span className="block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">15+</span>
+              </div>
+
+              <div className="pt-10 pb-4 px-4 md:px-6">
+                <span className="block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  TRANSPARENT<br />COMMUNICATION
+                </span>
+                <span className="block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">100%</span>
+              </div>
+
+              <div className="pt-10 pb-4 px-6 md:px-8">
+                <span className="block text-[10px] uppercase tracking-wider text-gray-400 mb-4 font-bold leading-tight">
+                  LONG-TERM<br />PARTNERSHIPS
+                </span>
+                <span className="block text-[clamp(2rem,4.5vw,4.5rem)] font-bold text-[#141414] leading-[1.2]">YES</span>
+              </div>
             </div>
           </div>
         </div>

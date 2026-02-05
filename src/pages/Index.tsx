@@ -2,7 +2,7 @@ import { Navigation } from '@/components/Navigation';
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import { ServicesSection } from '@/components/ServicesSection';
-import { ClientsMarquee } from '@/components/ClientsMarquee';
+
 
 import { ReasonsSection } from '@/components/ReasonsSection';
 import { TeamSection } from '@/components/TeamSection';
@@ -28,9 +28,6 @@ const Index = () => {
       {/* ================= SERVICES ================= */}
       <ServicesSection />
       <FuelingYourGrowthWithFreshIdeas />
-
-      {/* ================= CLIENTS ================= */}
-      <ClientsMarquee />
 
       {/* ================= CREATE / REASONS ================= */}
 

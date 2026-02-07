@@ -160,7 +160,7 @@ export default function CrearistCollage() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-[60vh] md:h-screen bg-white overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-screen bg-white overflow-hidden">
 
       {/* 1. LAYER: TEXT (BEHIND IMAGES - z-0) */}
       <div

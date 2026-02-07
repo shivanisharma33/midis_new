@@ -30,7 +30,7 @@ const partners = ["FORBES", "TECHCRUNCH", "WIRED", "NYT", "Awwwards", "Dribbble"
 
 const AboutHero = () => {
   return (
-    <section className="relative min-h-screen bg-[#0C0E12] flex flex-col items-center justify-start pt-40 overflow-hidden text-center px-6">
+    <section className="relative min-h-screen bg-[#0C0E12] flex flex-col items-center justify-start pt-28 md:pt-40 overflow-hidden text-center px-6">
       <motion.h1
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -38,10 +38,10 @@ const AboutHero = () => {
         className="text-[14vw] md:text-[11vw] font-black text-white leading-[0.85] tracking-tighter uppercase z-10"
       >
         GET TO <br />
-        <span className="inline-flex items-center gap-4">
+        <span className="inline-flex flex-wrap justify-center items-center gap-2 md:gap-4">
           KNOW US
-          <div className="w-[8vw] h-[8vw] bg-white rounded-2xl flex items-center justify-center -rotate-12 hover:rotate-0 transition-transform duration-500 cursor-pointer">
-            <ArrowUpRight className="text-black w-[5vw] h-[5vw]" />
+          <div className="w-[12vw] h-[12vw] md:w-[8vw] md:h-[8vw] bg-white rounded-2xl flex items-center justify-center -rotate-12 hover:rotate-0 transition-transform duration-500 cursor-pointer">
+            <ArrowUpRight className="text-black w-[8vw] h-[8vw] md:w-[5vw] md:h-[5vw]" />
           </div>
         </span>
       </motion.h1>
@@ -53,14 +53,14 @@ const AboutHero = () => {
 
       {/* Panoramic Curved Collage from Reference */}
       <div className="relative w-full mt-32 px-4 select-none mb-10 overflow-visible">
-        <div className="max-w-[1800px] mx-auto flex items-center justify-center -space-x-4 lg:-space-x-8 lg:scale-110 xl:scale-125 origin-center">
+        <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:-space-x-4 lg:-space-x-8 lg:scale-110 xl:scale-125 origin-center">
 
           {/* Left: Gold Bar */}
           <motion.div
             initial={{ x: -100, opacity: 0, rotate: -15 }}
             whileInView={{ x: 0, opacity: 1, rotate: -8 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-1/3 aspect-[4/5] rounded-[30px] lg:rounded-[50px] overflow-hidden shadow-2xl z-0 transform-gpu origin-right border-4 border-[#0C0E12]"
+            className="w-full md:w-1/3 aspect-[4/5] rounded-[30px] lg:rounded-[50px] overflow-hidden shadow-2xl z-0 transform-gpu origin-center md:origin-right border-4 border-[#0C0E12]"
           >
             <img
               src="/images/Futuristic Portrait.webp"
@@ -74,7 +74,7 @@ const AboutHero = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-2/5 aspect-[4/5] rounded-[40px] lg:rounded-[60px] overflow-hidden z-20 shadow-[0_50px_100px_rgba(0,0,0,0.8)] border-4 border-[#0C0E12]"
+            className="w-full md:w-2/5 aspect-[4/5] rounded-[40px] lg:rounded-[60px] overflow-hidden z-20 shadow-[0_50px_100px_rgba(0,0,0,0.8)] border-4 border-[#0C0E12]"
           >
             <img
               src="/images/Virtual Reality Immersion.png"
@@ -88,7 +88,7 @@ const AboutHero = () => {
             initial={{ x: 100, opacity: 0, rotate: 15 }}
             whileInView={{ x: 0, opacity: 1, rotate: 8 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-1/3 aspect-[4/5] rounded-[30px] lg:rounded-[50px] overflow-hidden shadow-2xl z-0 transform-gpu origin-left border-4 border-[#0C0E12]"
+            className="w-full md:w-1/3 aspect-[4/5] rounded-[30px] lg:rounded-[50px] overflow-hidden shadow-2xl z-0 transform-gpu origin-center md:origin-left border-4 border-[#0C0E12]"
           >
             <img
               src="/images/Neon Aesthetic Portrait.png"
@@ -104,8 +104,8 @@ const AboutHero = () => {
 
 const GrowthSection = () => {
   return (
-    <section className="bg-white py-48 px-6 lg:px-24">
-      <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+    <section className="bg-white py-24 md:py-48 px-6 lg:px-24">
+      <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
         {/* Left Side: Content */}
         <div className="lg:col-span-8 space-y-12">
@@ -141,7 +141,7 @@ const GrowthSection = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Avatar Group */}
             <div className="flex -space-x-3">
               {[
@@ -173,8 +173,8 @@ const GrowthSection = () => {
 
 const CreativeSection = () => {
   return (
-    <section className="bg-white pt-32 pb-0 px-6 lg:px-24">
-      <div className="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center gap-24">
+    <section className="bg-white pt-24 md:pt-32 pb-0 px-6 lg:px-24">
+      <div className="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-24">
         <div className="w-full md:w-[500px] aspect-[4/5] rounded-[40px] overflow-hidden shadow-6xl">
           <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d69162c2494e4bf9c3e_img%20(17)-p-500.webp" className="w-full h-full object-cover" />
         </div>
@@ -226,25 +226,26 @@ const ReasonsSection = () => {
   ];
 
   return (
-    <section className="bg-white pt-20 pb-48">
-      <div className="px-6 lg:px-24 mb-20">
+    <section className="bg-white pt-10 md:pt-20 pb-24 md:pb-48">
+      <div className="px-6 lg:px-24 mb-10 md:mb-20">
         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black block mb-6">Why You Choose Us</span>
-        <h2 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter max-w-4xl text-[#111317]">
+        <h2 className="text-[10vw] md:text-8xl font-black uppercase leading-[0.85] tracking-tighter max-w-4xl text-[#111317]">
           HERE ARE SOME REASONS YOU'LL LOVE WORKING WITH US!
         </h2>
       </div>
 
-      <div className="flex w-full h-[600px] border-y border-black/10 bg-[#fbfaf8]">
+      <div className="flex flex-col md:flex-row w-full h-[1000px] md:h-[600px] border-y border-black/10 bg-[#fbfaf8]">
         {reasons.map((r, i) => (
           <div
             key={i}
             onMouseEnter={() => setHoveredIndex(i)}
-            className={`relative flex transition-all duration-700 ease-[0.16,1,0.3,1] border-r border-black/10 last:border-r-0 cursor-pointer overflow-hidden ${hoveredIndex === i ? "flex-[2.5] bg-[#f5f3f0]" : "flex-1 hover:bg-[#efedea]"
+            onClick={() => setHoveredIndex(i)}
+            className={`relative flex transition-all duration-700 ease-[0.16,1,0.3,1] border-b md:border-b-0 md:border-r border-black/10 last:border-b-0 last:border-r-0 cursor-pointer overflow-hidden ${hoveredIndex === i ? "flex-[4] md:flex-[2.5] bg-[#f5f3f0]" : "flex-1 hover:bg-[#efedea]"
               }`}
           >
             {/* Vertical Title Container */}
             <div className={`flex flex-col justify-end p-8 w-full h-full transition-opacity duration-500 ${hoveredIndex === i ? "opacity-0 invisible" : "opacity-100 visible"}`}>
-              <h4 className="text-2xl font-black uppercase tracking-tighter [writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-[#111317]">
+              <h4 className="text-xl md:text-2xl font-black uppercase tracking-tighter md:[writing-mode:vertical-rl] md:rotate-180 whitespace-nowrap text-[#111317]">
                 {r.title}
               </h4>
             </div>
@@ -257,16 +258,16 @@ const ReasonsSection = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="absolute inset-0 flex flex-col p-12"
+                  className="absolute inset-0 flex flex-col p-6 md:p-12"
                 >
                   {/* Vertical Title (Side) */}
                   <div className="absolute left-8 bottom-8">
-                    <h4 className="text-2xl font-black uppercase tracking-tighter [writing-mode:vertical-rl] rotate-180 whitespace-nowrap text-[#111317]">
+                    <h4 className="text-xl md:text-2xl font-black uppercase tracking-tighter md:[writing-mode:vertical-rl] md:rotate-180 whitespace-nowrap text-[#111317]">
                       {r.title}
                     </h4>
                   </div>
 
-                  <div className="ml-24 max-w-md">
+                  <div className="md:ml-24 max-w-md">
                     <div className="relative mb-8 pt-6">
                       {/* Red Dot Decoration */}
                       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-red-600 rounded-full" />
@@ -295,7 +296,7 @@ const ReasonsSection = () => {
 
 const AboutMarquee = () => {
   return (
-    <div className="bg-[#0C0E12] py-20 overflow-hidden relative flex border-y border-white/5">
+    <div className="bg-[#0C0E12] py-10 md:py-20 overflow-hidden relative flex border-y border-white/5">
       <motion.div
         animate={{ x: [0, -2000] }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
@@ -313,35 +314,35 @@ const AboutMarquee = () => {
 
 const StatsCollage = () => {
   return (
-    <section className="bg-white py-48 px-6 lg:px-24">
+    <section className="bg-white py-24 md:py-48 px-6 lg:px-24">
       <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 h-auto md:h-[1200px]">
         {/* Box 1: Left Top Stat */}
-        <div className="md:col-span-4 bg-gray-50 rounded-[60px] p-16 flex flex-col justify-between">
-          <div className="aspect-square w-full rounded-[40px] overflow-hidden mb-12 shadow-3xl">
+        <div className="md:col-span-4 bg-gray-50 rounded-[40px] md:rounded-[60px] p-8 md:p-16 flex flex-col justify-between">
+          <div className="aspect-square w-full rounded-[24px] md:rounded-[40px] overflow-hidden mb-8 md:mb-12 shadow-3xl">
             <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d69162c2494e4bf9c3e_img%20(17)-p-500.webp" className="w-full h-full object-cover" />
           </div>
           <div>
-            <h3 className="text-[8rem] font-black tracking-tighter leading-none italic">365<span className="not-italic text-orange-600">+</span></h3>
+            <h3 className="text-[5rem] md:text-[8rem] font-black tracking-tighter leading-none italic">365<span className="not-italic text-orange-600">+</span></h3>
             <p className="uppercase text-[10px] font-black tracking-[0.5em] text-gray-400 mt-4">Design Portfolio</p>
           </div>
         </div>
 
         {/* Box 2: Right Main Image */}
-        <div className="md:col-span-8 bg-gray-50 rounded-[60px] overflow-hidden group shadow-2xl">
+        <div className="md:col-span-8 bg-gray-50 rounded-[40px] md:rounded-[60px] overflow-hidden group shadow-2xl">
           <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp" className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-all duration-2000" />
         </div>
 
         {/* Box 3: Left Bottom Image + Stat */}
-        <div className="md:col-span-5 bg-gray-50 rounded-[60px] overflow-hidden relative group">
+        <div className="md:col-span-5 bg-gray-50 rounded-[40px] md:rounded-[60px] overflow-hidden relative group">
           <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d10d18f7f9092d93761_Img%20(5)-p-500.webp" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-16 flex flex-col justify-end">
-            <h3 className="text-white text-8xl font-black tracking-tighter italic">98%</h3>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-8 md:p-16 flex flex-col justify-end">
+            <h3 className="text-white text-6xl md:text-8xl font-black tracking-tighter italic">98%</h3>
             <p className="text-white/40 uppercase text-[10px] font-black tracking-[0.4em] mt-4">Client Happiness</p>
           </div>
         </div>
 
         {/* Box 4: Tall Branding Showcase */}
-        <div className="md:col-span-7 bg-gray-50 rounded-[60px] overflow-hidden group shadow-3xl border border-black/5">
+        <div className="md:col-span-7 bg-gray-50 rounded-[40px] md:rounded-[60px] overflow-hidden group shadow-3xl border border-black/5">
           <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63c7ba173bf929fe05bd6_Img%20(2)-p-500.webp" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1500" />
         </div>
       </div>
@@ -353,8 +354,8 @@ const AwardsSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-white py-48 px-6 lg:px-24">
-      <h2 className="text-[12vw] font-black uppercase text-[#0C0E12] tracking-tighter leading-none mb-32">AWARDS</h2>
+    <section className="bg-white py-24 md:py-48 px-6 lg:px-24">
+      <h2 className="text-[15vw] md:text-[12vw] font-black uppercase text-[#0C0E12] tracking-tighter leading-none mb-16 md:mb-32">AWARDS</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center border-t border-black/10">
         <div className="divide-y divide-black/10 w-full">
           {awards.map((award, i) => (
@@ -393,21 +394,21 @@ const AwardsSection = () => {
 
 const DualCTA = () => {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 h-[80vh] min-h-[700px]">
-      <motion.div whileHover="hover" className="relative group overflow-hidden">
+    <section className="grid grid-cols-1 lg:grid-cols-2 h-auto lg:h-[80vh] min-h-0 lg:min-h-[700px]">
+      <motion.div whileHover="hover" className="relative group overflow-hidden h-[50vh] lg:h-auto">
         <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/68079e60d8c8c72fd621dfd8_Video-p-1600.webp" className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-110 group-hover:grayscale-0" />
         <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all" />
-        <div className="absolute inset-0 p-20 flex flex-col justify-between items-start text-white">
-          <h3 className="text-7xl font-black uppercase tracking-tighter leading-none max-w-md">HAVE A PROJECT IN MIND?</h3>
-          <button className="px-12 py-6 bg-white text-black rounded-full font-black uppercase text-[10px] tracking-widest hover:bg-orange-600 hover:text-white transition-all">LET'S TALK</button>
+        <div className="absolute inset-0 p-8 md:p-20 flex flex-col justify-between items-start text-white">
+          <h3 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none max-w-md">HAVE A PROJECT IN MIND?</h3>
+          <button className="px-8 py-4 md:px-12 md:py-6 bg-white text-black rounded-full font-black uppercase text-[10px] tracking-widest hover:bg-orange-600 hover:text-white transition-all mt-10 md:mt-0">LET'S TALK</button>
         </div>
       </motion.div>
-      <motion.div whileHover="hover" className="relative group overflow-hidden">
+      <motion.div whileHover="hover" className="relative group overflow-hidden h-[50vh] lg:h-auto">
         <img src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/67e63d10d18f7f9092d93761_Img%20(5)-p-500.webp" className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-110 group-hover:grayscale-0" />
         <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all" />
-        <div className="absolute inset-0 p-20 flex flex-col justify-between items-start text-white text-left">
-          <h3 className="text-7xl font-black uppercase tracking-tighter leading-none max-w-md">LOOKING TO HIRE AN AGENCY?</h3>
-          <button className="px-12 py-6 bg-white text-black rounded-full font-black uppercase text-[10px] tracking-widest hover:bg-orange-600 hover:text-white transition-all">JOIN US</button>
+        <div className="absolute inset-0 p-8 md:p-20 flex flex-col justify-between items-start text-white text-left">
+          <h3 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none max-w-md">LOOKING TO HIRE AN AGENCY?</h3>
+          <button className="px-8 py-4 md:px-12 md:py-6 bg-white text-black rounded-full font-black uppercase text-[10px] tracking-widest hover:bg-orange-600 hover:text-white transition-all mt-10 md:mt-0">JOIN US</button>
         </div>
       </motion.div>
     </section>
@@ -417,7 +418,7 @@ const DualCTA = () => {
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
   return (
-    <section className="bg-white py-48 px-6 lg:px-24">
+    <section className="bg-white py-24 md:py-48 px-6 lg:px-24">
       <div className="max-w-[1000px] mx-auto">
         <div className="divide-y divide-black/10">
           {faqs.map((f, i) => (
@@ -476,7 +477,7 @@ const AboutPage = () => {
       <DualCTA />
       <FAQSection />
 
-      <section className="bg-white py-48 text-center px-6">
+      <section className="bg-white py-24 md:py-48 text-center px-6">
         <h2 className="text-[14vw] font-black uppercase tracking-tighter leading-[0.8] text-[#0C0E12]">
           LET'S WORK <br /> <span className="text-orange-600">TOGETHER</span>
         </h2>

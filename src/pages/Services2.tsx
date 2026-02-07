@@ -59,7 +59,7 @@ const HeroSection = () => {
     <section ref={sectionRef} className="relative h-screen bg-[#0C0E12] overflow-hidden">
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.div
-          style={{ width, height, borderRadius }}
+          style={{ width: window.innerWidth < 768 ? '100%' : width, height, borderRadius: window.innerWidth < 768 ? '0px' : borderRadius }}
           className="relative z-10 bg-black overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] origin-center transition-all duration-75 ease-out"
         >
           <motion.img
@@ -110,10 +110,10 @@ const HeroSection = () => {
 const ExperienceSection = () => {
   return (
     <section className="bg-white px-6 lg:px-20 relative border-t border-gray-100">
-      <div className="max-w-[1400px] mx-auto py-32 grid grid-cols-1 lg:grid-cols-2 gap-0">
+      <div className="max-w-[1400px] mx-auto py-16 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-0">
 
         {/* Left Side */}
-        <div className="relative border-r border-gray-100 pr-12 lg:pr-24 pb-12 lg:pb-0">
+        <div className="relative border-r-0 lg:border-r border-gray-100 pr-0 lg:pr-24 pb-12 lg:pb-0">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-black mb-12">Who Are We?</p>
 
           <div className="flex items-start">
@@ -121,7 +121,7 @@ const ExperienceSection = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-[18rem] md:text-[24rem] font-black leading-[0.75] tracking-tighter text-[#0C0E12] select-none"
+              className="text-[30vw] md:text-[24rem] font-black leading-[0.75] tracking-tighter text-[#0C0E12] select-none"
             >
               15
             </motion.span>
@@ -148,7 +148,7 @@ const ExperienceSection = () => {
         </div>
 
         {/* Right Side */}
-        <div className="lg:pl-24 flex flex-col pt-12 lg:pt-0">
+        <div className="pl-0 lg:pl-24 flex flex-col pt-12 lg:pt-0 border-t lg:border-t-0 border-gray-100">
           <div className="max-w-xl">
             <p className="text-gray-600 text-lg leading-relaxed font-medium mb-4">
               We are a passionate creative agency with over 15 years of experience in branding, design, digital marketing, and storytelling. We help businesses stand out with innovative strategies, stunning visuals, and impactful campaigns that drive engagement and growth.
@@ -217,13 +217,13 @@ const ExploreServices = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-white py-40 px-6 lg:px-20 relative overflow-x-hidden text-black"
+      className="bg-white py-20 md:py-40 px-6 lg:px-20 relative overflow-x-hidden text-black"
     >
       <div className="max-w-[1500px] mx-auto">
         {/* Heading */}
-        <div className="flex flex-col mb-32 relative w-full items-center">
+        <div className="flex flex-col mb-16 md:mb-32 relative w-full items-center">
           <motion.div style={{ x: xExplore }} className="w-full">
-            <h2 className="text-7xl md:text-[13vw] font-black uppercase tracking-tighter leading-[0.8] text-black text-left">
+            <h2 className="text-[15vw] md:text-[13vw] font-black uppercase tracking-tighter leading-[0.8] text-black text-left">
               Explore
             </h2>
           </motion.div>
@@ -232,7 +232,7 @@ const ExploreServices = () => {
             style={{ x: xServices }}
             className="w-full flex justify-end md:pr-[10%]"
           >
-            <h2 className="text-7xl md:text-[13vw] font-black uppercase tracking-tighter leading-[0.8] text-black text-right">
+            <h2 className="text-[15vw] md:text-[13vw] font-black uppercase tracking-tighter leading-[0.8] text-black text-right">
               Services
             </h2>
           </motion.div>
@@ -247,7 +247,7 @@ const ExploreServices = () => {
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center mt-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center mt-16 md:mt-32">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[40px] bg-gray-50 shadow-5xl group">
             <AnimatePresence mode="wait">
               <motion.img
@@ -273,7 +273,7 @@ const ExploreServices = () => {
                 onMouseEnter={() => setActiveIndex(i)}
                 className="group border-b-2 border-gray-100 pb-12 flex items-center justify-between cursor-pointer hover:pl-8 transition-all duration-500"
               >
-                <h3 className={`text-5xl md:text-7xl font-black uppercase transition-colors ${activeIndex === i ? "text-black" : "text-black/30 group-hover:text-black"}`}>
+                <h3 className={`text-3xl md:text-5xl lg:text-7xl font-black uppercase transition-colors ${activeIndex === i ? "text-black" : "text-black/30 group-hover:text-black"}`}>
                   {service.name}
                 </h3>
 
@@ -311,8 +311,8 @@ const MarqueeSection = () => {
           className="flex items-center gap-12 pr-12"
         >
           {[...Array(10)].map((_, i) => (
-            <h2 key={i} className="text-[12rem] font-black uppercase tracking-tighter text-[#0C0E12] flex items-center gap-12">
-              Working <span className="text-orange-600 pb-8">*</span> Process
+            <h2 key={i} className="text-[15vw] md:text-[12rem] font-black uppercase tracking-tighter text-[#0C0E12] flex items-center gap-6 md:gap-12 pl-6 md:pl-12">
+              Working <span className="text-orange-600 pb-2 md:pb-8">*</span> Process
             </h2>
           ))}
         </motion.div>
@@ -323,8 +323,8 @@ const MarqueeSection = () => {
           className="flex items-center gap-12 pr-12"
         >
           {[...Array(10)].map((_, i) => (
-            <h2 key={i} className="text-[12rem] font-black uppercase tracking-tighter text-[#0C0E12] flex items-center gap-12">
-              Working <span className="text-orange-600 pb-8">*</span> Process
+            <h2 key={i} className="text-[15vw] md:text-[12rem] font-black uppercase tracking-tighter text-[#0C0E12] flex items-center gap-6 md:gap-12 pl-6 md:pl-12">
+              Working <span className="text-orange-600 pb-2 md:pb-8">*</span> Process
             </h2>
           ))}
         </motion.div>
@@ -336,13 +336,13 @@ const MarqueeSection = () => {
 /* ================= SECTION 5: PROCESS ================= */
 const ProcessSection = () => {
   return (
-    <section className="bg-[#0C0E12] h-[95vh] px-6 text-white overflow-hidden relative flex items-center">
+    <section className="bg-[#0C0E12] h-auto lg:h-[95vh] py-20 lg:py-0 px-6 text-white overflow-hidden relative flex items-center">
 
 
-      <div className="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-32 relative z-10 h-[75vh]">
+      <div className="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 relative z-10 h-auto lg:h-[75vh]">
 
         {/* Left Side: Independent Scrolling */}
-        <div className="h-full overflow-y-auto pr-10 space-y-24 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="h-auto lg:h-full overflow-y-visible lg:overflow-y-auto pr-0 lg:pr-10 space-y-12 lg:space-y-24 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {[
             { num: ".01", title: "Discovery & Research", desc: "Lorem ipsum dolor sit amet consectetur. Arcu mauris urna lobortis turpis dolor sem ultricies amet eleifend maecenas ultrices lectus." },
             { num: ".02", title: "Strategy & Planning", desc: "Lorem ipsum dolor sit amet consectetur. Arcu mauris urna lobortis turpis dolor sem ultricies amet eleifend maecenas ultrices lectus." },
@@ -378,7 +378,7 @@ const ProcessSection = () => {
         </div>
 
         {/* Right Side: Static/Pinned Visual */}
-        <div className="relative h-full flex items-center justify-center lg:pl-20">
+        <div className="relative h-[400px] lg:h-full flex items-center justify-center lg:pl-20 order-first lg:order-last mb-10 lg:mb-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -444,7 +444,7 @@ const CTACollage = () => {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="bg-white py-64 px-6 relative overflow-hidden flex flex-col items-center justify-center min-h-[100vh]"
+      className="bg-white py-24 md:py-64 px-6 relative overflow-hidden flex flex-col items-center justify-center min-h-[60vh] md:min-h-[100vh]"
     >
       <div className="max-w-[1200px] mx-auto text-center relative z-20">
         {/* Badge */}
@@ -461,7 +461,7 @@ const CTACollage = () => {
           <div className="absolute -bottom-1 left-1 w-2 h-2 bg-black rotate-45" />
         </motion.div>
 
-        <h2 className="text-7xl md:text-[10vw] font-black uppercase leading-[0.8] text-[#0C0E12] tracking-tighter mb-16">
+        <h2 className="text-[12vw] md:text-[10vw] font-black uppercase leading-[0.8] text-[#0C0E12] tracking-tighter mb-10 md:mb-16">
           <span className="block">Let’s Create</span>
           <span className="text-orange-600 block">Something</span>
           <span className="block italic">Better <span className="not-italic text-[#0C0E12]">Together!</span></span>
@@ -532,11 +532,11 @@ const CTACollage = () => {
 /* ================= FOOTER ================= */
 const CustomFooter = () => {
   return (
-    <footer className="bg-[#0C0E12] pt-40 pb-12 px-6 text-white overflow-hidden">
+    <footer className="bg-[#0C0E12] pt-20 md:pt-40 pb-12 px-6 text-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 mb-40">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-32 mb-20 md:mb-40">
           <div>
-            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-12">
+            <h2 className="text-[12vw] md:text-8xl font-black uppercase tracking-tighter leading-none mb-12">
               Let's Work <br /> Together
             </h2>
             <button className="px-12 py-6 border-2 border-white/20 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all flex items-center gap-4 group">
@@ -544,7 +544,7 @@ const CustomFooter = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-8">
               <div>
                 <p className="text-[10px] uppercase tracking-widest font-black text-white/40 mb-3">Email</p>
@@ -568,7 +568,7 @@ const CustomFooter = () => {
           </div>
         </div>
 
-        <div className="pt-12 border-t border-white/10 flex flex-col md:row items-center justify-between gap-6">
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-[11px] font-bold tracking-widest text-white/30 uppercase">© 2026 Midis Creative Agency. All Rights Reserved.</p>
           <div className="flex gap-8">
             {["Privacy", "Terms", "Cookies"].map(l => (

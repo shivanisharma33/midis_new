@@ -29,7 +29,6 @@ export const TeamSection: React.FC = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top top",
           end: "+=2400",
           scrub: 1.2,
           pin: true,

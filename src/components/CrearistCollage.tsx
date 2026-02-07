@@ -48,7 +48,7 @@ export default function CrearistCollage() {
         scrollTrigger: {
           trigger: container,
           start: "top top",
-          end: "+=1000%",
+          end: isMobile ? "+=200%" : "+=1000%",
           scrub: 1,
           pin: true,
           anticipatePin: 1,
@@ -92,7 +92,7 @@ export default function CrearistCollage() {
         left: 0,
         top: 0,
         width: isMobile ? "100%" : "50vw",
-        height: isMobile ? "50%" : "100vh",
+        height: isMobile ? "40%" : "100vh",
         x: 0,
         y: 0,
         scale: 1,
@@ -160,7 +160,7 @@ export default function CrearistCollage() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-screen bg-white overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[60vh] md:h-screen bg-white overflow-hidden">
 
       {/* 1. LAYER: TEXT (BEHIND IMAGES - z-0) */}
       <div
@@ -251,12 +251,12 @@ export default function CrearistCollage() {
       {/* 3. LAYER: FINAL MILESTONES (In Front) */}
       <div
         ref={milestonesRef}
-        className="absolute inset-0 flex z-40 pointer-events-none"
+        className="absolute inset-0 flex flex-col md:flex-row z-40 pointer-events-none"
       >
-        <div className="hidden md:block w-1/2 h-full" />
-        <div className="w-full md:w-1/2 h-full bg-white flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.05)]">
-          <div className="w-full max-w-2xl px-8 md:px-12 lg:px-16">
-            <h2 className="milestone-reveal text-[clamp(2rem,4.5vw,4rem)] font-bold text-black leading-[1.1] mb-12 tracking-tight uppercase">
+        <div className="w-full h-[40%] md:w-1/2 md:h-full min-h-0" />
+        <div className="w-full h-[60%] md:w-1/2 md:h-full bg-white flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.05)] overflow-y-auto">
+          <div className="w-full max-w-2xl px-6 py-8 md:px-12 lg:px-16">
+            <h2 className="milestone-reveal text-[clamp(1.8rem,4.5vw,4rem)] font-bold text-black leading-[1.1] mb-6 md:mb-12 tracking-tight uppercase">
               RESULTS THAT<br />
               POWER REAL<br />
               BUSINESS GROWTH
@@ -303,18 +303,18 @@ export default function CrearistCollage() {
 
       <div
         ref={cardStackRef}
-        className="absolute inset-0 flex z-50 pointer-events-none"
+        className="absolute inset-0 flex flex-col md:flex-row z-50 pointer-events-none"
       >
-        <div ref={imgStack2Ref} className="hidden md:block w-1/2 h-full overflow-hidden">
+        <div ref={imgStack2Ref} className="w-full h-[40%] md:w-1/2 md:h-full overflow-hidden block">
           <img
             src="https://cdn.prod.website-files.com/67a1ba0a889270647730e779/680771c045ce1011349f054e_Milestone-p-1080.webp"
             alt="Stack 2"
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="w-full md:w-1/2 h-full bg-white flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.05)]">
-          <div className="w-full max-w-2xl px-8 md:px-12 lg:px-16">
-            <h2 className="text-[clamp(2rem,4.5vw,4rem)] font-bold text-black leading-[1.1] mb-12 tracking-tight uppercase">
+        <div className="w-full h-[60%] md:w-1/2 md:h-full bg-white flex flex-col items-center justify-center pointer-events-auto shadow-[-20px_0_50px_rgba(0,0,0,0.05)] overflow-y-auto">
+          <div className="w-full max-w-2xl px-6 py-8 md:px-12 lg:px-16">
+            <h2 className="text-[clamp(1.8rem,4.5vw,4rem)] font-bold text-black leading-[1.1] mb-6 md:mb-12 tracking-tight uppercase">
               WHY TOP BRANDS<br />
               TRUST OUR<br />
               EXPERTISE

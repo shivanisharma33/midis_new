@@ -53,7 +53,7 @@ const AboutSection: React.FC = () => {
       ref={containerRef}
       className="
         w-full
-        min-h-[110vh]
+        min-h-[60vh]
         sm:min-h-[120vh]
         bg-white
         relative
@@ -64,7 +64,8 @@ const AboutSection: React.FC = () => {
         className="
           sticky
           top-0
-          h-[100svh]
+          h-[60vh]
+          sm:h-[100svh]
           flex
           items-center
           justify-center
